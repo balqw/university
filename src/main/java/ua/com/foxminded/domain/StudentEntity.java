@@ -5,6 +5,4 @@ import lombok.Data;
 @Data
 public class StudentEntity extends Person{
     private int course;
-    private GroupEntity group;
-
 }

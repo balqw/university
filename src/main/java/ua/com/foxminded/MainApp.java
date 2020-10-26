@@ -8,11 +8,6 @@ public class MainApp {
 
     public static void main(String[] args){
 
-
-    }
-
-    public String name(){
-        return "test";
     }
 
 }
