@@ -1,6 +1,8 @@
-package ua.com.foxminded.domain;
+package ua.com.foxminded.domain.entity;
 
 import lombok.Data;
+
+
 import java.time.LocalDateTime;
 
 @Data
