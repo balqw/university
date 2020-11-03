@@ -1,11 +1,14 @@
 package ua.com.foxminded.domain.entity;
-import lombok.Data;
-import lombok.NonNull;
-import ua.com.foxminded.domain.entity.Person;
+import lombok.*;
+
+
 
 
 @Data
-public class StudentEntity extends Person {
+@NoArgsConstructor
+@RequiredArgsConstructor
+public class StudentEntity{
+
     private int id;
     @NonNull
     private String firstName;
@@ -13,4 +16,5 @@ public class StudentEntity extends Person {
     private String lastName;
     @NonNull
     private int course;
+
 }

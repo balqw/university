@@ -9,6 +9,8 @@ import java.util.Optional;
 import java.util.Properties;
 
 public class JdbcTempleFactory {
+    private final static String H2 = "h2";
+    private final static String POSTGRES = "postgres";
     private final String DRIVER;
     private final String URL;
     private final String LOGIN;
