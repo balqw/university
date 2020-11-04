@@ -23,9 +23,7 @@ public class MainApp {
 
         JdbcTempleFactory jdbcTemple = new JdbcTempleFactory(POSTGRES_DB);
         StudentDao studentDao = new StudentDao(jdbcTemple.getJdbcTemplate());
-        studentDao.insert(new StudentEntity("first_name1","1",2));
-        studentDao.insert(new StudentEntity("first_name2","2",24));
-        System.out.println(studentDao.read(2));
+
 
 
     }

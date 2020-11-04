@@ -4,9 +4,10 @@ import java.util.List;
 
 public interface CrudOperation<T, ID> {
 
-    T create(T entity);
+    T save(T entity);
     List<T> readAll();
+    T findOne(Integer id);
     T update (T entity);
-    T delete (ID entity);
+    void delete (Integer id);
 
 }

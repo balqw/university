@@ -4,17 +4,11 @@ import lombok.*;
 
 
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@NoArgsConstructor
-@RequiredArgsConstructor
-public class StudentEntity{
+@ToString(callSuper = true)
+public class StudentEntity extends Person{
 
-    private int id;
-    @NonNull
-    private String firstName;
-    @NonNull
-    private String lastName;
-    @NonNull
     private int course;
 
 }
