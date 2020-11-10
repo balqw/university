@@ -8,6 +8,6 @@ import java.time.LocalDateTime;
 @Data
 public class IdCardEntity {
 
-    private int id;
+    private int cardId;
     private LocalDateTime dataExpire;
 }

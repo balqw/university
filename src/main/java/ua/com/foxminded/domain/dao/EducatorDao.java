@@ -12,7 +12,7 @@ import java.util.List;
 
 public class EducatorDao implements  CrudOperation<EducatorEntity,Integer>{
     private final String INSERT = "insert into educator (firstName,lastName) values(?,?)";
-    private final String FIND_BY_ID = "select * from educator where id = ?";
+    private final String FIND_BY_ID = "select * from educator join idcard on educator.idcard = idcard.id where id = ?";
     private final String FIND_ALL = "select * from educator";
     private final String UPDATE = "update educator set first_name=?,last_name=?,idCard=? where id=? ";
     private final String DELETE = "delete from educator where id = ?";
@@ -23,8 +23,6 @@ public class EducatorDao implements  CrudOperation<EducatorEntity,Integer>{
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
-
     @Override
     public EducatorEntity save(EducatorEntity entity) {
         KeyHolder keyH = new GeneratedKeyHolder();
@@ -34,7 +32,7 @@ public class EducatorDao implements  CrudOperation<EducatorEntity,Integer>{
             ps.setString(2,entity.getLastName());
             return ps;
         },keyH);
-         entity.setId((Integer) keyH.getKeys().get("id"));
+         entity.setEducatorId((Integer) keyH.getKeys().get("educatorId"));
          return entity;
     }
 
@@ -53,7 +51,7 @@ public class EducatorDao implements  CrudOperation<EducatorEntity,Integer>{
         jdbcTemplate.update(UPDATE,
                 entity.getFirstName(),
                 entity.getLastName(),
-                entity.getIdCard().getId());
+                entity.getIdCard().getCardId());
         return entity;
     }
 
@@ -63,8 +61,8 @@ public class EducatorDao implements  CrudOperation<EducatorEntity,Integer>{
     }
 
     public EducatorEntity setIdCard(EducatorEntity entity){
-        jdbcTemplate.update(SET_ID_CARD,entity.getId(),
-                entity.getIdCard().getId());
+        jdbcTemplate.update(SET_ID_CARD,entity.getIdCard(),
+                entity.getIdCard().getCardId());
         return entity;
     }
 }

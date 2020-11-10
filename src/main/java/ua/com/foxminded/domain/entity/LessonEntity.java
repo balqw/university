@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class LessonEntity {
-    private int id;
+    private int lessonId;
     private String title;
     private LocalDateTime startLesson;
     private LocalDateTime endLesson;

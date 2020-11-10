@@ -22,7 +22,7 @@ public class InitDataBase {
             ScriptRunner scriptRunner = new ScriptRunner(connection);
             scriptRunner.runScript(reader);
         } catch (IOException | SQLException e) {
-            throw new RuntimeException("DB connection failed");
+            throw new RuntimeException(e);
         }
 
     }

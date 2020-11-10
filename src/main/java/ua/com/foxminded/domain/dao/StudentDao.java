@@ -6,10 +6,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import ua.com.foxminded.domain.entity.StudentEntity;
 import ua.com.foxminded.domain.entity.mapperEntity.StudentMapper;
-
-import javax.swing.plaf.basic.BasicComboBoxUI;
-import javax.swing.plaf.basic.BasicTreeUI;
-import javax.swing.tree.RowMapper;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
@@ -37,7 +33,7 @@ public class StudentDao implements CrudOperation <StudentEntity, Integer>{
             ps.setInt(3,entity.getCourse());
             return ps;
         },keyH);
-        entity.setId((Integer) keyH.getKeys().get("id"));
+        entity.setStudentId((Integer) keyH.getKeys().get("studentId"));
         return entity;
     }
 
@@ -58,7 +54,7 @@ public class StudentDao implements CrudOperation <StudentEntity, Integer>{
         jdbcTemplate.update(UPDATE,entity.getFirstName(),
                 entity.getLastName(),
                 entity.getCourse(),
-                entity.getId());
+                entity.getStudentId());
          return entity;
     }
 

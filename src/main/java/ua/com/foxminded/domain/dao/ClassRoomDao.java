@@ -24,8 +24,14 @@ public class ClassRoomDao implements CrudOperation<ClassRoomEntity,Integer>{
 
     @Override
     public ClassRoomEntity save(ClassRoomEntity entity){
-        jdbcTemplate.update(INSERT,entity.getNumber(),
-                entity.getCapacity());
+        KeyHolder keyH = new GeneratedKeyHolder();
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(INSERT,Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1,entity.getNumber());
+            ps.setInt(2,entity.getCapacity());
+            return ps;
+        },keyH);
+        entity.setClassId((int)keyH.getKeys().get("classId"));
         return entity;
     }
 

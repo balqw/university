@@ -33,21 +33,6 @@ public class MainApp {
         LessonDao lessonDao = new LessonDao(jdbcTemplate);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-        EducatorEntity educator1 = new EducatorEntity();
-        educator1.setFirstName("John");
-        educator1.setLastName("Mathews");
-        educator1 = educatorDao.save(educator1);
-
-        System.out.println(educator1.getIdCard());
-
-        IdCardEntity idCardEntity = new IdCardEntity();
-        idCardEntity.setDataExpire(LocalDateTime.parse("2000-01-01 00:00",dtf));
-        educator1.setIdCard(idCardEntity);
-        idCardEntity = idCardDao.save(idCardEntity);
-
-        educatorDao.setIdCard(educator1);
-
-        System.out.println(educator1.getIdCard());
 
         ClassRoomEntity classRoomEntity = new ClassRoomEntity();
 
@@ -59,17 +44,11 @@ public class MainApp {
         classRoomEntity1.setNumber(5);
         classRoomEntity1 = classRoomDao.save(classRoomEntity1);
 
-
-        LessonEntity lessonEntity1 = new LessonEntity();
-        lessonEntity1.setTitle("math");
-        lessonEntity1.setStartLesson(LocalDateTime.parse("2000-10-10 00:00",dtf));
-        lessonEntity1.setEndLesson(LocalDateTime.parse("2000-10-10 01:00",dtf));
-        //lessonEntity1.setClassRoom(classRoomEntity);
-
-        System.out.println(lessonEntity1 = lessonDao.save(lessonEntity1));
-
-        System.out.println(lessonDao.findOne(1));
-
+        LessonEntity lessonEntity = new LessonEntity();
+        lessonEntity.setStartLesson(LocalDateTime.parse("2000-10-10 10:00",dtf));
+        lessonEntity.setEndLesson(LocalDateTime.parse("2000-10-10 11:00",dtf));
+        lessonEntity.setClassRoom(classRoomEntity);
+        System.out.println(lessonEntity = lessonDao.save(lessonEntity));
 
 
     }

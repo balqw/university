@@ -6,13 +6,9 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import ua.com.foxminded.domain.entity.IdCardEntity;
 import ua.com.foxminded.domain.entity.mapperEntity.IdCardMapper;
-
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class IdCardDao implements CrudOperation<IdCardEntity,Integer>{
@@ -35,7 +31,7 @@ public class IdCardDao implements CrudOperation<IdCardEntity,Integer>{
             preparedStatement.setTimestamp(1,Timestamp.valueOf(entity.getDataExpire()));
             return preparedStatement;
         },keyH);
-        entity.setId((Integer) keyH.getKeys().get("id"));
+        entity.setCardId((Integer) keyH.getKeys().get("cardId"));
         return entity;
     }
 
@@ -53,7 +49,7 @@ public class IdCardDao implements CrudOperation<IdCardEntity,Integer>{
     public IdCardEntity update(IdCardEntity entity) {
         jdbcTemplate.update(UPDATE,
                 Timestamp.valueOf(entity.getDataExpire()),
-                entity.getId());
+                entity.getCardId());
         return entity;
     }
 

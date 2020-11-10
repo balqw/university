@@ -6,39 +6,40 @@ drop table if exists classRoom cascade ;
 drop table if exists lesson cascade ;
 
 create table student(
-id serial primary key,
+studentId serial primary key,
 firstName varchar(100),
 lastName varchar (100),
 course integer
 );
 
 create table idCard(
-id serial primary key,
+cardId serial primary key,
 dateExpire timestamp
 );
 
 create table educator(
-id serial primary key,
+educatorId serial primary key,
 firstName varchar (100),
 lastName varchar (100),
 idCard int references idCard(id)
 );
 
 create table educatorCard(
-id serial primary  key,
+educatorId serial primary  key,
 idCard int references idCard(id) on delete cascade,
 idEducator int references educator(id) on delete cascade
 );
 
 create table classRoom(
-number int primary key,
+classId serial primary key,
+number int unique,
 capacity int
 );
 
 create table lesson(
-id serial primary key,
+lessonId serial primary key,
 title varchar (100),
 startLesson timestamp,
 endLesson timestamp,
-classRoom int
+classRoom int references classRoom(number) on delete cascade
 );
