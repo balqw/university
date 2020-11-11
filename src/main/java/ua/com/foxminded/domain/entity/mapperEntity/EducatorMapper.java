@@ -7,10 +7,11 @@ import java.sql.SQLException;
 
 
 public class EducatorMapper implements RowMapper<EducatorEntity> {
-    private  IdCardEntity idCardEntity = new IdCardEntity();
+
 
     @Override
     public EducatorEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
+        IdCardEntity idCardEntity = new IdCardEntity();
         EducatorEntity educatorEntity = new EducatorEntity();
         educatorEntity.setEducatorId(rs.getInt("educatorId"));
         educatorEntity.setFirstName(rs.getString("firstName"));

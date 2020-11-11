@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LessonMapper implements RowMapper<LessonEntity> {
-    private  ClassRoomEntity classRoomEntity = new ClassRoomEntity();
 
     @Override
     public LessonEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
+        ClassRoomEntity classRoomEntity = new ClassRoomEntity();
         LessonEntity lessonEntity = new LessonEntity();
         lessonEntity.setTitle(rs.getString("title"));
         lessonEntity.setStartLesson(rs.getTimestamp("startLesson").toLocalDateTime());
