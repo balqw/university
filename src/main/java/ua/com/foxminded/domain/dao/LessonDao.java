@@ -13,11 +13,13 @@ import java.util.Objects;
 public class LessonDao implements CrudOperation<LessonEntity, Integer>{
 
     private final String INSERT = "insert into lesson (title,startLesson,endLesson) values(?,?,?)";
-    private final String FIND_ALL = "select * from lesson";
+    private final String FIND_ALL = "select * from lesson join classRoom on classroom.number = lesson.classroom";
     private final String UPDATE = "update lesson set title=?,startLesson=?,endLesson=?,classRoom=? where id=? ";
     private final String DELETE = "delete from lesson where id = ?";
-    private final JdbcTemplate jdbcTemplate;
     private final String FIND_BY_ID = "select * from lesson join classRoom on classroom.number = lesson.classroom where id = ?";
+
+    private final JdbcTemplate jdbcTemplate;
+
 
     public LessonDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

@@ -13,7 +13,7 @@ import java.util.List;
 public class EducatorDao implements  CrudOperation<EducatorEntity,Integer>{
     private final String INSERT = "insert into educator (firstName,lastName) values(?,?)";
     private final String FIND_BY_ID = "select * from educator join idcard on educator.idcard = idcard.id where id = ?";
-    private final String FIND_ALL = "select * from educator";
+    private final String FIND_ALL = "select * from educator join idcard on educator.idcard = idcard.id";
     private final String UPDATE = "update educator set first_name=?,last_name=?,idCard=? where id=? ";
     private final String DELETE = "delete from educator where id = ?";
     private final String SET_ID_CARD = "insert into educatorCard (idCard, idEducator) values(?,?)";
