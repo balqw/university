@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan("ua.com.foxminded.*")
 @PropertySource("classpath:application.properties")
-public class SpringConfig {
+public class BeanConfig {
 
     @Autowired
     Environment environment;
