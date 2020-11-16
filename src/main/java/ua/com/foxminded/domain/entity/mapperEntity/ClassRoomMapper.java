@@ -4,6 +4,7 @@ import ua.com.foxminded.domain.entity.ClassRoomEntity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
 public class ClassRoomMapper implements RowMapper<ClassRoomEntity> {
     @Override
     public ClassRoomEntity mapRow(ResultSet rs, int rowNum) throws SQLException {

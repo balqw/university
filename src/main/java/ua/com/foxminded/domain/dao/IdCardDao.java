@@ -1,16 +1,21 @@
 package ua.com.foxminded.domain.dao;
 
 import org.apache.commons.lang.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.IdCardEntity;
 import ua.com.foxminded.domain.entity.mapperEntity.IdCardMapper;
+
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.List;
-
+@Repository
 public class IdCardDao implements CrudOperation<IdCardEntity,Integer>{
     private final String INSERT = "insert into idCard (dateExpire) values (?)";
     private final String FIND_BY_ID = "select * from idCard where id = ?";
@@ -18,9 +23,9 @@ public class IdCardDao implements CrudOperation<IdCardEntity,Integer>{
     private final String UPDATE = "update idCard set dateExpire=? where id=? ";
     private final String DELETE = "delete from idCard where id = ?";
     private final JdbcTemplate jdbcTemplate;
-
-    public IdCardDao(JdbcTemplate jdbcTemplate){
-        this.jdbcTemplate = jdbcTemplate;
+    @Autowired
+    public IdCardDao(DataSource dataSource){
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override

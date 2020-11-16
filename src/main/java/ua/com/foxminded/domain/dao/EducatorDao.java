@@ -1,14 +1,19 @@
 package ua.com.foxminded.domain.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.EducatorEntity;
 import ua.com.foxminded.domain.entity.mapperEntity.EducatorMapper;
 
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
+@Repository
 
 public class EducatorDao implements  CrudOperation<EducatorEntity,Integer>{
     private final String INSERT = "insert into educator (firstName,lastName) values(?,?)";
@@ -18,9 +23,9 @@ public class EducatorDao implements  CrudOperation<EducatorEntity,Integer>{
     private final String DELETE = "delete from educator where id = ?";
     private final String SET_ID_CARD = "insert into educatorCard (idCard, idEducator) values(?,?)";
     private final JdbcTemplate jdbcTemplate;
-
-    public EducatorDao(JdbcTemplate jdbcTemplate){
-        this.jdbcTemplate = jdbcTemplate;
+    @Autowired
+    public EducatorDao(DataSource dataSource){
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override

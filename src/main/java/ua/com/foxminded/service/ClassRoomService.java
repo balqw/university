@@ -1,15 +1,18 @@
 package ua.com.foxminded.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.ClassRoomDao;
 import ua.com.foxminded.domain.dao.CrudOperation;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
 
 import java.util.List;
 
+@Service
 public class ClassRoomService implements CrudOperation<ClassRoomEntity,Integer> {
 
     private final ClassRoomDao service;
-
+    @Autowired
     public ClassRoomService(ClassRoomDao service) {
         this.service = service;
     }

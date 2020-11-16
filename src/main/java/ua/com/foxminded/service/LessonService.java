@@ -1,14 +1,15 @@
 package ua.com.foxminded.service;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.CrudOperation;
 import ua.com.foxminded.domain.dao.LessonDao;
 import ua.com.foxminded.domain.entity.LessonEntity;
 
 import java.util.List;
-
+@Service
 public class LessonService implements CrudOperation<LessonEntity,Integer> {
     private final LessonDao service;
-
+    @Autowired
     public LessonService(LessonDao service) {
         this.service = service;
     }

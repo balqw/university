@@ -1,14 +1,18 @@
 package ua.com.foxminded.service;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.CrudOperation;
 import ua.com.foxminded.domain.dao.IdCardDao;
 import ua.com.foxminded.domain.entity.IdCardEntity;
-
 import java.util.List;
 
+@Service
 public class IdCardService implements CrudOperation<IdCardEntity,Integer> {
+
     private final IdCardDao service;
 
+
+    @Autowired
     public IdCardService(IdCardDao service) {
         this.service = service;
     }
