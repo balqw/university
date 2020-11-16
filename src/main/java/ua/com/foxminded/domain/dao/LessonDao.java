@@ -1,15 +1,22 @@
 package ua.com.foxminded.domain.dao;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.LessonEntity;
 import ua.com.foxminded.domain.entity.mapperEntity.LessonMapper;
+
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
-
+@Repository
+@RequiredArgsConstructor
 public class LessonDao implements CrudOperation<LessonEntity, Integer>{
 
     private final String INSERT = "insert into lesson (title,startLesson,endLesson) values(?,?,?)";
@@ -21,9 +28,6 @@ public class LessonDao implements CrudOperation<LessonEntity, Integer>{
     private final JdbcTemplate jdbcTemplate;
 
 
-    public LessonDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     @Override
     public LessonEntity save(LessonEntity entity) {

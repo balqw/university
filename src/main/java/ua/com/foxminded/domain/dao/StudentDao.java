@@ -1,16 +1,22 @@
 package ua.com.foxminded.domain.dao;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.StudentEntity;
 import ua.com.foxminded.domain.entity.mapperEntity.StudentMapper;
+
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 
-
+@Repository
+@RequiredArgsConstructor
 public class StudentDao implements CrudOperation <StudentEntity, Integer>{
     private final String INSERT = "insert into student (firstName,lastName,course) values(?,?,?)";
     private final String FIND_BY_ID = "select * from student where id = ?";
@@ -19,9 +25,7 @@ public class StudentDao implements CrudOperation <StudentEntity, Integer>{
     private final String DELETE = "delete from student where id = ?";
     private final JdbcTemplate jdbcTemplate;
 
-    public StudentDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+
 
     @Override
     public StudentEntity save(StudentEntity entity) {
@@ -35,6 +39,7 @@ public class StudentDao implements CrudOperation <StudentEntity, Integer>{
         },keyH);
         entity.setStudentId((Integer) keyH.getKeys().get("studentId"));
         return entity;
+
     }
 
     @Override

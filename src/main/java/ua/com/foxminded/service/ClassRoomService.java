@@ -1,41 +1,42 @@
 package ua.com.foxminded.service;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.ClassRoomDao;
 import ua.com.foxminded.domain.dao.CrudOperation;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class ClassRoomService implements CrudOperation<ClassRoomEntity,Integer> {
 
-    private final ClassRoomDao service;
-
-    public ClassRoomService(ClassRoomDao service) {
-        this.service = service;
-    }
+    private final ClassRoomDao classRoomDao;
 
     @Override
     public ClassRoomEntity save(ClassRoomEntity entity) {
-        return service.save(entity);
+        return classRoomDao.save(entity);
     }
 
     @Override
     public List<ClassRoomEntity> readAll() {
-        return service.readAll();
+        return classRoomDao.readAll();
     }
 
     @Override
     public ClassRoomEntity findOne(Integer id) {
-        return service.findOne(id);
+        return classRoomDao.findOne(id);
     }
 
     @Override
     public ClassRoomEntity update(ClassRoomEntity entity) {
-        return service.update(entity);
+        return classRoomDao.update(entity);
     }
 
     @Override
     public void delete(Integer id) {
-        service.delete(id);
+        classRoomDao.delete(id);
     }
 }

@@ -1,15 +1,20 @@
 package ua.com.foxminded.domain.dao;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
 import ua.com.foxminded.domain.entity.mapperEntity.ClassRoomMapper;
-
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 
+@Repository
+@RequiredArgsConstructor
 public class ClassRoomDao implements CrudOperation<ClassRoomEntity,Integer>{
     private final String INSERT = "insert into classroom (number,capacity) values(?,?)";
     private final String FIND_BY_ID = "select * from classroom where number = ?";
@@ -18,9 +23,6 @@ public class ClassRoomDao implements CrudOperation<ClassRoomEntity,Integer>{
     private final String DELETE = "delete from classroom where id = ?";
     private final JdbcTemplate jdbcTemplate;
 
-    public ClassRoomDao(JdbcTemplate jdbcTemplate){
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     @Override
     public ClassRoomEntity save(ClassRoomEntity entity){

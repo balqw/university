@@ -21,13 +21,13 @@ create table educator(
 educatorId serial primary key,
 firstName varchar (100),
 lastName varchar (100),
-idCard int references idCard(id)
+idCard int references idCard(cardId)
 );
 
 create table educatorCard(
 educatorId serial primary  key,
-idCard int references idCard(id) on delete cascade,
-idEducator int references educator(id) on delete cascade
+idCard int references idCard(cardId) on delete cascade,
+idEducator int references educator(educatorId) on delete cascade
 );
 
 create table classRoom(
@@ -41,5 +41,5 @@ lessonId serial primary key,
 title varchar (100),
 startLesson timestamp,
 endLesson timestamp,
-classRoom int references classRoom(number) on delete cascade
+classRoom int references classRoom(number)
 );

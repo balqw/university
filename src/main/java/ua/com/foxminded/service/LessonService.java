@@ -1,40 +1,39 @@
 package ua.com.foxminded.service;
-
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.CrudOperation;
 import ua.com.foxminded.domain.dao.LessonDao;
 import ua.com.foxminded.domain.entity.LessonEntity;
 
 import java.util.List;
-
+@Service
+@RequiredArgsConstructor
 public class LessonService implements CrudOperation<LessonEntity,Integer> {
-    private final LessonDao service;
-
-    public LessonService(LessonDao service) {
-        this.service = service;
-    }
+    private final LessonDao lessonDao;
 
     @Override
     public LessonEntity save(LessonEntity entity) {
-        return service.save(entity);
+        return lessonDao.save(entity);
     }
 
     @Override
     public List<LessonEntity> readAll() {
-        return service.readAll();
+        return lessonDao.readAll();
     }
 
     @Override
     public LessonEntity findOne(Integer id) {
-        return service.findOne(id);
+        return lessonDao.findOne(id);
     }
 
     @Override
     public LessonEntity update(LessonEntity entity) {
-        return service.update(entity);
+        return lessonDao.update(entity);
     }
 
     @Override
     public void delete(Integer id) {
-        service.delete(id);
+        lessonDao.delete(id);
     }
 }
