@@ -1,5 +1,6 @@
 package ua.com.foxminded.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.ClassRoomDao;
@@ -9,13 +10,10 @@ import ua.com.foxminded.domain.entity.ClassRoomEntity;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ClassRoomService implements CrudOperation<ClassRoomEntity,Integer> {
 
     private final ClassRoomDao classRoomDao;
-    @Autowired
-    public ClassRoomService(ClassRoomDao classRoomDao) {
-        this.classRoomDao = classRoomDao;
-    }
 
     @Override
     public ClassRoomEntity save(ClassRoomEntity entity) {

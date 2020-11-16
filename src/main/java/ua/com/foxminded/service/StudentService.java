@@ -1,5 +1,6 @@
 package ua.com.foxminded.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.CrudOperation;
@@ -7,12 +8,10 @@ import ua.com.foxminded.domain.dao.StudentDao;
 import ua.com.foxminded.domain.entity.StudentEntity;
 import java.util.List;
 @Service
+@RequiredArgsConstructor
 public class StudentService implements CrudOperation<StudentEntity,Integer> {
     private final StudentDao studentDao;
-    @Autowired
-    public StudentService(StudentDao studentDao) {
-        this.studentDao = studentDao;
-    }
+
 
     @Override
     public StudentEntity save(StudentEntity entity) {

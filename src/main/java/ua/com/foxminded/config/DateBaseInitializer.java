@@ -13,12 +13,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @Component
-public class PrepareDB {
+public class DateBaseInitializer {
 
     DataSource dataSource;
 
     @Autowired
-    public PrepareDB(DataSource dataSource) {
+    public DateBaseInitializer(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 

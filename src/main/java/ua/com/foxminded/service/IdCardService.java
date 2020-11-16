@@ -1,21 +1,16 @@
 package ua.com.foxminded.service;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.CrudOperation;
 import ua.com.foxminded.domain.dao.IdCardDao;
 import ua.com.foxminded.domain.entity.IdCardEntity;
 import java.util.List;
-
+@RequiredArgsConstructor
 @Service
 public class IdCardService implements CrudOperation<IdCardEntity,Integer> {
 
     private final IdCardDao idCardDao;
-
-
-    @Autowired
-    public IdCardService(IdCardDao idCardDao) {
-        this.idCardDao = idCardDao;
-    }
 
     @Override
     public IdCardEntity save(IdCardEntity entity) {

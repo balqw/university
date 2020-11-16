@@ -6,16 +6,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan("ua.com.foxminded.domain.entity")
-@ComponentScan("ua.com.foxminded.domain.dao")
-@ComponentScan("ua.com.foxminded.service")
-@ComponentScan("ua.com.foxminded.config")
+@ComponentScan("ua.com.foxminded.*")
 @PropertySource("classpath:application.properties")
 public class SpringConfig {
 
@@ -34,5 +32,10 @@ public class SpringConfig {
         dataSource.setUsername(environment.getProperty(USER));
         dataSource.setPassword(environment.getProperty(PASS));
         return  dataSource;
+    }
+
+    @Bean
+    JdbcTemplate jdbcTemplate(){
+        return  new JdbcTemplate(dataSource());
     }
 }

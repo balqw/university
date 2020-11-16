@@ -1,7 +1,7 @@
 package ua.com.foxminded;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ua.com.foxminded.config.PrepareDB;
+import ua.com.foxminded.config.DateBaseInitializer;
 import ua.com.foxminded.config.SpringConfig;
 import ua.com.foxminded.domain.entity.*;
 import ua.com.foxminded.service.StudentService;
@@ -20,7 +20,7 @@ public class MainApp {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
-        PrepareDB prepareDB = context.getBean(PrepareDB.class);
+        DateBaseInitializer prepareDB = context.getBean(DateBaseInitializer.class);
         prepareDB.run();
         StudentEntity studentEntity = context.getBean(StudentEntity.class);
         studentEntity.setFirstName("23");

@@ -1,5 +1,6 @@
 package ua.com.foxminded.domain.dao;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -14,7 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 @Repository
-
+@RequiredArgsConstructor
 public class EducatorDao implements  CrudOperation<EducatorEntity,Integer>{
     private final String INSERT = "insert into educator (firstName,lastName) values(?,?)";
     private final String FIND_BY_ID = "select * from educator join idcard on educator.idcard = idcard.id where id = ?";
@@ -23,10 +24,7 @@ public class EducatorDao implements  CrudOperation<EducatorEntity,Integer>{
     private final String DELETE = "delete from educator where id = ?";
     private final String SET_ID_CARD = "insert into educatorCard (idCard, idEducator) values(?,?)";
     private final JdbcTemplate jdbcTemplate;
-    @Autowired
-    public EducatorDao(DataSource dataSource){
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
+
 
     @Override
     public EducatorEntity save(EducatorEntity entity) {
