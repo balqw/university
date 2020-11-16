@@ -8,34 +8,34 @@ import ua.com.foxminded.domain.entity.LessonEntity;
 import java.util.List;
 @Service
 public class LessonService implements CrudOperation<LessonEntity,Integer> {
-    private final LessonDao service;
+    private final LessonDao lessonDao;
     @Autowired
-    public LessonService(LessonDao service) {
-        this.service = service;
+    public LessonService(LessonDao lessonDao) {
+        this.lessonDao = lessonDao;
     }
 
     @Override
     public LessonEntity save(LessonEntity entity) {
-        return service.save(entity);
+        return lessonDao.save(entity);
     }
 
     @Override
     public List<LessonEntity> readAll() {
-        return service.readAll();
+        return lessonDao.readAll();
     }
 
     @Override
     public LessonEntity findOne(Integer id) {
-        return service.findOne(id);
+        return lessonDao.findOne(id);
     }
 
     @Override
     public LessonEntity update(LessonEntity entity) {
-        return service.update(entity);
+        return lessonDao.update(entity);
     }
 
     @Override
     public void delete(Integer id) {
-        service.delete(id);
+        lessonDao.delete(id);
     }
 }

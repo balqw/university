@@ -11,34 +11,34 @@ import java.util.List;
 @Service
 public class ClassRoomService implements CrudOperation<ClassRoomEntity,Integer> {
 
-    private final ClassRoomDao service;
+    private final ClassRoomDao classRoomDao;
     @Autowired
-    public ClassRoomService(ClassRoomDao service) {
-        this.service = service;
+    public ClassRoomService(ClassRoomDao classRoomDao) {
+        this.classRoomDao = classRoomDao;
     }
 
     @Override
     public ClassRoomEntity save(ClassRoomEntity entity) {
-        return service.save(entity);
+        return classRoomDao.save(entity);
     }
 
     @Override
     public List<ClassRoomEntity> readAll() {
-        return service.readAll();
+        return classRoomDao.readAll();
     }
 
     @Override
     public ClassRoomEntity findOne(Integer id) {
-        return service.findOne(id);
+        return classRoomDao.findOne(id);
     }
 
     @Override
     public ClassRoomEntity update(ClassRoomEntity entity) {
-        return service.update(entity);
+        return classRoomDao.update(entity);
     }
 
     @Override
     public void delete(Integer id) {
-        service.delete(id);
+        classRoomDao.delete(id);
     }
 }

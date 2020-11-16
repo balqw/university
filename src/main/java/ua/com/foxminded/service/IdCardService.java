@@ -9,36 +9,36 @@ import java.util.List;
 @Service
 public class IdCardService implements CrudOperation<IdCardEntity,Integer> {
 
-    private final IdCardDao service;
+    private final IdCardDao idCardDao;
 
 
     @Autowired
-    public IdCardService(IdCardDao service) {
-        this.service = service;
+    public IdCardService(IdCardDao idCardDao) {
+        this.idCardDao = idCardDao;
     }
 
     @Override
     public IdCardEntity save(IdCardEntity entity) {
-        return service.save(entity);
+        return idCardDao.save(entity);
     }
 
     @Override
     public List<IdCardEntity> readAll() {
-        return service.readAll();
+        return idCardDao.readAll();
     }
 
     @Override
     public IdCardEntity findOne(Integer id) {
-        return service.findOne(id);
+        return idCardDao.findOne(id);
     }
 
     @Override
     public IdCardEntity update(IdCardEntity entity) {
-        return service.update(entity);
+        return idCardDao.update(entity);
     }
 
     @Override
     public void delete(Integer id) {
-        service.delete(id);
+        idCardDao.delete(id);
     }
 }
