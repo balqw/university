@@ -1,6 +1,7 @@
 package ua.com.foxminded.domain.entity;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
