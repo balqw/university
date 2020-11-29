@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.StudentEntity;
 import ua.com.foxminded.domain.entity.mapperEntity.StudentMapper;
 import ua.com.foxminded.domain.exceptions.NotFoundException;
-
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
@@ -19,11 +18,13 @@ import static java.lang.String.format;
 @Repository
 @RequiredArgsConstructor
 public class StudentDao implements CrudOperation <StudentEntity, Integer>{
-    private final String INSERT = "insert into student (firstName,lastName,course) values(?,?,?)";
+    private final String INSERT = "insert into student (firstName,lastName,course) values (?,?,?)";
     private final String FIND_BY_ID = "select * from student where studentId = ?";
     private final String FIND_ALL = "select * from student";
-    private final String UPDATE = "update student set first_name=?,last_name=?,course=? where studentId=? ";
+    private final String UPDATE = "update student set firstName=?,lastName=?,course=? where studentId=? ";
     private final String DELETE = "delete from student where studentId = ?";
+    private final String COUNT = "select count(studentId) from student where studentId=?";
+    private final String UNIQ = "select count (*) from student where firstName=? and lastName = ? ";
     private final JdbcTemplate jdbcTemplate;
     private final static Logger logger = LoggerFactory.getLogger(StudentDao.class);
 
@@ -64,6 +65,7 @@ public class StudentDao implements CrudOperation <StudentEntity, Integer>{
 
     @Override
     public StudentEntity update(StudentEntity entity) {
+
         jdbcTemplate.update(UPDATE,
                 entity.getFirstName(),
                 entity.getLastName(),
@@ -77,6 +79,15 @@ public class StudentDao implements CrudOperation <StudentEntity, Integer>{
     public void delete(Integer id) {
         logger.debug("delete student with id {}",id);
         jdbcTemplate.update(DELETE,id);
+    }
+
+
+    public boolean isExist(Integer id) {
+      return jdbcTemplate.queryForObject(COUNT,new Object[]{id},Integer.class)>0;
+    }
+
+    public boolean isExist(String fName, String lName ){
+        return jdbcTemplate.queryForObject(UNIQ,new Object[]{lName,fName},Integer.class)>0;
     }
 
 }

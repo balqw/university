@@ -1,4 +1,5 @@
 package ua.com.foxminded.domain.dao;
+
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,13 +10,10 @@ import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.LessonEntity;
 import ua.com.foxminded.domain.entity.mapperEntity.LessonMapper;
 import ua.com.foxminded.domain.exceptions.NotFoundException;
-
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Objects;
-
 import static java.lang.String.format;
 
 
@@ -28,7 +26,7 @@ public class LessonDao implements CrudOperation<LessonEntity, Integer>{
     private final String UPDATE = "update lesson set title=?,startLesson=?,endLesson=?,classRoom=? where lessonId = ?";
     private final String DELETE = "delete from lesson where id = ?";
     private final String FIND_BY_ID = "select * from lesson join classRoom on classroom.number = lesson.classroom where lessonId = ?";
-
+    private final String COUNT = "select count(lessonId) from lesson where lessonId=?";
     private final JdbcTemplate jdbcTemplate;
     private static final Logger logger = LoggerFactory.getLogger(LessonDao.class);
 
@@ -47,7 +45,6 @@ public class LessonDao implements CrudOperation<LessonEntity, Integer>{
         entity.setLessonId((int) (keyH.getKeys()).get("lessonId"));
         logger.debug("save lesson {} ",entity);
         return entity;
-
     }
 
     @Override
@@ -78,11 +75,15 @@ public class LessonDao implements CrudOperation<LessonEntity, Integer>{
         return entity;
     }
 
-
-
     @Override
     public void delete(Integer id) {
         jdbcTemplate.update(DELETE,id);
         logger.debug("delete lesson with id {}",id);
     }
+
+
+    public boolean isExist(Integer id) {
+        return jdbcTemplate.queryForObject(COUNT,new Object[]{id},Integer.class)>0;
+    }
+
 }

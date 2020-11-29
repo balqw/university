@@ -1,26 +1,21 @@
 package ua.com.foxminded.domain.dao;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.IdCardEntity;
 import ua.com.foxminded.domain.entity.mapperEntity.IdCardMapper;
 import ua.com.foxminded.domain.exceptions.NotFoundException;
-
-import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.List;
-
 import static java.lang.String.format;
+
 
 @Repository
 @RequiredArgsConstructor
@@ -32,7 +27,7 @@ public class IdCardDao implements CrudOperation<IdCardEntity,Integer>{
     private final String DELETE = "delete from idCard where id = ?";
     private final JdbcTemplate jdbcTemplate;
     private final static Logger logger = LoggerFactory.getLogger(IdCardDao.class);
-
+    private final String COUNT = "select count(cardId) from idCard where cardId=?";
 
     @Override
     public IdCardEntity save(IdCardEntity entity) {
@@ -78,4 +73,10 @@ public class IdCardDao implements CrudOperation<IdCardEntity,Integer>{
         logger.debug("delete idCard with id {}",id);
         jdbcTemplate.update(DELETE,id);
     }
+
+    public boolean iExist(Integer id){
+        return jdbcTemplate.queryForObject(COUNT,new Object[]{id},Integer.class)>0;
+    }
+
+
 }

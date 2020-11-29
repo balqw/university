@@ -3,8 +3,6 @@ package ua.com.foxminded.domain.dao;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -12,8 +10,6 @@ import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
 import ua.com.foxminded.domain.entity.mapperEntity.ClassRoomMapper;
 import ua.com.foxminded.domain.exceptions.NotFoundException;
-
-import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
@@ -28,6 +24,8 @@ public class ClassRoomDao implements CrudOperation<ClassRoomEntity,Integer>{
     private final String FIND_ALL = "select * from classroom";
     private final String UPDATE = "update classroom set number=?,capacity=? where classId=? ";
     private final String DELETE = "delete from classroom where classId = ?";
+    private final String COUNT = "select count(classId) from classroom where classId=?";
+    private final String UNIQ = "select count(number) from classroom where number = ?";
     private final JdbcTemplate jdbcTemplate;
     private final static Logger logger = LoggerFactory.getLogger(ClassRoomDao.class);
 
@@ -78,4 +76,10 @@ public class ClassRoomDao implements CrudOperation<ClassRoomEntity,Integer>{
         logger.debug("delete classRoom with id {}",id);
         jdbcTemplate.update(DELETE,id);
     }
+
+    public boolean isExist(Integer id){
+        return jdbcTemplate.queryForObject(COUNT,new Object[]{id},Integer.class)>0;
+    }
+
+
 }

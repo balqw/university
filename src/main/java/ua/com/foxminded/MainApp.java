@@ -27,11 +27,16 @@ public class MainApp {
         DateBaseInitializer prepareDB = context.getBean(DateBaseInitializer.class);
         prepareDB.run();
         StudentEntity studentEntity = new StudentEntity();
-        studentEntity.setFirstName("23");
-        studentEntity.setLastName("tes23t");
+        studentEntity.setFirstName("1");
+        studentEntity.setLastName("1");
 
         StudentService studentService = context.getBean(StudentService.class);
         studentService.save(studentEntity);
+
+        StudentEntity studentEntity2 = new StudentEntity();
+        studentEntity2.setFirstName("1");
+        studentEntity2.setLastName("1");
+        studentService.save(studentEntity2);
 
         LessonEntity lessonEntity = new LessonEntity();
         lessonEntity.setStartLesson(LocalDateTime.now());
@@ -50,7 +55,11 @@ public class MainApp {
         lessonService.update(lessonEntity);
         System.out.println(lessonService.findOne(1));
 
+        studentEntity.setCourse(2);
+        studentEntity2.setCourse(1);
 
+        studentService.update(studentEntity);
+        studentService.update(studentEntity2);
 
         context.close();
     }

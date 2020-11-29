@@ -1,38 +1,39 @@
 package ua.com.foxminded.service;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.com.foxminded.domain.dao.CrudOperation;
 import ua.com.foxminded.domain.dao.LessonDao;
 import ua.com.foxminded.domain.entity.LessonEntity;
-
+import ua.com.foxminded.domain.exceptions.NotFoundException;
 import java.util.List;
+
+import static java.lang.String.format;
+
 @Service
 @RequiredArgsConstructor
-public class LessonService implements CrudOperation<LessonEntity,Integer> {
+public class LessonService {
     private final LessonDao lessonDao;
 
-    @Override
+
     public LessonEntity save(LessonEntity entity) {
         return lessonDao.save(entity);
     }
 
-    @Override
     public List<LessonEntity> readAll() {
         return lessonDao.readAll();
     }
 
-    @Override
     public LessonEntity findOne(Integer id) {
         return lessonDao.findOne(id);
     }
 
-    @Override
     public LessonEntity update(LessonEntity entity) {
-        return lessonDao.update(entity);
+        if(lessonDao.isExist(entity.getLessonId()))
+            return lessonDao.update(entity);
+
+        throw new NotFoundException(format("lesson with id = '%s' not exist",entity.getLessonId()));
     }
 
-    @Override
     public void delete(Integer id) {
         lessonDao.delete(id);
     }

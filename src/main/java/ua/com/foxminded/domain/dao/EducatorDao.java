@@ -3,18 +3,13 @@ package ua.com.foxminded.domain.dao;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.EducatorEntity;
 import ua.com.foxminded.domain.entity.mapperEntity.EducatorMapper;
 import ua.com.foxminded.domain.exceptions.NotFoundException;
-
-import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
@@ -29,10 +24,10 @@ public class EducatorDao implements  CrudOperation<EducatorEntity,Integer>{
     private final String FIND_ALL = "select * from educator join idcard on educator.idcard = idcard.id";
     private final String UPDATE = "update educator set first_name=?,last_name=?,idCard=? where educatorId=? ";
     private final String DELETE = "delete from educator where id = ?";
-    private final String SET_ID_CARD = "insert into educatorCard (idCard, idEducator) values(?,?)";
+    private final String COUNT = "select count(educatorId) from educator where educatorId=?";
+    private final String UNIQ = "select count (*) from educator where firstName = ? and lastName = ?";
     private final JdbcTemplate jdbcTemplate;
     private final static Logger logger = LoggerFactory.getLogger(EducatorDao.class);
-
 
 
     @Override
@@ -83,4 +78,12 @@ public class EducatorDao implements  CrudOperation<EducatorEntity,Integer>{
         jdbcTemplate.update(DELETE,id);
     }
 
+
+    public boolean isExist(Integer id){
+        return jdbcTemplate.queryForObject(COUNT,new Object[]{id},Integer.class)>0;
+    }
+
+    public boolean isExist(String fName, String lName){
+        return jdbcTemplate.queryForObject(UNIQ,new Object[]{fName,lName},Integer.class)>0;
+    }
 }

@@ -1,41 +1,43 @@
 package ua.com.foxminded.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.ClassRoomDao;
-import ua.com.foxminded.domain.dao.CrudOperation;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
+import ua.com.foxminded.domain.exceptions.NotFoundException;
 
 import java.util.List;
 
+import static java.lang.String.format;
+
 @Service
 @RequiredArgsConstructor
-public class ClassRoomService implements CrudOperation<ClassRoomEntity,Integer> {
-
+public class ClassRoomService{
     private final ClassRoomDao classRoomDao;
 
-    @Override
+
     public ClassRoomEntity save(ClassRoomEntity entity) {
+        if(classRoomDao.isExist(entity.getNumber()))
+            throw new IllegalArgumentException("classroom already exist");
+
         return classRoomDao.save(entity);
     }
 
-    @Override
     public List<ClassRoomEntity> readAll() {
         return classRoomDao.readAll();
     }
 
-    @Override
     public ClassRoomEntity findOne(Integer id) {
         return classRoomDao.findOne(id);
     }
 
-    @Override
     public ClassRoomEntity update(ClassRoomEntity entity) {
-        return classRoomDao.update(entity);
+        if(classRoomDao.isExist(entity.getClassId()))
+            return classRoomDao.update(entity);
+
+        throw new NotFoundException(format("classRoom with id = '%s' not exist",entity.getClassId()));
     }
 
-    @Override
     public void delete(Integer id) {
         classRoomDao.delete(id);
     }
