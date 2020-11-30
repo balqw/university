@@ -1,10 +1,10 @@
 package ua.com.foxminded.domain.entity.mapperEntity;
-import org.springframework.jdbc.core.RowMapper;;
+
+import org.springframework.jdbc.core.RowMapper;
 import ua.com.foxminded.domain.entity.EducatorEntity;
 import ua.com.foxminded.domain.entity.IdCardEntity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 
 public class EducatorMapper implements RowMapper<EducatorEntity> {
 

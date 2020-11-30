@@ -1,38 +1,38 @@
 package ua.com.foxminded.service;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.com.foxminded.domain.dao.CrudOperation;
 import ua.com.foxminded.domain.dao.IdCardDao;
 import ua.com.foxminded.domain.entity.IdCardEntity;
+import ua.com.foxminded.domain.exceptions.NotFoundException;
 import java.util.List;
+import static java.lang.String.format;
+
 @RequiredArgsConstructor
 @Service
-public class IdCardService implements CrudOperation<IdCardEntity,Integer> {
-
+public class IdCardService{
     private final IdCardDao idCardDao;
 
-    @Override
+
     public IdCardEntity save(IdCardEntity entity) {
         return idCardDao.save(entity);
     }
 
-    @Override
     public List<IdCardEntity> readAll() {
         return idCardDao.readAll();
     }
 
-    @Override
     public IdCardEntity findOne(Integer id) {
         return idCardDao.findOne(id);
     }
 
-    @Override
     public IdCardEntity update(IdCardEntity entity) {
-        return idCardDao.update(entity);
+        if(idCardDao.iExist(entity.getCardId()))
+            return idCardDao.update(entity);
+
+        throw new NotFoundException(format("idCard with id = '%s' not exist",entity.getCardId()));
     }
 
-    @Override
     public void delete(Integer id) {
         idCardDao.delete(id);
     }

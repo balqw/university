@@ -1,4 +1,5 @@
 package ua.com.foxminded.domain.entity.mapperEntity;
+
 import org.springframework.jdbc.core.RowMapper;
 import ua.com.foxminded.domain.entity.StudentEntity;
 import java.sql.ResultSet;
