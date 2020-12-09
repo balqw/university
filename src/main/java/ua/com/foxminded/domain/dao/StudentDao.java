@@ -52,6 +52,7 @@ public class StudentDao implements CrudOperation <StudentEntity, Integer>{
 
     @Override
     public StudentEntity findOne(Integer id) {
+        logger.debug("find by id");
         try{StudentEntity studentEntity;
             studentEntity = jdbcTemplate.queryForObject(FIND_BY_ID,new Object[]{id},
                 new StudentMapper());

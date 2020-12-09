@@ -16,9 +16,7 @@ public class StudentService  {
     public StudentEntity save(StudentEntity entity) {
         if(studentDao.isExist(entity.getFirstName(),entity.getLastName()))
             throw  new IllegalArgumentException("student already exist");
-
         return studentDao.save(entity);
-
     }
 
 

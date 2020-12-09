@@ -21,47 +21,31 @@ public class MainApp {
         //InitDataBase initDataBase = new InitDataBase(dbConnection);
         //initDataBase.create();
 
-
+/*
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-        DateBaseInitializer prepareDB = context.getBean(DateBaseInitializer.class);
-        prepareDB.run();
+
+
         StudentEntity studentEntity = new StudentEntity();
-        studentEntity.setFirstName("1");
-        studentEntity.setLastName("1");
+        studentEntity.setFirstName("Mike");
+        studentEntity.setLastName("Gilty");
 
         StudentService studentService = context.getBean(StudentService.class);
         studentService.save(studentEntity);
 
         StudentEntity studentEntity2 = new StudentEntity();
-        studentEntity2.setFirstName("1");
-        studentEntity2.setLastName("1");
+        studentEntity2.setFirstName("Sae");
+        studentEntity2.setLastName("Mukido");
         studentService.save(studentEntity2);
 
-        LessonEntity lessonEntity = new LessonEntity();
-        lessonEntity.setStartLesson(LocalDateTime.now());
-        lessonEntity.setEndLesson(LocalDateTime.now());
 
-        LessonService lessonService = context.getBean(LessonService.class);
 
-        List<LessonEntity> lessons
-         = lessonService.readAll();
-        System.out.println(lessons);
-        ClassRoomService roomService = context.getBean(ClassRoomService.class);
-        ClassRoomEntity classRoomEntity = new ClassRoomEntity();
-        classRoomEntity = roomService.save(classRoomEntity);
-        lessonEntity.setClassRoom(classRoomEntity);
-        lessonEntity = lessonService.save(lessonEntity);
-        lessonService.update(lessonEntity);
-        System.out.println(lessonService.findOne(1));
 
-        studentEntity.setCourse(2);
-        studentEntity2.setCourse(1);
+        context.close()
+        */
 
-        studentService.update(studentEntity);
-        studentService.update(studentEntity2);
 
-        context.close();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+
     }
 
 }

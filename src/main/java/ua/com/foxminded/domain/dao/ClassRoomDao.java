@@ -25,7 +25,6 @@ public class ClassRoomDao implements CrudOperation<ClassRoomEntity,Integer>{
     private final String UPDATE = "update classroom set number=?,capacity=? where classId=? ";
     private final String DELETE = "delete from classroom where classId = ?";
     private final String COUNT = "select count(classId) from classroom where classId=?";
-    private final String UNIQ = "select count(number) from classroom where number = ?";
     private final JdbcTemplate jdbcTemplate;
     private final static Logger logger = LoggerFactory.getLogger(ClassRoomDao.class);
 
