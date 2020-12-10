@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+</head>
+<body>
+Welcome to university!
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-link active" id="nav-home-tab" data-toggle="tab" th:href="@{/students}"role="tab" aria-controls="nav-home" aria-selected="true">Students</a>
+        <a class="nav-link" id="nav-profile-tab" data-toggle="tab" th:href="@{/students}" role="tab" aria-controls="nav-profile" aria-selected="false">Teachers</a>
+        <a class="nav-link" id="nav-contact-tab" data-toggle="tab" th:href="@{/students}" role="tab" aria-controls="nav-contact" aria-selected="false">Lesson</a>
+    </div>
+</nav>
+
+</body>
+</html>

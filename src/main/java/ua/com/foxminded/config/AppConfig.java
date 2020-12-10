@@ -8,21 +8,26 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-
-
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan("ua.com.foxminded.*")
 @PropertySource("classpath:application.properties")
-public class AppConfig {
+
+@ComponentScan("ua.com.foxminded.*")
+public class AppConfig  {
 
     @Autowired
     Environment environment;
+
+
+
     private final String URL = "url";
     private final String USER = "user";
     private final String PASS = "pass";
     private final String DRIVER = "driver";
+
+
+
 
     @Bean
     DataSource dataSource(){
@@ -38,4 +43,8 @@ public class AppConfig {
     JdbcTemplate jdbcTemplate(){
         return  new JdbcTemplate(dataSource());
     }
+
+
+
+
 }
