@@ -1,11 +1,14 @@
 package ua.com.foxminded.domain.entity;
-import lombok.*;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class StudentEntity extends Person{
-    private int studentId;
-    private int course;
+public class StudentEntity extends Person {
+    private Integer studentId;
+    private Integer course;
 }

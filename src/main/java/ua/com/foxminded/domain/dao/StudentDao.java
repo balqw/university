@@ -1,12 +1,14 @@
 package ua.com.foxminded.domain.dao;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.client.HttpServerErrorException;
 import ua.com.foxminded.domain.entity.StudentEntity;
 import ua.com.foxminded.domain.entity.mapperEntity.StudentMapper;
 import ua.com.foxminded.domain.exceptions.NotFoundException;
@@ -80,6 +82,11 @@ public class StudentDao implements CrudOperation <StudentEntity, Integer>{
     public void delete(Integer id) {
         logger.debug("delete student with id {}",id);
         jdbcTemplate.update(DELETE,id);
+    }
+
+    @Override
+    public boolean exist(StudentEntity entity) {
+        throw new NotImplementedException();//ToDo:
     }
 
 
