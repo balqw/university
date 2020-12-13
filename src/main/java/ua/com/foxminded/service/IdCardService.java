@@ -27,7 +27,7 @@ public class IdCardService{
     }
 
     public IdCardEntity update(IdCardEntity entity) {
-        if(idCardDao.iExist(entity.getCardId()))
+        if(idCardDao.exist(entity))
             return idCardDao.update(entity);
 
         throw new NotFoundException(format("idCard with id = '%s' not exist",entity.getCardId()));

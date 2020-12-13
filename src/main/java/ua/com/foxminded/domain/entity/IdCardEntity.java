@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 
 @Data
 public class IdCardEntity {
-
-    private int cardId;
+    private Integer cardId;
     private LocalDateTime dataExpire;
 }
