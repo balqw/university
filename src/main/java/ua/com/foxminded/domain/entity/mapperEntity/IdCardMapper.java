@@ -10,6 +10,7 @@ public class IdCardMapper implements RowMapper<IdCardEntity> {
     public IdCardEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
         IdCardEntity idCardEntity = new IdCardEntity();
         idCardEntity.setCardId(rs.getInt("cardId"));
+        if(rs.getTimestamp("dateExpire")!=null)
         idCardEntity.setDataExpire(rs.getTimestamp("dateExpire").toLocalDateTime());
         return idCardEntity;
     }

@@ -25,7 +25,7 @@ public class IdCardDao implements CrudOperation<IdCardEntity, Integer> {
     private final String FIND_BY_ID = "select * from idCard where cardId = ?";
     private final String FIND_ALL = "select * from idCard";
     private final String UPDATE = "update idCard set dateExpire=? where cardId=? ";
-    private final String DELETE = "delete from idCard where id = ?";
+    private final String DELETE = "delete from idCard where cardId = ?";
     private final JdbcTemplate jdbcTemplate;
     private final static Logger logger = LoggerFactory.getLogger(IdCardDao.class);
     private final String COUNT = "select count(cardId) from idCard where cardId=?";

@@ -22,10 +22,10 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class EducatorDao implements CrudOperation<EducatorEntity, Integer> {
     private final String INSERT = "insert into educator (firstName,lastName,idCard) values(?,?,?)";
-    private final String FIND_BY_ID = "select * from educator join idcard on educator.idcard = idcard.id where educatorId = ?";
-    private final String FIND_ALL = "select * from educator join idcard on educator.idcard = idcard.id";
-    private final String UPDATE = "update educator set first_name=?,last_name=?,idCard=? where educatorId=? ";
-    private final String DELETE = "delete from educator where id = ?";
+    private final String FIND_BY_ID = "select * from educator  join idcard on educator.idcard = idcard.cardid where educatorId = ?";
+    private final String FIND_ALL   = "select * from educator full join idcard on educator.idcard = idcard.cardid";
+    private final String UPDATE = "update educator set firstName=?,lastName=?,idCard=? where educatorId=? ";
+    private final String DELETE = "delete from educator where educatorId = ?";
     private final String COUNT = "select count(educatorId) from educator where educatorId=?";
     private final String UNIQ = "select count (*) from educator where firstName = ? and lastName = ?";
     private final JdbcTemplate jdbcTemplate;
@@ -39,7 +39,6 @@ public class EducatorDao implements CrudOperation<EducatorEntity, Integer> {
             PreparedStatement ps = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, entity.getFirstName());
             ps.setString(2, entity.getLastName());
-            ps.setInt(3, entity.getIdCard().getCardId());
             if (entity.getIdCard() != null && entity.getIdCard().getCardId() != null) {
                 ps.setInt(3, entity.getIdCard().getCardId());
             } else ps.setNull(3, Types.INTEGER);
@@ -75,7 +74,8 @@ public class EducatorDao implements CrudOperation<EducatorEntity, Integer> {
         jdbcTemplate.update(UPDATE,
                 entity.getFirstName(),
                 entity.getLastName(),
-                entity.getIdCard().getCardId());
+                entity.getIdCard().getCardId(),
+                entity.getEducatorId());
         return entity;
     }
 

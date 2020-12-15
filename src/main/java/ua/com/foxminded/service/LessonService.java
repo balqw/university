@@ -28,7 +28,7 @@ public class LessonService {
     }
 
     public LessonEntity update(LessonEntity entity) {
-        if(lessonDao.isExist(entity.getLessonId()))
+        if(lessonDao.exist(entity))
             return lessonDao.update(entity);
 
         throw new NotFoundException(format("lesson with id = '%s' not exist",entity.getLessonId()));

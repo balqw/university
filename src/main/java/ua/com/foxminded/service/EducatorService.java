@@ -32,6 +32,7 @@ public class EducatorService {
     }
 
     public List<EducatorEntity> readAll() {
+
         return educatorDao.readAll();
     }
 

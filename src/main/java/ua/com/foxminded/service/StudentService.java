@@ -29,7 +29,7 @@ public class StudentService {
     }
 
     public StudentEntity update(StudentEntity entity) {
-        if (studentDao.isExist(entity.getStudentId()))
+        if (studentDao.exist(entity))
             return studentDao.update(entity);
         throw new IllegalArgumentException(format("student with id = '%s' not exist", entity.getStudentId()));
     }

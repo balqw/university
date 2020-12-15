@@ -5,6 +5,7 @@ import ua.com.foxminded.domain.entity.EducatorEntity;
 import ua.com.foxminded.domain.entity.IdCardEntity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class EducatorMapper implements RowMapper<EducatorEntity> {
 
@@ -17,6 +18,7 @@ public class EducatorMapper implements RowMapper<EducatorEntity> {
         educatorEntity.setFirstName(rs.getString("firstName"));
         educatorEntity.setLastName(rs.getString("lastName"));
         idCardEntity.setCardId(rs.getInt("cardId"));
+        if(rs.getTimestamp("dateExpire")!=null)
         idCardEntity.setDataExpire(rs.getTimestamp("dateExpire").toLocalDateTime());
         educatorEntity.setIdCard(idCardEntity);
         return educatorEntity;
