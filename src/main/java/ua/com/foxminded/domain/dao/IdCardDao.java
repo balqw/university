@@ -14,6 +14,7 @@ import ua.com.foxminded.domain.exceptions.NotFoundException;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import static java.lang.String.format;
@@ -23,7 +24,7 @@ import static java.lang.String.format;
 public class IdCardDao implements CrudOperation<IdCardEntity, Integer> {
     private final String INSERT = "insert into idCard (dateExpire) values (?)";
     private final String FIND_BY_ID = "select * from idCard where cardId = ?";
-    private final String FIND_ALL = "select * from idCard";
+    private final String FIND_ALL = "select * from idCard order by cardId";
     private final String UPDATE = "update idCard set dateExpire=? where cardId=? ";
     private final String DELETE = "delete from idCard where cardId = ?";
     private final JdbcTemplate jdbcTemplate;
@@ -35,7 +36,7 @@ public class IdCardDao implements CrudOperation<IdCardEntity, Integer> {
         KeyHolder keyH = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
             PreparedStatement preparedStatement = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setTimestamp(1, Timestamp.valueOf(entity.getDataExpire()));
+            preparedStatement.setTimestamp(1, Timestamp.valueOf(entity.getDataExpire().atStartOfDay()));
             return preparedStatement;
         }, keyH);
         entity.setCardId((Integer) keyH.getKeys().get("cardId"));
@@ -65,7 +66,7 @@ public class IdCardDao implements CrudOperation<IdCardEntity, Integer> {
     public IdCardEntity update(IdCardEntity entity) {
         logger.debug("update idCard {}", entity);
         jdbcTemplate.update(UPDATE,
-                Timestamp.valueOf(entity.getDataExpire()),
+                Timestamp.valueOf(entity.getDataExpire().atStartOfDay()),
                 entity.getCardId());
         return entity;
     }

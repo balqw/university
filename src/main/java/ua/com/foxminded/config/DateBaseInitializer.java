@@ -14,8 +14,7 @@ import java.sql.SQLException;
 
 @Component
 public class DateBaseInitializer {
-
-    DataSource dataSource;
+    private final DataSource dataSource;
 
     @Autowired
     public DateBaseInitializer(DataSource dataSource) {

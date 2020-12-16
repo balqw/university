@@ -12,9 +12,13 @@ public class LessonMapper implements RowMapper<LessonEntity> {
     public LessonEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
         ClassRoomEntity classRoomEntity = new ClassRoomEntity();
         LessonEntity lessonEntity = new LessonEntity();
+        lessonEntity.setLessonId(rs.getInt("lessonId"));
         lessonEntity.setTitle(rs.getString("title"));
+        if(rs.getTimestamp("startLesson")!=null)
         lessonEntity.setStartLesson(rs.getTimestamp("startLesson").toLocalDateTime());
+        if(rs.getTimestamp("endLesson")!=null)
         lessonEntity.setEndLesson(rs.getTimestamp("endLesson").toLocalDateTime());
+        classRoomEntity.setClassId(rs.getInt("classId"));
         classRoomEntity.setNumber(rs.getInt("number"));
         classRoomEntity.setCapacity(rs.getInt("capacity"));
         lessonEntity.setClassRoom(classRoomEntity);

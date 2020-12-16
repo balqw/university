@@ -1,8 +1,10 @@
 package ua.com.foxminded.config;
 
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
@@ -25,6 +27,8 @@ public class SpringMvcDispatcherServletInit extends AbstractAnnotationConfigDisp
 
     public void onStartup(ServletContext aServletContext) throws ServletException {
         super.onStartup(aServletContext);
+        FilterRegistration.Dynamic encodingFilter = aServletContext.addFilter("encodingFilter", new CharacterEncodingFilter("UTF-8", true));
+        encodingFilter.addMappingForUrlPatterns(null, false, "/*");
         registerHiddenFieldFilter(aServletContext);
     }
 
@@ -32,7 +36,5 @@ public class SpringMvcDispatcherServletInit extends AbstractAnnotationConfigDisp
         aContext.addFilter("hiddenHttpMethodFilter",
                 new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null ,true, "/*");
     }
-
-
 
 }

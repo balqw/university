@@ -24,14 +24,13 @@ import static java.lang.String.format;
 public class LessonDao implements CrudOperation<LessonEntity, Integer> {
 
     private final String INSERT = "insert into lesson (title,startLesson,endLesson) values(?,?,?)";
-    private final String FIND_ALL = "select * from lesson join classRoom on classroom.number = lesson.classroom";
+    private final String FIND_ALL = "select * from lesson full join classRoom on classroom.number = lesson.classroom";
     private final String UPDATE = "update lesson set title=?,startLesson=?,endLesson=?,classRoom=? where lessonId = ?";
-    private final String DELETE = "delete from lesson where id = ?";
-    private final String FIND_BY_ID = "select * from lesson join classRoom on classroom.number = lesson.classroom where lessonId = ?";
+    private final String DELETE = "delete from lesson where lessonId = ?";
+    private final String FIND_BY_ID = "select * from lesson full join classRoom on classroom.number = lesson.classroom where lessonId = ?";
     private final String COUNT = "select count(lessonId) from lesson where lessonId=?";
     private final JdbcTemplate jdbcTemplate;
     private static final Logger logger = LoggerFactory.getLogger(LessonDao.class);
-
 
     @Override
     public LessonEntity save(LessonEntity entity) {

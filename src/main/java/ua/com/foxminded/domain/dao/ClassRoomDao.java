@@ -67,7 +67,8 @@ public class ClassRoomDao implements CrudOperation<ClassRoomEntity, Integer> {
         logger.debug("update classRoom {}", entity);
         jdbcTemplate.update(UPDATE,
                 entity.getNumber(),
-                entity.getCapacity());
+                entity.getCapacity(),
+                entity.getClassId());
         return entity;
     }
 

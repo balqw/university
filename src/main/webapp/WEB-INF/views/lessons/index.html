@@ -12,29 +12,33 @@
 <div class="container my-2">
     <div class="card">
         <div class="card-body">
-            <div th:switch="${cards}" class="container my-5">
+            <div th:switch="${lessons}" class="container my-5">
                 <p class="my-5">
-                    <a th:href="@{cards/new}" class="btn btn-primary"><i
-                            class="fas fa-user-plus ml-2"> Add Card</i></a>
+                    <a th:href="@{lessons/new}" class="btn btn-primary"><i
+                            class="fas fa-user-plus ml-2"> Add lesson</i></a>
                 </p>
                 <div class="col-md-10">
-                    <h2 th:case="null">No Cards yet!</h2>
+                    <h2 th:case="null">No lessons yet!</h2>
                     <div th:case="*">
                         <table class="table table-striped table-responsive-md">
                             <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Date Expire</th>
+                                <th>Title</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Class Room</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="card : ${cards}">
-                                <td th:text="${card.getCardId()}"></td>
-                                <td th:text="${#temporals.format(card.getDataExpire(),'dd/MM/yyyy')}"></td>
-                                <td><a th:href="@{cards/{id}/edit(id=${card.getCardId()})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-                                <td><a th:href="@{cards/{id}/delete(id=${card.getCardId()})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
+                            <tr th:each="lesson : ${lessons}">
+                                <td th:text="${lesson.getTitle()}"></td>
+                                <td th:text="${#temporals.format(lesson.getStartLesson(),'HH:mm dd/MM/yyyy')}"></td>
+                                <td th:text="${#temporals.format(lesson.getEndLesson(),'HH:mm dd/MM/yyyy')}"></td>
+                                <td th:text="${lesson.getClassRoom().getNumber()}"></td>
+                                <td><a th:href="@{lessons/{id}/edit(id=${lesson.getLessonId()})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
+                                <td><a th:href="@{lessons/{id}/delete(id=${lesson.getLessonId()})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
                             </tr>
                             </tbody>
                         </table>

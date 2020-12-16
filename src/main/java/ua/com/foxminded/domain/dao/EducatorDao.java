@@ -22,7 +22,7 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class EducatorDao implements CrudOperation<EducatorEntity, Integer> {
     private final String INSERT = "insert into educator (firstName,lastName,idCard) values(?,?,?)";
-    private final String FIND_BY_ID = "select * from educator  join idcard on educator.idcard = idcard.cardid where educatorId = ?";
+    private final String FIND_BY_ID = "select * from educator full join idcard on educator.idcard = idcard.cardid where educatorId = ?";
     private final String FIND_ALL   = "select * from educator full join idcard on educator.idcard = idcard.cardid";
     private final String UPDATE = "update educator set firstName=?,lastName=?,idCard=? where educatorId=? ";
     private final String DELETE = "delete from educator where educatorId = ?";

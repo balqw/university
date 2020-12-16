@@ -1,11 +1,17 @@
 package ua.com.foxminded.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.entity.IdCardEntity;
 import ua.com.foxminded.service.IdCardService;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/cards")
@@ -43,7 +49,7 @@ public class IdCardsController {
     }
 
     @PatchMapping("{id}")
-    public String editCard(@ModelAttribute("card") IdCardEntity idCardEntity,@PathVariable("id") int id){
+    public String editCard(@ModelAttribute("card") IdCardEntity idCardEntity, @PathVariable("id") int id){
         idCardEntity.setCardId(id);
         idCardService.update(idCardEntity);
         return "redirect:/cards";
