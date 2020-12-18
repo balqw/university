@@ -6,14 +6,23 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.jca.support.LocalConnectionFactoryBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jndi.JndiTemplate;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
+import java.util.Objects;
 
 @Configuration
 @PropertySource("classpath:application.properties")
-
 @ComponentScan("ua.com.foxminded.*")
+@EnableTransactionManagement
 public class AppConfig  {
 
     @Autowired
@@ -28,8 +37,8 @@ public class AppConfig  {
 
 
 
-
-    @Bean
+/*
+   @Bean
     DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getProperty(DRIVER));
@@ -38,9 +47,16 @@ public class AppConfig  {
         dataSource.setPassword(environment.getProperty(PASS));
         return  dataSource;
     }
+*/
 
     @Bean
-    JdbcTemplate jdbcTemplate(){
+    public DataSource dataSource() throws NamingException{
+        return (DataSource) new JndiTemplate().lookup("jdbc.url");
+    }
+
+
+    @Bean
+    JdbcTemplate jdbcTemplate() throws NamingException{
         return  new JdbcTemplate(dataSource());
     }
 

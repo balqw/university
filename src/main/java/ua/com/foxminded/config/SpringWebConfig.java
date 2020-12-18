@@ -11,6 +11,7 @@ import org.springframework.format.datetime.DateFormatterRegistrar;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.spring5.ISpringTemplateEngine;
@@ -25,8 +26,9 @@ import java.time.format.DateTimeFormatter;
 @Configuration
 @EnableWebMvc
 @ComponentScan("ua.com.foxminded.*")
-public class SpringWebConfig implements WebMvcConfigurer {
+@EnableTransactionManagement
 
+public class SpringWebConfig implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;
 
     @Autowired
@@ -66,4 +68,9 @@ public class SpringWebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
             registry.addResourceHandler("/css/**").addResourceLocations("classpath:/bootstrap/css/");
     }
+
+
+
+
+
 }
