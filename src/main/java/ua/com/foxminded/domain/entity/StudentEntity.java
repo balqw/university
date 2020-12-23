@@ -4,11 +4,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import javax.persistence.*;
 
-@Data
 @EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@Data
+@Entity
+@Table(name = "student")
 public class StudentEntity extends Person {
+    @Id
+    @GeneratedValue
     private Integer studentId;
     private Integer course;
 }

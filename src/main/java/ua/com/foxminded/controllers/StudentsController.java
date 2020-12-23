@@ -50,7 +50,7 @@ public class StudentsController {
         return "redirect:/students";
     }
 
-    @GetMapping("{id}")
+    @GetMapping("{id}/delete")
     public String deleteStudent(@PathVariable("id") int id){
         studentService.delete(id);
         return "redirect:/students";

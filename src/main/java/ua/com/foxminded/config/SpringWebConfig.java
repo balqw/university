@@ -26,7 +26,6 @@ import java.time.format.DateTimeFormatter;
 @Configuration
 @EnableWebMvc
 @ComponentScan("ua.com.foxminded.*")
-@EnableTransactionManagement
 
 public class SpringWebConfig implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;
@@ -68,8 +67,6 @@ public class SpringWebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
             registry.addResourceHandler("/css/**").addResourceLocations("classpath:/bootstrap/css/");
     }
-
-
 
 
 
