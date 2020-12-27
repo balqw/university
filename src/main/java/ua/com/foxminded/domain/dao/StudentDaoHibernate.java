@@ -1,56 +1,67 @@
 package ua.com.foxminded.domain.dao;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.StudentEntity;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import java.util.List;
 
 @Repository
 public class StudentDaoHibernate implements CrudOperation<StudentEntity, Integer>{
 
-    private EntityManager entityManager;
+    private final EntityManagerFactory managerFactory;
 
-    
     @Autowired
-    public StudentDaoHibernate(@Qualifier("getEntityManager") EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public StudentDaoHibernate(EntityManagerFactory managerFactory) {
+        this.managerFactory = managerFactory;
     }
-
 
 
     @Override
     public StudentEntity save(StudentEntity entity) {
-         EntityTransaction et = entityManager.getTransaction();
-         et.begin();
-         entityManager.persist(entity);
-         et.commit();
-         return entity;
-
+        EntityManager em = managerFactory.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        em.persist(entity);
+        et.commit();
+        em.close();
+        return entity;
     }
 
     @Override
     public List<StudentEntity> readAll() {
-        //entityManager.getTransaction().begin();
-        return entityManager.createQuery("select a from StudentEntity a",StudentEntity.class).getResultList();
-
+       EntityManager em = managerFactory.createEntityManager();
+       return em.createQuery("SELECT student from StudentEntity student").getResultList();
     }
 
     @Override
     public StudentEntity findOne(Integer id) {
-      return null;
+        EntityManager em = managerFactory.createEntityManager();
+
+        return em.find(StudentEntity.class,id);
     }
 
     @Override
     public StudentEntity update(StudentEntity entity) {
-        return null;
+        EntityManager em = managerFactory.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        em.merge(entity);
+        et.commit();
+        em.close();
+        return entity;
     }
 
     @Override
-    public void delete(Integer integer) {
-
+    public void delete(Integer id) {
+        EntityManager em = managerFactory.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        StudentEntity student = em.find(StudentEntity.class, id);
+        em.remove(student);
+        et.commit();
+        em.close();
     }
 
     @Override

@@ -17,8 +17,6 @@ public class StudentService {
     private final StudentDaoHibernate studentDaoHibernate;
 
     public StudentEntity save(StudentEntity entity) {
-        if (studentDao.isExist(entity.getFirstName(), entity.getLastName()))
-            throw new IllegalArgumentException("student already exist");
         return studentDaoHibernate.save(entity);
     }
 
@@ -28,17 +26,15 @@ public class StudentService {
    }
 
     public StudentEntity findOne(Integer id) {
-        return studentDao.findOne(id);
+        return studentDaoHibernate.findOne(id);
     }
 
     public StudentEntity update(StudentEntity entity) {
-        if (studentDao.exist(entity))
-            return studentDao.update(entity);
-        throw new IllegalArgumentException(format("student with id = '%s' not exist", entity.getStudentId()));
+            return studentDaoHibernate.update(entity);
     }
 
     public void delete(Integer id) {
-        studentDao.delete(id);
+        studentDaoHibernate.delete(id);
     }
 
 }
