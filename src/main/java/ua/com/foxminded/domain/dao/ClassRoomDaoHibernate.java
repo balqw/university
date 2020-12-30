@@ -1,25 +1,26 @@
 package ua.com.foxminded.domain.dao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ua.com.foxminded.domain.entity.StudentEntity;
+import ua.com.foxminded.domain.entity.ClassRoomEntity;
+import ua.com.foxminded.domain.entity.EducatorEntity;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import java.util.List;
 
 @Repository
-public class StudentDaoHibernate implements CrudOperation<StudentEntity, Integer>{
-
+public class ClassRoomDaoHibernate implements CrudOperation<ClassRoomEntity, Integer>{
     private final EntityManagerFactory managerFactory;
 
     @Autowired
-    public StudentDaoHibernate(EntityManagerFactory managerFactory) {
+    public ClassRoomDaoHibernate(EntityManagerFactory managerFactory) {
         this.managerFactory = managerFactory;
     }
 
-
     @Override
-    public StudentEntity save(StudentEntity entity) {
+    public ClassRoomEntity save(ClassRoomEntity entity) {
         EntityManager em = managerFactory.createEntityManager();
         EntityTransaction et = em.getTransaction();
         et.begin();
@@ -30,19 +31,17 @@ public class StudentDaoHibernate implements CrudOperation<StudentEntity, Integer
     }
 
     @Override
-    public List<StudentEntity> readAll() {
-       EntityManager em = managerFactory.createEntityManager();
-       return em.createQuery("SELECT student from StudentEntity student").getResultList();
+    public List<ClassRoomEntity> readAll() {
+        return managerFactory.createEntityManager().createQuery("select room from ClassRoomEntity room").getResultList();
     }
 
     @Override
-    public StudentEntity findOne(Integer id) {
-        EntityManager em = managerFactory.createEntityManager();
-        return em.find(StudentEntity.class,id);
+    public ClassRoomEntity findOne(Integer id) {
+        return managerFactory.createEntityManager().find(ClassRoomEntity.class, id);
     }
 
     @Override
-    public StudentEntity update(StudentEntity entity) {
+    public ClassRoomEntity update(ClassRoomEntity entity) {
         EntityManager em = managerFactory.createEntityManager();
         EntityTransaction et = em.getTransaction();
         et.begin();
@@ -57,14 +56,13 @@ public class StudentDaoHibernate implements CrudOperation<StudentEntity, Integer
         EntityManager em = managerFactory.createEntityManager();
         EntityTransaction et = em.getTransaction();
         et.begin();
-        StudentEntity student = em.find(StudentEntity.class, id);
-        em.remove(student);
+        em.remove(em.find(ClassRoomEntity.class,id));
         et.commit();
         em.close();
     }
 
     @Override
-    public boolean exist(StudentEntity entity) {
+    public boolean exist(ClassRoomEntity entity) {
         return false;
     }
 }

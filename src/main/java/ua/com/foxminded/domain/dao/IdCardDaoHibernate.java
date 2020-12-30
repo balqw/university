@@ -1,25 +1,27 @@
 package ua.com.foxminded.domain.dao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ua.com.foxminded.domain.entity.StudentEntity;
+import ua.com.foxminded.domain.entity.IdCardEntity;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import java.util.List;
 
 @Repository
-public class StudentDaoHibernate implements CrudOperation<StudentEntity, Integer>{
+public class IdCardDaoHibernate implements CrudOperation<IdCardEntity, Integer>{
 
     private final EntityManagerFactory managerFactory;
 
     @Autowired
-    public StudentDaoHibernate(EntityManagerFactory managerFactory) {
+    public IdCardDaoHibernate(EntityManagerFactory managerFactory) {
         this.managerFactory = managerFactory;
     }
 
 
     @Override
-    public StudentEntity save(StudentEntity entity) {
+    public IdCardEntity save(IdCardEntity entity) {
         EntityManager em = managerFactory.createEntityManager();
         EntityTransaction et = em.getTransaction();
         et.begin();
@@ -30,19 +32,18 @@ public class StudentDaoHibernate implements CrudOperation<StudentEntity, Integer
     }
 
     @Override
-    public List<StudentEntity> readAll() {
-       EntityManager em = managerFactory.createEntityManager();
-       return em.createQuery("SELECT student from StudentEntity student").getResultList();
-    }
-
-    @Override
-    public StudentEntity findOne(Integer id) {
+    public List<IdCardEntity> readAll() {
         EntityManager em = managerFactory.createEntityManager();
-        return em.find(StudentEntity.class,id);
+        return em.createQuery("select idCard from IdCardEntity idCard").getResultList();
     }
 
     @Override
-    public StudentEntity update(StudentEntity entity) {
+    public IdCardEntity findOne(Integer id) {
+        return managerFactory.createEntityManager().find(IdCardEntity.class, id);
+    }
+
+    @Override
+    public IdCardEntity update(IdCardEntity entity) {
         EntityManager em = managerFactory.createEntityManager();
         EntityTransaction et = em.getTransaction();
         et.begin();
@@ -57,14 +58,13 @@ public class StudentDaoHibernate implements CrudOperation<StudentEntity, Integer
         EntityManager em = managerFactory.createEntityManager();
         EntityTransaction et = em.getTransaction();
         et.begin();
-        StudentEntity student = em.find(StudentEntity.class, id);
-        em.remove(student);
+        em.remove(em.find(IdCardEntity.class,id));
         et.commit();
         em.close();
     }
 
     @Override
-    public boolean exist(StudentEntity entity) {
+    public boolean exist(IdCardEntity entity) {
         return false;
     }
 }

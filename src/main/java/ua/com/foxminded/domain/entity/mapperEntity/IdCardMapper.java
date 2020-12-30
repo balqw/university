@@ -11,7 +11,7 @@ public class IdCardMapper implements RowMapper<IdCardEntity> {
         IdCardEntity idCardEntity = new IdCardEntity();
         idCardEntity.setCardId(rs.getInt("cardId"));
         if(rs.getTimestamp("dateExpire")!=null)
-        idCardEntity.setDataExpire(rs.getTimestamp("dateExpire").toLocalDateTime().toLocalDate());
+        idCardEntity.setDateExpire(rs.getTimestamp("dateExpire").toLocalDateTime().toLocalDate());
         return idCardEntity;
     }
 }

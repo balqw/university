@@ -32,7 +32,7 @@
                             <tbody>
                             <tr th:each="card : ${cards}">
                                 <td th:text="${card.getCardId()}"></td>
-                                <td th:text="${#temporals.format(card.getDataExpire(),'dd/MM/yyyy')}"></td>
+                                <td th:text="${#temporals.format(card.getDateExpire(),'dd/MM/yyyy')}"></td>
                                 <td><a th:href="@{cards/{id}/edit(id=${card.getCardId()})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
                                 <td><a th:href="@{cards/{id}/delete(id=${card.getCardId()})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
                             </tr>

@@ -30,11 +30,18 @@ public class SpringMvcDispatcherServletInit extends AbstractAnnotationConfigDisp
         FilterRegistration.Dynamic encodingFilter = aServletContext.addFilter("encodingFilter", new CharacterEncodingFilter("UTF-8", true));
         encodingFilter.addMappingForUrlPatterns(null, false, "/*");
         registerHiddenFieldFilter(aServletContext);
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
     }
+
+
 
     private void registerHiddenFieldFilter(ServletContext aContext) {
         aContext.addFilter("hiddenHttpMethodFilter",
                 new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null ,true, "/*");
     }
+
+
 
 }

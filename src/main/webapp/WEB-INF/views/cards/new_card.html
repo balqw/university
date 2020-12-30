@@ -16,7 +16,7 @@
                 <form th:action="@{/cards}" th:object="${card}" th:method="post" >
                     <div class="row">
                         <div class="form-group col-md-8">
-                            <label for="data-expire" class="col-form-label">Date Expire</label> <input type="text" th:field="*{dataExpire}" class="form-control" id="data-expire" placeholder="dd/mm/yyyy">
+                            <label for="data-expire" class="col-form-label">Date Expire</label> <input type="text" th:field="*{dateExpire}" class="form-control" id="data-expire" placeholder="dd/mm/yyyy">
                         </div>
                         <div class="col-md-6">
                             <input type="submit" class="btn btn-primary" value="Add Card">

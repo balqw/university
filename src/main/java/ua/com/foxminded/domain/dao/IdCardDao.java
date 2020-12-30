@@ -36,7 +36,7 @@ public class IdCardDao implements CrudOperation<IdCardEntity, Integer> {
         KeyHolder keyH = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
             PreparedStatement preparedStatement = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setTimestamp(1, Timestamp.valueOf(entity.getDataExpire().atStartOfDay()));
+            preparedStatement.setTimestamp(1, Timestamp.valueOf(entity.getDateExpire().atStartOfDay()));
             return preparedStatement;
         }, keyH);
         entity.setCardId((Integer) keyH.getKeys().get("cardId"));
@@ -66,7 +66,7 @@ public class IdCardDao implements CrudOperation<IdCardEntity, Integer> {
     public IdCardEntity update(IdCardEntity entity) {
         logger.debug("update idCard {}", entity);
         jdbcTemplate.update(UPDATE,
-                Timestamp.valueOf(entity.getDataExpire().atStartOfDay()),
+                Timestamp.valueOf(entity.getDateExpire().atStartOfDay()),
                 entity.getCardId());
         return entity;
     }

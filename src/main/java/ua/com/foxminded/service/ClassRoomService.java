@@ -3,6 +3,7 @@ package ua.com.foxminded.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.ClassRoomDao;
+import ua.com.foxminded.domain.dao.ClassRoomDaoHibernate;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
 import ua.com.foxminded.domain.exceptions.NotFoundException;
 
@@ -13,13 +14,10 @@ import static java.lang.String.format;
 @Service
 @RequiredArgsConstructor
 public class ClassRoomService{
-    private final ClassRoomDao classRoomDao;
+    private final ClassRoomDaoHibernate classRoomDao;
 
 
     public ClassRoomEntity save(ClassRoomEntity entity) {
-        if(classRoomDao.isExist(entity.getNumber()))
-            throw new IllegalArgumentException("classroom already exist");
-
         return classRoomDao.save(entity);
     }
 
@@ -32,10 +30,7 @@ public class ClassRoomService{
     }
 
     public ClassRoomEntity update(ClassRoomEntity entity) {
-        if(classRoomDao.isExist(entity.getClassId()))
-            return classRoomDao.update(entity);
-
-        throw new NotFoundException(format("classRoom with id = '%s' not exist",entity.getClassId()));
+          return classRoomDao.update(entity);
     }
 
     public void delete(Integer id) {

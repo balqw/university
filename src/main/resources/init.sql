@@ -24,7 +24,7 @@ create table educator
     educatorId serial primary key,
     firstName  varchar(100),
     lastName   varchar(100),
-    idCard     int references idCard (cardId)
+    idCard int references idCard(cardId)
 );
 
 create table classRoom

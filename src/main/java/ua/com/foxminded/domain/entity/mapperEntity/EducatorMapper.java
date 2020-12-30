@@ -19,7 +19,7 @@ public class EducatorMapper implements RowMapper<EducatorEntity> {
         educatorEntity.setLastName(rs.getString("lastName"));
         idCardEntity.setCardId(rs.getInt("cardId"));
         if(rs.getTimestamp("dateExpire")!=null)
-        idCardEntity.setDataExpire(rs.getTimestamp("dateExpire").toLocalDateTime().toLocalDate());
+        idCardEntity.setDateExpire(rs.getTimestamp("dateExpire").toLocalDateTime().toLocalDate());
         educatorEntity.setIdCard(idCardEntity);
         return educatorEntity;
     }
