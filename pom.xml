@@ -20,6 +20,7 @@
         <jacoco-version>0.8.3</jacoco-version>
         <h2db.version>1.4.200</h2db.version>
         <spring-version>5.2.9.RELEASE</spring-version>
+        <thymeleaf-version>3.0.11.RELEASE</thymeleaf-version>
     </properties>
 
 
@@ -51,11 +52,6 @@
             <version>5.2.9.RELEASE</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>3.0.1</version>
-        </dependency>
 
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -104,7 +100,7 @@
             <artifactId>logback-classic</artifactId>
             <version>1.2.3</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring5</artifactId>
@@ -116,6 +112,31 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.1</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-java8time</artifactId>
+            <version>3.0.4.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.10.Final</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring-version}</version>
         </dependency>
 
 
