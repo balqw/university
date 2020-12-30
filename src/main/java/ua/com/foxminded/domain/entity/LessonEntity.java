@@ -4,13 +4,14 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
 @Data
 @Entity
 @Table(name = "lesson")
-public class LessonEntity {
+public class LessonEntity implements Serializable {
     @Id
     @GeneratedValue
     private Integer lessonId;
@@ -23,7 +24,7 @@ public class LessonEntity {
     @DateTimeFormat(pattern = "HH:mm dd/MM/yyyy")
     private LocalDateTime endLesson ;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "classRoom", referencedColumnName = "number")
     private ClassRoomEntity classRoom;
 

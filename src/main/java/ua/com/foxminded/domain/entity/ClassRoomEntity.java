@@ -6,11 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Data
 @Entity
 @Table(name = "classroom")
-public class ClassRoomEntity {
+public class ClassRoomEntity implements Serializable {
     @Id
     @GeneratedValue
     private Integer classId;

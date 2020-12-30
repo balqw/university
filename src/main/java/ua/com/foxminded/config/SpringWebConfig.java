@@ -5,27 +5,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.format.FormatterRegistry;
-import org.springframework.format.datetime.DateFormatter;
-import org.springframework.format.datetime.DateFormatterRegistrar;
-import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
-import org.springframework.format.support.DefaultFormattingConversionService;
-import org.springframework.format.support.FormattingConversionService;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.filter.HiddenHttpMethodFilter;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
-import org.thymeleaf.spring5.ISpringTemplateEngine;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.ITemplateResolver;
-
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import java.time.format.DateTimeFormatter;
 
 
 @Configuration
@@ -41,17 +28,17 @@ public class SpringWebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public SpringResourceTemplateResolver templateResolver(){
+    public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/views/");
         templateResolver.setSuffix(".html");
         templateResolver.setCharacterEncoding("UTF-8");
-        return  templateResolver;
+        return templateResolver;
     }
 
     @Bean
-    public SpringTemplateEngine templateEngine(){
+    public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.addDialect(new Java8TimeDialect());
         templateEngine.setTemplateResolver(templateResolver());
@@ -70,9 +57,8 @@ public class SpringWebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/css/**").addResourceLocations("classpath:/bootstrap/css/");
+        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/bootstrap/css/");
     }
-
 
 
 }

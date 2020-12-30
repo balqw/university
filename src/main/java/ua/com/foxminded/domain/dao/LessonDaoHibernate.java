@@ -3,7 +3,6 @@ package ua.com.foxminded.domain.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.LessonEntity;
-import ua.com.foxminded.domain.entity.StudentEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -11,7 +10,7 @@ import javax.persistence.EntityTransaction;
 import java.util.List;
 
 @Repository
-public class LessonDaoHibernate implements CrudOperation<LessonEntity, Integer>{
+public class LessonDaoHibernate implements CrudOperation<LessonEntity, Integer> {
 
     private final EntityManagerFactory managerFactory;
 
@@ -40,7 +39,7 @@ public class LessonDaoHibernate implements CrudOperation<LessonEntity, Integer>{
     @Override
     public LessonEntity findOne(Integer id) {
         EntityManager em = managerFactory.createEntityManager();
-        return em.find(LessonEntity.class,id);
+        return em.find(LessonEntity.class, id);
     }
 
     @Override
