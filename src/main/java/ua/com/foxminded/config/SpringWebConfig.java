@@ -58,6 +58,8 @@ public class SpringWebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/css/**").addResourceLocations("classpath:/bootstrap/css/");
+        registry.addResourceHandler("/js/**").addResourceLocations("classpath:/bootstrap/js/");
+
     }
 
 

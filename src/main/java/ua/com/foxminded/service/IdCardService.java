@@ -3,16 +3,15 @@ package ua.com.foxminded.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.IdCardDao;
-import ua.com.foxminded.domain.dao.IdCardDaoHibernate;
 import ua.com.foxminded.domain.entity.IdCardEntity;
-import ua.com.foxminded.domain.exceptions.NotFoundException;
+
 import java.util.List;
 import static java.lang.String.format;
 
 @RequiredArgsConstructor
 @Service
 public class IdCardService{
-    private final IdCardDaoHibernate idCardDao;
+    private final IdCardDao idCardDao;
 
 
     public IdCardEntity save(IdCardEntity entity) {

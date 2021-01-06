@@ -3,9 +3,7 @@ package ua.com.foxminded.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.ClassRoomDao;
-import ua.com.foxminded.domain.dao.ClassRoomDaoHibernate;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
-import ua.com.foxminded.domain.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -14,7 +12,7 @@ import static java.lang.String.format;
 @Service
 @RequiredArgsConstructor
 public class ClassRoomService{
-    private final ClassRoomDaoHibernate classRoomDao;
+    private final ClassRoomDao classRoomDao;
 
 
     public ClassRoomEntity save(ClassRoomEntity entity) {

@@ -18,13 +18,13 @@ public class LessonEntity implements Serializable {
 
     private String title;
 
-    @DateTimeFormat(pattern = "HH:mm dd/MM/yyyy")
+   @DateTimeFormat(pattern = "mm/dd/yyyy HH:mm a")
     private LocalDateTime startLesson;
 
-    @DateTimeFormat(pattern = "HH:mm dd/MM/yyyy")
+    @DateTimeFormat(pattern = "mm/dd/yyyy HH:mm a")
     private LocalDateTime endLesson ;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "classRoom", referencedColumnName = "number")
     private ClassRoomEntity classRoom;
 

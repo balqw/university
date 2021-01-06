@@ -3,7 +3,6 @@ package ua.com.foxminded.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.EducatorDao;
-import ua.com.foxminded.domain.dao.EducatorDaoHibernate;
 import ua.com.foxminded.domain.dao.IdCardDao;
 import ua.com.foxminded.domain.entity.EducatorEntity;
 import ua.com.foxminded.domain.entity.IdCardEntity;
@@ -16,7 +15,7 @@ import static java.lang.String.format;
 @Service
 @RequiredArgsConstructor
 public class EducatorService {
-    private final EducatorDaoHibernate educatorDao;
+    private final EducatorDao educatorDao;
     private final IdCardDao idCardDao;
 
     public EducatorEntity save(EducatorEntity educator) {

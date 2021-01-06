@@ -2,10 +2,11 @@ package ua.com.foxminded.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ua.com.foxminded.domain.dao.ClassRoomDao;
 import ua.com.foxminded.domain.dao.LessonDao;
-import ua.com.foxminded.domain.dao.LessonDaoHibernate;
+import ua.com.foxminded.domain.entity.ClassRoomEntity;
 import ua.com.foxminded.domain.entity.LessonEntity;
-import ua.com.foxminded.domain.exceptions.NotFoundException;
+
 import java.util.List;
 
 import static java.lang.String.format;
@@ -13,11 +14,20 @@ import static java.lang.String.format;
 @Service
 @RequiredArgsConstructor
 public class LessonService {
-    private final LessonDaoHibernate lessonDao;
+    private final LessonDao lessonDao;
+    private final ClassRoomDao classRoomDao;
 
 
     public LessonEntity save(LessonEntity entity) {
+        ClassRoomEntity classRoom = null;
+        try {
+            classRoom = classRoomDao.findByNumber(entity.getClassRoom().getNumber());
+        } catch (RuntimeException e) {
+            throw new IllegalArgumentException("class not exist");
+        }
+        entity.setClassRoom(classRoom);
         return lessonDao.save(entity);
+
     }
 
     public List<LessonEntity> readAll() {
