@@ -8,13 +8,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "student")
-public class StudentEntity extends Person {
+public class StudentEntity{
     @Id
     @GeneratedValue
     private Integer studentId;
     private Integer course;
+    private String firstName;
+    private String lastName;
 }

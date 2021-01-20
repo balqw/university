@@ -17,4 +17,5 @@ public class ClassRoomEntity implements Serializable {
     private Integer classId;
     private Integer number;
     private Integer capacity;
+
 }

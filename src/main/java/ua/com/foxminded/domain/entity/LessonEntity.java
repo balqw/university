@@ -18,10 +18,10 @@ public class LessonEntity implements Serializable {
 
     private String title;
 
-   @DateTimeFormat(pattern = "mm/dd/yyyy HH:mm a")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startLesson;
 
-    @DateTimeFormat(pattern = "mm/dd/yyyy HH:mm a")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endLesson ;
 
     @OneToOne(fetch = FetchType.EAGER)

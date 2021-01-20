@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.entity.StudentEntity;
+import ua.com.foxminded.domain.entity.mappers.StudentMapper;
+import ua.com.foxminded.domain.entity.mappers.StudentMapperImpl;
 import ua.com.foxminded.service.StudentService;
 
 @Controller
@@ -11,15 +13,19 @@ import ua.com.foxminded.service.StudentService;
 public class StudentsController {
 
     private final StudentService studentService;
+    private final StudentMapper studentMapper;
 
-    public StudentsController(StudentService studentService) {
+
+    public StudentsController(StudentService studentService, StudentMapper studentMapper, StudentMapperImpl studentMapper1) {
         this.studentService = studentService;
+        this.studentMapper = studentMapper;
     }
 
 
     @GetMapping
     public String showStudents(Model model){
         model.addAttribute("students",studentService.readAll());
+
         return "students/index";
     }
 
