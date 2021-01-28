@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-
 @Data
 @Entity
 @Table(name = "lesson")
@@ -22,7 +21,7 @@ public class LessonEntity implements Serializable {
     private LocalDateTime startLesson;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime endLesson ;
+    private LocalDateTime endLesson;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "classRoom", referencedColumnName = "number")
