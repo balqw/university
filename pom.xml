@@ -21,10 +21,14 @@
         <h2db.version>1.4.200</h2db.version>
         <spring-version>5.2.9.RELEASE</spring-version>
         <thymeleaf-version>3.0.11.RELEASE</thymeleaf-version>
+        <mapstruct-version>1.4.1.Final</mapstruct-version>
+
+
     </properties>
 
 
     <dependencies>
+
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -139,6 +143,15 @@
             <version>${spring-version}</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct-version}</version>
+        </dependency>
+
+
+
 
     </dependencies>
 
@@ -184,6 +197,22 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok-version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct-version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
