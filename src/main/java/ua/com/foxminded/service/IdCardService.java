@@ -6,11 +6,10 @@ import ua.com.foxminded.domain.dao.IdCardDao;
 import ua.com.foxminded.domain.entity.IdCardEntity;
 
 import java.util.List;
-import static java.lang.String.format;
 
 @RequiredArgsConstructor
 @Service
-public class IdCardService{
+public class IdCardService {
     private final IdCardDao idCardDao;
 
 

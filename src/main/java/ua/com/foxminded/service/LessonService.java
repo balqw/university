@@ -9,14 +9,11 @@ import ua.com.foxminded.domain.entity.LessonEntity;
 
 import java.util.List;
 
-import static java.lang.String.format;
-
 @Service
 @RequiredArgsConstructor
 public class LessonService {
     private final LessonDao lessonDao;
     private final ClassRoomDao classRoomDao;
-
 
     public LessonEntity save(LessonEntity entity) {
         ClassRoomEntity classRoom = null;
