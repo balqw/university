@@ -3,7 +3,7 @@ package ua.com.foxminded.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.ClassRoomDao;
-import ua.com.foxminded.domain.dao.LessonDao;
+import ua.com.foxminded.domain.dao.LessonDaoImpl;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
 import ua.com.foxminded.domain.entity.LessonEntity;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class LessonService {
-    private final LessonDao lessonDao;
+    private final LessonDaoImpl lessonDaoImpl;
     private final ClassRoomDao classRoomDao;
 
     public LessonEntity save(LessonEntity entity) {
@@ -23,23 +23,23 @@ public class LessonService {
             throw new IllegalArgumentException("class not exist");
         }
         entity.setClassRoom(classRoom);
-        return lessonDao.save(entity);
+        return lessonDaoImpl.save(entity);
 
     }
 
     public List<LessonEntity> readAll() {
-        return lessonDao.readAll();
+        return lessonDaoImpl.readAll();
     }
 
     public LessonEntity findOne(Integer id) {
-        return lessonDao.findOne(id);
+        return lessonDaoImpl.findOne(id);
     }
 
     public LessonEntity update(LessonEntity entity) {
-        return lessonDao.update(entity);
+        return lessonDaoImpl.update(entity);
     }
 
     public void delete(Integer id) {
-        lessonDao.delete(id);
+        lessonDaoImpl.delete(id);
     }
 }

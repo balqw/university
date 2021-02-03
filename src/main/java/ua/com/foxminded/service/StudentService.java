@@ -23,7 +23,7 @@ public class StudentService {
         return studentDao.save(entity);
     }
 
-   public List<StudentDTO> readAll() {
+    public List<StudentDTO> readAll() {
         return studentMapper.toDtos(studentDao.readAll());
     }
 
@@ -41,11 +41,11 @@ public class StudentService {
 
     public StudentSummaryInfo combineSummaryInfo(Integer id) {
         StudentEntity student = studentDao.findOne(id);
-        //  List<LessonEntity> lessons = lessonDao.findByStudentId(student.getStudentId());  ToDo -> implement
+        //List<LessonEntity> lessons = lessonDao.findByGroup(student.getGroup().getId());
         return StudentSummaryInfo.builder()
                 .id(student.getStudentId())
                 .name(String.format("%s %s", student.getFirstName(), student.getLastName()))
-                //....ToDo  add other fields
+                //.lessons(lessons)
                 .build();
     }
 }
