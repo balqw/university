@@ -1,3 +1,4 @@
+drop table if exists student_group cascade;
 drop table if exists student;
 drop table if exists educator cascade;
 drop table if exists idCard cascade;
@@ -5,12 +6,20 @@ drop table if exists educatorCard;
 drop table if exists classRoom cascade;
 drop table if exists lesson cascade;
 
+create table student_group
+(
+    groupId serial primary key,
+    abbreviate varchar(10) unique ,
+    description  varchar(200)
+);
+
 create table student
 (
     studentId serial primary key,
     firstName varchar(100),
     lastName  varchar(100),
-    course    integer
+    course    integer,
+    studentGroup varchar
 );
 
 create table idCard
@@ -42,3 +51,5 @@ create table lesson
     endLesson   timestamp,
     classRoom   int references classRoom (number)
 );
+
+

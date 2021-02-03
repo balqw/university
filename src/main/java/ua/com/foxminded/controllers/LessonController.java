@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ua.com.foxminded.domain.dao.ClassRoomDao;
 import ua.com.foxminded.domain.entity.LessonEntity;
 import ua.com.foxminded.domain.entity.mappers.StudentMapper;
 import ua.com.foxminded.service.LessonService;
@@ -13,6 +14,7 @@ import ua.com.foxminded.service.LessonService;
 @AllArgsConstructor
 public class LessonController {
     private final LessonService lessonService;
+    private final ClassRoomDao classRoomDao;
 
     @GetMapping
     public String showAll(Model model) {
@@ -23,6 +25,7 @@ public class LessonController {
     @GetMapping("/new")
     public String showAdd(Model model) {
         model.addAttribute("lesson", new LessonEntity());
+        model.addAttribute("class",classRoomDao.readAll());
         return "lessons/new_lesson";
     }
 

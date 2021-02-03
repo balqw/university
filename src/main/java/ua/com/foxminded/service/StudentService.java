@@ -23,12 +23,12 @@ public class StudentService {
         return studentDao.save(entity);
     }
 
-    public List<StudentDTO> readAll() {
+   public List<StudentDTO> readAll() {
         return studentMapper.toDtos(studentDao.readAll());
     }
 
-    public StudentEntity findOne(Integer id) {
-        return studentDao.findOne(id);
+    public StudentDTO findOne(Integer id) {
+        return studentMapper.toStudentDTO(studentDao.findOne(id));
     }
 
     public StudentEntity update(StudentEntity entity) {

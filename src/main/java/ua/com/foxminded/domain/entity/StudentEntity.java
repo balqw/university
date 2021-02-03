@@ -18,4 +18,5 @@ public class StudentEntity{
     private Integer course;
     private String firstName;
     private String lastName;
+    private String studentGroup;
 }

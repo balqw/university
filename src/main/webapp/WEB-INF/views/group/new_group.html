@@ -13,7 +13,7 @@
     <div class="card">
         <div class="card-body">
             <div class="col-md-10">
-                <form th:action="@{/students}" th:object="${student}" th:method="post" >
+                <form th:action="@{/educators}" th:object="${educator}" th:method="post" >
                     <div class="row">
                         <div class="form-group col-md-8">
                             <label for="name" class="col-form-label">Name</label> <input type="text" th:field="*{firstName}" class="form-control" id="name" placeholder="Name">
@@ -21,23 +21,11 @@
                         <div class="form-group col-md-8">
                             <label for="surname" class="col-form-label">Surname</label> <input type="text" th:field="*{lastName}" class="form-control" id="surname" placeholder="Surname">
                         </div>
-
-                        <div class="form-group col-md-8">
-                            <label for="course" class="col-form-label">Course</label> <input type="text" th:field="*{course}" class="form-control" id="course" placeholder="Course">
+                        <div  class="form-group col-md-8">
+                            <label for="idCard" class="col-form-label">Id Card</label> <input type="text" th:field="*{idCard.cardId}" class="form-control" id="idCard" placeholder="Id Card">
                         </div>
-
-                        <div class="form-group col-md-8">
-                            <select th:field="*{studentGroup}">
-                                <option value="">Group</option>
-                                     <option th:each="group :${groups}"
-                                        th:value="${group.getAbbreviate()}"
-                                        th:text="${group.getAbbreviate()}">
-                                </option>
-                            </select>
-                        </div>
-
                         <div class="col-md-6">
-                            <input type="submit" class="btn btn-primary" value="Add Student">
+                            <input type="submit" class="btn btn-primary" value="Add Educator">
                         </div>
 
                         <div class="form-group col-md-8"></div>

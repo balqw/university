@@ -29,7 +29,13 @@
                             <label for="end" class="col-form-label">end</label> <input type="datetime-local" th:field="*{endLesson}" class="form-control" id="end" placeholder="end HH:mm dd/MM/yyyy"></span>
                         </div>
                         <div class="form-group col-md-8">
-                            <label for="class-room" class="col-form-label">Class room</label> <input type="text" th:field="*{classRoom.number}" class="form-control" id="class-room" placeholder="Class room"></span>
+                            <select th:field="*{classRoom.number}">
+                                <option value="">Class</option>
+                                <option th:each="classEach :${class}"
+                                        th:value="${classEach.getNumber()}"
+                                        th:text="${classEach.getNumber()}">
+                                </option>
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <input type="submit" class="btn btn-primary" value="Add Card">

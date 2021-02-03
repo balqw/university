@@ -14,7 +14,7 @@
 <div class="container my-2">
     <div class="card">
         <div class="card-body">
-            <div th:switch="${students}" class="container my-5">
+            <div th:switch="${studentGroups}" class="container my-5">
                 <p class="my-5">
                     <a th:href="@{students/new}" class="btn btn-primary"><i
                             class="fas fa-user-plus ml-2"> Add Student</i></a>
@@ -25,24 +25,19 @@
                         <table class="table table-striped table-responsive-md">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Surname</th>
-                                <th>Group</th>
-                                <th>Course</th>
-                                <th>Details</th>
+                                <th>Abbreviate</th>
+                                <th>Description</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                             </thead>
-                            <tbody >
-                            <tr th:each="student : ${students}">
-                                <td th:text="${student.getName()}"></td>
-                                <td th:text="${student.getSurName()}"></td>
-                                <td th:text="${student.getStudentGroup()}"></td>
-                                <td th:text="${student.getCourse()}"></td>
-                                <td><a th:href="@{students/{id}/details(id=${student.getId()})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-                                <td><a th:href="@{students/{id}/edit(id=${student.getId()})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-                                <td><a th:href="@{students/{id}/delete(id=${student.getId()})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
+                            <tbody>
+                            <tr th:each="group : ${studentGroups}">
+                                <td th:text="${group.getAbbreviate()}"></td>
+                                <td th:text="${group.getDescription()}"></td>
+
+                                <td><a th:href="@{students/{id}/edit(id=${group.getGroupId()})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
+                                <td><a th:href="@{students/{id}/delete(id=${group.getGroupId()})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
                             </tr>
                             </tbody>
                         </table>
