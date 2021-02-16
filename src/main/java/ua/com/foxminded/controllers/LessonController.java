@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dao.ClassRoomDao;
+import ua.com.foxminded.domain.dao.StudentGroupDao;
 import ua.com.foxminded.domain.entity.LessonEntity;
 import ua.com.foxminded.domain.entity.mappers.StudentMapper;
 import ua.com.foxminded.service.LessonService;
@@ -15,6 +16,7 @@ import ua.com.foxminded.service.LessonService;
 public class LessonController {
     private final LessonService lessonService;
     private final ClassRoomDao classRoomDao;
+    private final StudentGroupDao studentGroupDao;
 
     @GetMapping
     public String showAll(Model model) {
@@ -26,6 +28,7 @@ public class LessonController {
     public String showAdd(Model model) {
         model.addAttribute("lesson", new LessonEntity());
         model.addAttribute("class",classRoomDao.readAll());
+        model.addAttribute("group",studentGroupDao.readAll());
         return "lessons/new_lesson";
     }
 
@@ -38,6 +41,8 @@ public class LessonController {
     @GetMapping("{id}/edit")
     public String showEdit(@PathVariable("id") int id, Model model) {
         model.addAttribute("lesson", lessonService.findOne(id));
+        model.addAttribute("class",classRoomDao.readAll());
+        model.addAttribute("group",studentGroupDao.readAll());
         return "lessons/edit_lesson";
     }
 

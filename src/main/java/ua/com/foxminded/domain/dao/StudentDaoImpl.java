@@ -1,23 +1,23 @@
 package ua.com.foxminded.domain.dao;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-import ua.com.foxminded.domain.entity.StudentGroupEntity;
-import ua.com.foxminded.domain.entity.IdCardEntity;
+import ua.com.foxminded.domain.entity.StudentEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
-public class StudentGroupDao implements CrudOperation<StudentGroupEntity, Integer> {
-
+@AllArgsConstructor
+public class StudentDaoImpl implements StudentDao{
     private final EntityManagerFactory managerFactory;
 
+
     @Override
-    public StudentGroupEntity save(StudentGroupEntity entity) {
+    public StudentEntity save(StudentEntity entity) {
         EntityManager em = managerFactory.createEntityManager();
         EntityTransaction et = em.getTransaction();
         et.begin();
@@ -28,20 +28,20 @@ public class StudentGroupDao implements CrudOperation<StudentGroupEntity, Intege
     }
 
     @Override
-    public List<StudentGroupEntity> readAll() {
+    @SuppressWarnings("unchecked")
+    public List<StudentEntity> readAll() {
         EntityManager em = managerFactory.createEntityManager();
-        return em.createQuery("select a from StudentGroupEntity a").getResultList();
+        return em.createQuery("SELECT student from StudentEntity student").getResultList();
     }
 
     @Override
-    public StudentGroupEntity findOne(Integer id) {
-        return managerFactory.createEntityManager().find(StudentGroupEntity.class, id);
+    public StudentEntity findOne(Integer id) {
+        EntityManager em = managerFactory.createEntityManager();
+        return em.find(StudentEntity.class, id);
     }
 
-
-
     @Override
-    public StudentGroupEntity update(StudentGroupEntity entity) {
+    public StudentEntity update(StudentEntity entity) {
         EntityManager em = managerFactory.createEntityManager();
         EntityTransaction et = em.getTransaction();
         et.begin();
@@ -56,24 +56,22 @@ public class StudentGroupDao implements CrudOperation<StudentGroupEntity, Intege
         EntityManager em = managerFactory.createEntityManager();
         EntityTransaction et = em.getTransaction();
         et.begin();
-        em.remove(em.find(IdCardEntity.class,id));
+        StudentEntity student = em.find(StudentEntity.class, id);
+        em.remove(student);
         et.commit();
         em.close();
     }
 
-    public StudentGroupEntity findByAbbr(String name){
-        EntityManager em = managerFactory.createEntityManager();
-        return em.find(StudentGroupEntity.class,name);
-    }
-
-    public StudentGroupEntity findGroupInLesson(Integer id){
-        EntityManager em = managerFactory.createEntityManager();
-
-
+    @Override
+    public boolean exist(StudentEntity entity) {
+        return false;//FixMe
     }
 
     @Override
-    public boolean exist(StudentGroupEntity entity) {
-        return false;
+    public List<StudentEntity> findByGroup(Integer groupId) {
+        EntityManager em = managerFactory.createEntityManager();
+        Query query = em.createNativeQuery("Select * from student where studentgroup =:id");
+        query.setParameter("id",groupId);
+        return query.getResultList();
     }
 }

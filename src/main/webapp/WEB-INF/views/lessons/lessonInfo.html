@@ -40,8 +40,7 @@
                                 <td th:text="${#temporals.format(lesson.getEndLesson(),'HH:mm dd/MM/yyyy')}"></td>
                                 <td th:text="${lesson.getClassRoom().getNumber()}"></td>
 
-
-                                <td><a th:href="@{lessons/{id}/{idGroup}/details(id=${lesson.getLessonId()})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
+                                <td><a th:href="@{lessons/{id}/details(id=${lesson.getLessonId()})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
                                 <td><a th:href="@{lessons/{id}/edit(id=${lesson.getLessonId()})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
                                 <td><a th:href="@{lessons/{id}/delete(id=${lesson.getLessonId()})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
                             </tr>

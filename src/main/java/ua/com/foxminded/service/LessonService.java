@@ -1,11 +1,15 @@
 package ua.com.foxminded.service;
 
+import com.sun.org.apache.bcel.internal.generic.ARETURN;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.ClassRoomDao;
 import ua.com.foxminded.domain.dao.LessonDaoImpl;
+import ua.com.foxminded.domain.dao.StudentDaoImpl;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
 import ua.com.foxminded.domain.entity.LessonEntity;
+import ua.com.foxminded.domain.entity.StudentEntity;
+import ua.com.foxminded.domain.entity.dto.LessonInfo;
 
 import java.util.List;
 
@@ -14,6 +18,7 @@ import java.util.List;
 public class LessonService {
     private final LessonDaoImpl lessonDaoImpl;
     private final ClassRoomDao classRoomDao;
+    private final StudentDaoImpl studentDao;
 
     public LessonEntity save(LessonEntity entity) {
         ClassRoomEntity classRoom = null;
@@ -41,5 +46,10 @@ public class LessonService {
 
     public void delete(Integer id) {
         lessonDaoImpl.delete(id);
+    }
+
+    public LessonInfo getLessonInfo(Integer groupId){
+        List<StudentEntity>students = studentDao.findByGroup(groupId);
+     return null;
     }
 }

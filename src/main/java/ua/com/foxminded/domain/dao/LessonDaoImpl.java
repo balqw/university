@@ -77,4 +77,15 @@ public class LessonDaoImpl implements LessonDao {
         query.setParameter("id", groupId);
         return query.getResultList();
     }
+
+    public void setGroup(Integer lessId, Integer groupId){
+        EntityManager em = managerFactory.createEntityManager();
+        Query query = em.createNativeQuery("INSERT into lesson_group (lessonid,groupid) values (:idLesson,:idGroup)");
+        query.setParameter("idLesson",lessId).setParameter("idGroup",groupId);
+
+    }
+
+
+
+
 }
