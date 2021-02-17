@@ -9,13 +9,15 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-@Table(name = "idCard")
+@Table(name = "id_card")
 public class IdCardEntity {
     @Id
     @GeneratedValue
+    @Column("card_id")
     private Integer cardId;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Column("date_expire")
     private LocalDate dateExpire;
 
 }
