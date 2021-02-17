@@ -8,7 +8,6 @@ import ua.com.foxminded.domain.entity.StudentEntity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Builder
 @Data
 public class LessonInfo {
     private String title;

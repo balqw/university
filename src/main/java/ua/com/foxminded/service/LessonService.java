@@ -1,6 +1,5 @@
 package ua.com.foxminded.service;
 
-import com.sun.org.apache.bcel.internal.generic.ARETURN;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.ClassRoomDao;
@@ -48,8 +47,8 @@ public class LessonService {
         lessonDaoImpl.delete(id);
     }
 
-    public LessonInfo getLessonInfo(Integer groupId){
-        List<StudentEntity>students = studentDao.findByGroup(groupId);
-     return null;
+    public LessonInfo getLessonInfo(Integer groupId) {
+        List<StudentEntity> students = studentDao.findByGroup(groupId);
+        return null;
     }
 }
