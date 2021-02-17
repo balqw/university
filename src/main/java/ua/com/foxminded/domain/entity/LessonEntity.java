@@ -13,18 +13,20 @@ import java.time.LocalDateTime;
 public class LessonEntity implements Serializable {
     @Id
     @GeneratedValue
+    @Column("lesson_id")
     private Integer lessonId;
 
     private String title;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @Column("start_lesson")
     private LocalDateTime startLesson;
 
+    @Column("end_lesson")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endLesson;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "classRoom", referencedColumnName = "number")
+    @JoinColumn(name = "class_room", referencedColumnName = "number")
     private ClassRoomEntity classRoom;
-
 }
