@@ -32,6 +32,7 @@ public class LessonDaoImpl implements LessonDao {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<LessonEntity> readAll() {
         EntityManager em = managerFactory.createEntityManager();
         return em.createQuery("SELECT a from LessonEntity a").getResultList();
@@ -67,10 +68,11 @@ public class LessonDaoImpl implements LessonDao {
 
     @Override
     public boolean exist(LessonEntity entity) {
-        return false;
+        return false;//ToDo -> implement me
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<LessonEntity> findByGroup(Integer groupId) {
         EntityManager em = managerFactory.createEntityManager();
         Query query = em.createNativeQuery("SELECT * from lesson_group  where group_id = :id");//ToDo -> create on DB side
@@ -78,14 +80,12 @@ public class LessonDaoImpl implements LessonDao {
         return query.getResultList();
     }
 
-    public void setGroup(Integer lessId, Integer groupId){
+    public void setGroup(Integer lessId, Integer groupId) {
         EntityManager em = managerFactory.createEntityManager();
         Query query = em.createNativeQuery("INSERT into lesson_group (lessonid,groupid) values (:idLesson,:idGroup)");
-        query.setParameter("idLesson",lessId).setParameter("idGroup",groupId);
+        query.setParameter("idLesson", lessId).setParameter("idGroup", groupId);
 
     }
-
-
 
 
 }

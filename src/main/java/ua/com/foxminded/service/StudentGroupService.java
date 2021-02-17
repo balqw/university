@@ -4,8 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.StudentGroupDao;
 
-import ua.com.foxminded.domain.entity.StudentEntity;
-import ua.com.foxminded.domain.entity.StudentGroupEntity;
+import ua.com.foxminded.domain.entity.Group;
 import ua.com.foxminded.domain.entity.dto.StudentGroupDTO;
 import ua.com.foxminded.domain.entity.mappers.StudentGroupMapper;
 
@@ -17,7 +16,7 @@ public class StudentGroupService {
     private final StudentGroupMapper groupMapper;
     private final StudentGroupDao studentGroupDao;
 
-    public List<StudentGroupEntity> readAll(){
+    public List<Group> readAll(){
         return studentGroupDao.readAll();
     }
 
@@ -34,7 +33,7 @@ public class StudentGroupService {
     }
 
     public StudentGroupDTO save (StudentGroupDTO studentGroupDTO){
-        StudentGroupEntity entity = groupMapper.toEntity(studentGroupDTO);
+        Group entity = groupMapper.toEntity(studentGroupDTO);
         entity = studentGroupDao.save(entity);
         return groupMapper.toDto(entity);
     }

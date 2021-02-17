@@ -2,7 +2,8 @@ package ua.com.foxminded.domain.dao;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import ua.com.foxminded.domain.entity.StudentGroupEntity;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import ua.com.foxminded.domain.entity.Group;
 import ua.com.foxminded.domain.entity.IdCardEntity;
 
 import javax.persistence.EntityManager;
@@ -12,12 +13,12 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class StudentGroupDao implements CrudOperation<StudentGroupEntity, Integer> {
+public class StudentGroupDao implements CrudOperation<Group, Integer> {
 
     private final EntityManagerFactory managerFactory;
 
     @Override
-    public StudentGroupEntity save(StudentGroupEntity entity) {
+    public Group save(Group entity) {
         EntityManager em = managerFactory.createEntityManager();
         EntityTransaction et = em.getTransaction();
         et.begin();
@@ -28,20 +29,19 @@ public class StudentGroupDao implements CrudOperation<StudentGroupEntity, Intege
     }
 
     @Override
-    public List<StudentGroupEntity> readAll() {
+    public List<Group> readAll() {
         EntityManager em = managerFactory.createEntityManager();
-        return em.createQuery("select a from StudentGroupEntity a").getResultList();
+        return em.createQuery("select a from Group a").getResultList();
     }
 
     @Override
-    public StudentGroupEntity findOne(Integer id) {
-        return managerFactory.createEntityManager().find(StudentGroupEntity.class, id);
+    public Group findOne(Integer id) {
+        return managerFactory.createEntityManager().find(Group.class, id);
     }
 
 
-
     @Override
-    public StudentGroupEntity update(StudentGroupEntity entity) {
+    public Group update(Group entity) {
         EntityManager em = managerFactory.createEntityManager();
         EntityTransaction et = em.getTransaction();
         et.begin();
@@ -56,24 +56,23 @@ public class StudentGroupDao implements CrudOperation<StudentGroupEntity, Intege
         EntityManager em = managerFactory.createEntityManager();
         EntityTransaction et = em.getTransaction();
         et.begin();
-        em.remove(em.find(IdCardEntity.class,id));
+        em.remove(em.find(IdCardEntity.class, id));
         et.commit();
         em.close();
     }
 
-    public StudentGroupEntity findByAbbr(String name){
+    public Group findByAbbr(String name) {
         EntityManager em = managerFactory.createEntityManager();
-        return em.find(StudentGroupEntity.class,name);
+        return em.find(Group.class, name);
     }
 
-    public StudentGroupEntity findGroupInLesson(Integer id){
+    public Group findGroupInLesson(Integer id) {
         EntityManager em = managerFactory.createEntityManager();
-
-
+        throw new NotImplementedException();//ToDo
     }
 
     @Override
-    public boolean exist(StudentGroupEntity entity) {
-        return false;
+    public boolean exist(Group entity) {
+        return false;//ToDo
     }
 }

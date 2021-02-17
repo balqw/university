@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.LessonDao;
 import ua.com.foxminded.domain.dao.StudentDao;
+import ua.com.foxminded.domain.entity.LessonEntity;
 import ua.com.foxminded.domain.entity.StudentEntity;
 import ua.com.foxminded.domain.entity.dto.StudentDTO;
 import ua.com.foxminded.domain.entity.dto.StudentSummaryInfo;
@@ -41,11 +42,11 @@ public class StudentService {
 
     public StudentSummaryInfo combineSummaryInfo(Integer id) {
         StudentEntity student = studentDao.findOne(id);
-        //List<LessonEntity> lessons = lessonDao.findByGroup(student.getGroup().getId());
+        List<LessonEntity> lessons = lessonDao.findByGroup(student.getGroup().getGroupId());
         return StudentSummaryInfo.builder()
                 .id(student.getStudentId())
                 .name(String.format("%s %s", student.getFirstName(), student.getLastName()))
-                //.lessons(lessons)
+                .lessons(lessons)
                 .build();
     }
 }

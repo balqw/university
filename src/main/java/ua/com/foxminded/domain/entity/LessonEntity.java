@@ -11,20 +11,23 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "lesson")
 public class LessonEntity implements Serializable {
+
     @Id
     @GeneratedValue
+    @Column(name = "lesson_id")
     private Integer lessonId;
 
     private String title;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @Column(name = "start_lesson")
     private LocalDateTime startLesson;
 
+    @Column(name = "end_lesson")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endLesson;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "classRoom", referencedColumnName = "number")
+    @JoinColumn(name = "class_room", referencedColumnName = "number")
     private ClassRoomEntity classRoom;
-
 }

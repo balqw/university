@@ -1,22 +1,24 @@
 package ua.com.foxminded.domain.entity;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "student")
-public class StudentEntity{
+public class StudentEntity {
     @Id
     @GeneratedValue
+    @Column(name = "student_id")
     private Integer studentId;
+    @Column(name = "course")
     private Integer course;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
-    private String studentGroup;
+    @ManyToOne
+    @JoinColumn(referencedColumnName ="group_id")
+    private Group group;
 }

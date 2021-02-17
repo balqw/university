@@ -1,61 +1,61 @@
-drop table if exists studentGroup cascade;
+drop table if exists student_group cascade;
 drop table if exists student;
 drop table if exists educator cascade;
-drop table if exists idCard cascade;
-drop table if exists educatorCard;
-drop table if exists classRoom cascade;
+drop table if exists id_card cascade;
+drop table if exists educator_card;
+drop table if exists class_room cascade;
 drop table if exists lesson cascade;
 
-create table studentGroup
+create table group
 (
-    groupId serial primary key,
-    abbreviate varchar(10) unique ,
-    description  varchar(200)
+    group_id    serial primary key,
+    abbreviate  varchar(10) unique,
+    description varchar(200)
 );
 
 create table student
 (
-    studentId serial primary key,
-    firstName varchar(100),
-    lastName  varchar(100),
-    course    integer,
-    studentGroup varchar
+    student_id serial primary key,
+    firstName  varchar(100),
+    lastName   varchar(100),
+    course     integer,
+    group_id   int references group (group_id)
 );
 
-create table idCard
+create table id_card
 (
-    cardId     serial primary key,
-    dateExpire timestamp
+    card_id     serial primary key,
+    date_expire timestamp
 );
 
 create table educator
 (
-    educatorId serial primary key,
-    firstName  varchar(100),
-    lastName   varchar(100),
-    idCard int references idCard(cardId)
+    educator_id serial primary key,
+    first_name  varchar(100),
+    last_name   varchar(100),
+    id_card     int references id_card (card_id)
 );
 
-create table classRoom
+create table class_room
 (
-    classId  serial primary key,
+    class_id serial primary key,
     number   int unique,
     capacity int
 );
 
 create table lesson
 (
-    lessonId    serial primary key,
-    title       varchar(100),
-    startLesson timestamp,
-    endLesson   timestamp,
-    classRoom   int references classRoom (number)
+    lesson_id    serial primary key,
+    title        varchar(100),
+    start_lesson timestamp,
+    end_lesson   timestamp,
+    class_room   int references class_room (number)
 );
 
 create table lesson_group
 (
-    id serial primary key,
-    lessonId int references lesson(lessonId),
-    groupId int references student_group(groupid)
+    id        serial primary key,
+    lesson_id int references lesson (lesson_id),
+    group_id  int references group (group_id)
 );
 
