@@ -9,11 +9,11 @@
 </head>
 <body>
 <div class="container my-5">
-    <h3> Add Student</h3>
+    <h3> Add Group</h3>
     <div class="card">
         <div class="card-body">
             <div class="col-md-10">
-                <form th:action="@{/educators}" th:object="${educator}" th:method="post" >
+                <form th:action="@{/groups}" th:object="${g}" th:method="post" >
                     <div class="row">
                         <div class="form-group col-md-8">
                             <label for="name" class="col-form-label">Name</label> <input type="text" th:field="*{firstName}" class="form-control" id="name" placeholder="Name">
