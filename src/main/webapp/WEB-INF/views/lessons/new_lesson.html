@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/datepicker.min.css}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
 </head>
 <body>
@@ -37,10 +37,20 @@
                                 </option>
                             </select>
                         </div>
+
+                        <div class="form-group col-md-8">
+                            <select th:field="*{groupList}" id = "selectedGroup" multiple size="3">
+                                <option th:each="group : ${groups}"
+                                th:value="${group}"
+                                th:text="${group.abbreviate}">
+                                </option>
+                            </select>
+                        </div>
+
                         <div class="col-md-6">
                             <input type="submit" class="btn btn-primary" value="Add Card">
                         </div>
-                        <div class="form-group col-md-8"></div>
+
                     </div>
                 </form>
             </div>

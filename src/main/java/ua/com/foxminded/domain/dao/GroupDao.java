@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class StudentGroupDao implements CrudOperation<Group, Integer> {
+public class GroupDao implements CrudOperation<Group, Integer> {
 
     private final EntityManagerFactory managerFactory;
 

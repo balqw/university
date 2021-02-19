@@ -15,6 +15,6 @@ public class EducatorEntity extends Person {
     @Column(name = "educator_id")
     private Integer educatorId;
     @OneToOne
-    @JoinColumn(referencedColumnName = "id_card")
+    @JoinColumn(referencedColumnName = "card_id")
     private IdCardEntity idCard;
 }

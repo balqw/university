@@ -2,39 +2,38 @@ package ua.com.foxminded.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ua.com.foxminded.domain.dao.StudentGroupDao;
+import ua.com.foxminded.domain.dao.GroupDao;
 
 import ua.com.foxminded.domain.entity.Group;
-import ua.com.foxminded.domain.entity.dto.StudentGroupDTO;
-import ua.com.foxminded.domain.entity.mappers.StudentGroupMapper;
+import ua.com.foxminded.domain.entity.dto.GroupDTO;
+import ua.com.foxminded.domain.entity.mappers.GroupMapper;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class StudentGroupService {
-    private final StudentGroupMapper groupMapper;
-    private final StudentGroupDao studentGroupDao;
+public class GroupService {
+    private final GroupMapper groupMapper;
+    private final GroupDao groupDao;
 
     public List<Group> readAll(){
-        return studentGroupDao.readAll();
+        return groupDao.readAll();
     }
 
-    public StudentGroupDTO findById(Integer id){
-        return groupMapper.toDto((studentGroupDao.findOne(id)));
+    public GroupDTO findById(Integer id){
+        Group group = groupDao.findOne(id);
+        return groupMapper.toDto(group);
     }
 
     public void delete (Integer id){
-        studentGroupDao.delete(id);
+        groupDao.delete(id);
     }
 
-    public StudentGroupDTO update(StudentGroupDTO studentGroupDTO){
-        return groupMapper.toDto(studentGroupDao.update(groupMapper.toEntity(studentGroupDTO)));
+    public Group update (Group group){
+        return groupDao.save(group);
     }
 
-    public StudentGroupDTO save (StudentGroupDTO studentGroupDTO){
-        Group entity = groupMapper.toEntity(studentGroupDTO);
-        entity = studentGroupDao.save(entity);
-        return groupMapper.toDto(entity);
-    }
+   public Group save(Group group){
+        return groupDao.save(group);
+   }
 }

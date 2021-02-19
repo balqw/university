@@ -3,10 +3,10 @@ package ua.com.foxminded.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.entity.StudentEntity;
-import ua.com.foxminded.service.StudentGroupService;
+import ua.com.foxminded.domain.entity.dto.StudentDTO;
+import ua.com.foxminded.service.GroupService;
 import ua.com.foxminded.service.StudentService;
 
 @Controller
@@ -15,7 +15,7 @@ import ua.com.foxminded.service.StudentService;
 public class StudentsController {
 
     private final StudentService studentService;
-    private final StudentGroupService groupService;
+    private final GroupService groupService;
 
 
     @GetMapping
@@ -33,15 +33,14 @@ public class StudentsController {
 
     @GetMapping("/new")
     public String create(Model model) {
-        model.addAttribute("student", new StudentEntity());
+        model.addAttribute("student", new StudentDTO());
         model.addAttribute("groups",groupService.readAll());
         return "students/new_student";
     }
 
     @PostMapping
-    public String createStudent(@ModelAttribute("student") StudentEntity studentEntity) {
-
-        studentService.save(studentEntity);
+    public String createStudent(@ModelAttribute("student")StudentDTO dto) {
+        studentService.save(dto);
         return "redirect:/students";
     }
 

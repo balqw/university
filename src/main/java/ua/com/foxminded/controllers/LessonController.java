@@ -5,9 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dao.ClassRoomDao;
-import ua.com.foxminded.domain.dao.StudentGroupDao;
+import ua.com.foxminded.domain.dao.GroupDao;
+import ua.com.foxminded.domain.entity.Group;
 import ua.com.foxminded.domain.entity.LessonEntity;
-import ua.com.foxminded.domain.entity.mappers.StudentMapper;
+import ua.com.foxminded.domain.entity.dto.LessonInfo;
 import ua.com.foxminded.service.LessonService;
 
 @Controller
@@ -16,7 +17,7 @@ import ua.com.foxminded.service.LessonService;
 public class LessonController {
     private final LessonService lessonService;
     private final ClassRoomDao classRoomDao;
-    private final StudentGroupDao studentGroupDao;
+    private final GroupDao groupDao;
 
     @GetMapping
     public String showAll(Model model) {
@@ -26,15 +27,20 @@ public class LessonController {
 
     @GetMapping("/new")
     public String showAdd(Model model) {
-        model.addAttribute("lesson", new LessonEntity());
+        model.addAttribute("lesson", new LessonInfo());
         model.addAttribute("class",classRoomDao.readAll());
-        model.addAttribute("group",studentGroupDao.readAll());
+        model.addAttribute("groups", groupDao.readAll());
         return "lessons/new_lesson";
     }
 
     @PostMapping
-    public String addLesson(@ModelAttribute("lesson") LessonEntity lessonEntity) {
-        lessonService.save(lessonEntity);
+    public String addLesson(@ModelAttribute("lesson") LessonInfo lessonInfo, @ModelAttribute ("group")Group group) {
+        lessonService.save(lessonInfo);
+        if(lessonInfo.getGroupList().size()!=0){
+            for(Group one : lessonInfo.getGroupList()){
+                lessonService.setGroup(one.getGroupId(),lessonInfo.getLessonId());
+            }
+        }
         return "redirect:/lessons";
     }
 
@@ -42,7 +48,7 @@ public class LessonController {
     public String showEdit(@PathVariable("id") int id, Model model) {
         model.addAttribute("lesson", lessonService.findOne(id));
         model.addAttribute("class",classRoomDao.readAll());
-        model.addAttribute("group",studentGroupDao.readAll());
+        model.addAttribute("group", groupDao.readAll());
         return "lessons/edit_lesson";
     }
 

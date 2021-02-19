@@ -2,6 +2,7 @@ package ua.com.foxminded.domain.entity.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import ua.com.foxminded.domain.entity.Group;
 
 @Data
 public class StudentDTO {
@@ -9,5 +10,5 @@ public class StudentDTO {
     private String name;
     private String surName;
     private Integer course;
-    private String studentGroup;
+    private Group group;
 }

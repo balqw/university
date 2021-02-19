@@ -20,11 +20,13 @@ public class StudentService {
     private final LessonDao lessonDao;
     private final StudentMapper studentMapper;
 
-    public StudentEntity save(StudentEntity entity) {
+    public StudentEntity save(StudentDTO dto) {
+        StudentEntity entity = studentMapper.toStudentEntity(dto);
         return studentDao.save(entity);
     }
 
     public List<StudentDTO> readAll() {
+
         return studentMapper.toDtos(studentDao.readAll());
     }
 

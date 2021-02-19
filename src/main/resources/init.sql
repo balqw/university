@@ -1,12 +1,13 @@
-drop table if exists student_group cascade;
 drop table if exists student;
 drop table if exists educator cascade;
 drop table if exists id_card cascade;
 drop table if exists educator_card;
 drop table if exists class_room cascade;
 drop table if exists lesson cascade;
+drop table if exists lesson_group cascade;
+drop table if exists _group cascade;
 
-create table group
+create table _group
 (
     group_id    serial primary key,
     abbreviate  varchar(10) unique,
@@ -16,10 +17,10 @@ create table group
 create table student
 (
     student_id serial primary key,
-    firstName  varchar(100),
-    lastName   varchar(100),
+    first_name  varchar(100),
+    last_name   varchar(100),
     course     integer,
-    group_id   int references group (group_id)
+    group_id   int references _group (group_id)
 );
 
 create table id_card
@@ -56,6 +57,6 @@ create table lesson_group
 (
     id        serial primary key,
     lesson_id int references lesson (lesson_id),
-    group_id  int references group (group_id)
+    group_id  int references _group (group_id)
 );
 

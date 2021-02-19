@@ -6,9 +6,11 @@ import ua.com.foxminded.domain.dao.ClassRoomDao;
 import ua.com.foxminded.domain.dao.LessonDaoImpl;
 import ua.com.foxminded.domain.dao.StudentDaoImpl;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
+import ua.com.foxminded.domain.entity.Group;
 import ua.com.foxminded.domain.entity.LessonEntity;
 import ua.com.foxminded.domain.entity.StudentEntity;
 import ua.com.foxminded.domain.entity.dto.LessonInfo;
+import ua.com.foxminded.domain.entity.mappers.LessonInfoMapper;
 
 import java.util.List;
 
@@ -18,21 +20,29 @@ public class LessonService {
     private final LessonDaoImpl lessonDaoImpl;
     private final ClassRoomDao classRoomDao;
     private final StudentDaoImpl studentDao;
+    private final LessonInfoMapper lessonInfoMapper;
 
-    public LessonEntity save(LessonEntity entity) {
+    public LessonInfo save(LessonInfo lessonInfo) {
         ClassRoomEntity classRoom = null;
+
         try {
-            classRoom = classRoomDao.findByNumber(entity.getClassRoom().getNumber());
+            classRoom = classRoomDao.findByNumber(lessonInfo.getClassRoom().getNumber());
         } catch (RuntimeException e) {
             throw new IllegalArgumentException("class not exist");
         }
-        entity.setClassRoom(classRoom);
-        return lessonDaoImpl.save(entity);
+        lessonInfo.setClassRoom(classRoom);
+
+
+        LessonEntity lessonEntity = lessonInfoMapper.toEntity(lessonInfo);
+
+        lessonDaoImpl.save(lessonEntity);
+
+        return lessonInfo;
 
     }
 
-    public List<LessonEntity> readAll() {
-        return lessonDaoImpl.readAll();
+    public List<LessonInfo> readAll() {
+        return lessonInfoMapper.toDtos(lessonDaoImpl.readAll());
     }
 
     public LessonEntity findOne(Integer id) {
@@ -50,5 +60,9 @@ public class LessonService {
     public LessonInfo getLessonInfo(Integer groupId) {
         List<StudentEntity> students = studentDao.findByGroup(groupId);
         return null;
+    }
+
+    public void setGroup(Integer idGroup, Integer idLesson){
+        lessonDaoImpl.setGroup(idLesson,idGroup);
     }
 }

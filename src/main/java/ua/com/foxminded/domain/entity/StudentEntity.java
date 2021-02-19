@@ -18,7 +18,8 @@ public class StudentEntity {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @ManyToOne
-    @JoinColumn(referencedColumnName ="group_id")
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "group_id",referencedColumnName = "group_id")
     private Group group;
 }
