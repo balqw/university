@@ -1,4 +1,4 @@
-package ua.com.foxminded.domain.entity.dto;
+package ua.com.foxminded.domain.dto;
 
 import lombok.Data;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;

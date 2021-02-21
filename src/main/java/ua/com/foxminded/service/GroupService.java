@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.GroupDao;
 
 import ua.com.foxminded.domain.entity.Group;
-import ua.com.foxminded.domain.entity.dto.GroupDTO;
-import ua.com.foxminded.domain.entity.mappers.GroupMapper;
+import ua.com.foxminded.domain.dto.GroupDTO;
+import ua.com.foxminded.domain.mappers.GroupMapper;
 
 import java.util.List;
 

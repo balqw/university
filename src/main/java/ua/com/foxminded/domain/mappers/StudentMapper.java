@@ -1,11 +1,11 @@
-package ua.com.foxminded.domain.entity.mappers;
+package ua.com.foxminded.domain.mappers;
 
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ua.com.foxminded.domain.entity.Group;
 import ua.com.foxminded.domain.entity.StudentEntity;
-import ua.com.foxminded.domain.entity.dto.StudentDTO;
+import ua.com.foxminded.domain.dto.StudentDTO;
 
 import java.util.List;
 

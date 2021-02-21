@@ -1,6 +1,5 @@
-package ua.com.foxminded.domain.entity.dto;
+package ua.com.foxminded.domain.dto;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data

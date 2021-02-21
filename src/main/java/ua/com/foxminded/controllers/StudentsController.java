@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.entity.StudentEntity;
-import ua.com.foxminded.domain.entity.dto.StudentDTO;
+import ua.com.foxminded.domain.dto.StudentDTO;
 import ua.com.foxminded.service.GroupService;
 import ua.com.foxminded.service.StudentService;
 
@@ -47,14 +47,15 @@ public class StudentsController {
     @GetMapping("/{id}/edit")
     public String showEdit(@PathVariable("id") int id, Model model) {
         model.addAttribute("student", studentService.findOne(id));
+        model.addAttribute("groups",groupService.readAll());
         return "students/edit_student";
     }
 
 
     @PatchMapping("{id}")
-    public String editStudent(@ModelAttribute("student") StudentEntity studentEntity, @PathVariable("id") int id) {
-        studentEntity.setStudentId(id);
-        studentService.update(studentEntity);
+    public String editStudent(@ModelAttribute("student") StudentDTO studentDTO, @PathVariable("id") int id) {
+        studentDTO.setId(id);
+        studentService.update(studentDTO);
         return "redirect:/students";
     }
 

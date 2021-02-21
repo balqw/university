@@ -35,6 +35,7 @@ public class SpringWebConfig implements WebMvcConfigurer {
         templateResolver.setSuffix(".html");
         templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
+
     }
 
     @Bean

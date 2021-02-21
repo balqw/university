@@ -38,14 +38,6 @@
                             </select>
                         </div>
 
-                        <div class="form-group col-md-8">
-                            <select th:field="*{groupList}" id = "selectedGroup" multiple size="3">
-                                <option th:each="group : ${groups}"
-                                th:value="${group}"
-                                th:text="${group.abbreviate}">
-                                </option>
-                            </select>
-                        </div>
 
                         <div class="col-md-6">
                             <input type="submit" class="btn btn-primary" value="Add Card">

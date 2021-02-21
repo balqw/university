@@ -1,8 +1,8 @@
-package ua.com.foxminded.domain.entity.mappers;
+package ua.com.foxminded.domain.mappers;
 
 import org.mapstruct.Mapper;
 import ua.com.foxminded.domain.entity.Group;
-import ua.com.foxminded.domain.entity.dto.GroupDTO;
+import ua.com.foxminded.domain.dto.GroupDTO;
 
 import java.util.List;
 

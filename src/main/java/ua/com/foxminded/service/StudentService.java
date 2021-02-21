@@ -6,9 +6,9 @@ import ua.com.foxminded.domain.dao.LessonDao;
 import ua.com.foxminded.domain.dao.StudentDao;
 import ua.com.foxminded.domain.entity.LessonEntity;
 import ua.com.foxminded.domain.entity.StudentEntity;
-import ua.com.foxminded.domain.entity.dto.StudentDTO;
-import ua.com.foxminded.domain.entity.dto.StudentSummaryInfo;
-import ua.com.foxminded.domain.entity.mappers.StudentMapper;
+import ua.com.foxminded.domain.dto.StudentDTO;
+import ua.com.foxminded.domain.dto.StudentSummaryInfo;
+import ua.com.foxminded.domain.mappers.StudentMapper;
 
 import java.util.List;
 
@@ -34,8 +34,10 @@ public class StudentService {
         return studentMapper.toStudentDTO(studentDao.findOne(id));
     }
 
-    public StudentEntity update(StudentEntity entity) {
-        return studentDao.update(entity);
+    public StudentDTO update(StudentDTO studentDTO) {
+        StudentEntity entity = studentMapper.toStudentEntity(studentDTO);
+         studentDao.update(entity);
+        return studentDTO;
     }
 
     public void delete(Integer id) {

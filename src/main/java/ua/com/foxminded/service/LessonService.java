@@ -6,11 +6,10 @@ import ua.com.foxminded.domain.dao.ClassRoomDao;
 import ua.com.foxminded.domain.dao.LessonDaoImpl;
 import ua.com.foxminded.domain.dao.StudentDaoImpl;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
-import ua.com.foxminded.domain.entity.Group;
 import ua.com.foxminded.domain.entity.LessonEntity;
 import ua.com.foxminded.domain.entity.StudentEntity;
-import ua.com.foxminded.domain.entity.dto.LessonInfo;
-import ua.com.foxminded.domain.entity.mappers.LessonInfoMapper;
+import ua.com.foxminded.domain.dto.LessonInfo;
+import ua.com.foxminded.domain.mappers.LessonInfoMapper;
 
 import java.util.List;
 
@@ -23,6 +22,30 @@ public class LessonService {
     private final LessonInfoMapper lessonInfoMapper;
 
     public LessonInfo save(LessonInfo lessonInfo) {
+        setRoom(lessonInfo);
+        LessonEntity entity = lessonInfoMapper.toEntity(lessonInfo);
+        lessonDaoImpl.save(entity);
+        return lessonInfo;
+
+    }
+
+    public List<LessonInfo> readAll() {
+        return lessonInfoMapper.toDtos(lessonDaoImpl.readAll());
+    }
+
+    public LessonInfo findOne(Integer id) {
+        LessonEntity lessonEntity =  lessonDaoImpl.findOne(id);
+        return lessonInfoMapper.toDto(lessonEntity);
+    }
+
+    public LessonInfo update(LessonInfo lessonInfo) {
+        setRoom(lessonInfo);
+        LessonEntity entity = lessonInfoMapper.toEntity(lessonInfo);
+        lessonDaoImpl.update(entity);
+        return lessonInfo;
+    }
+
+    private void setRoom(LessonInfo lessonInfo) {
         ClassRoomEntity classRoom = null;
 
         try {
@@ -32,25 +55,6 @@ public class LessonService {
         }
         lessonInfo.setClassRoom(classRoom);
 
-
-        LessonEntity lessonEntity = lessonInfoMapper.toEntity(lessonInfo);
-
-        lessonDaoImpl.save(lessonEntity);
-
-        return lessonInfo;
-
-    }
-
-    public List<LessonInfo> readAll() {
-        return lessonInfoMapper.toDtos(lessonDaoImpl.readAll());
-    }
-
-    public LessonEntity findOne(Integer id) {
-        return lessonDaoImpl.findOne(id);
-    }
-
-    public LessonEntity update(LessonEntity entity) {
-        return lessonDaoImpl.update(entity);
     }
 
     public void delete(Integer id) {
