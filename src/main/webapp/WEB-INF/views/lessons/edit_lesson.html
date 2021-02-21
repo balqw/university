@@ -16,13 +16,13 @@
                 <form th:action="@{/lessons/{id}(id=${lesson.getLessonId()})}" th:object="${lesson}" th:method="PATCH">
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label for="title" class="col-form-label">title</label> <input type="text" th:field="*{title}" class="form-control" id="title" placeholder="title" ></span>
+                            <label for="title" class="col-form-label">title</label> <input type="d" th:field="*{title}" class="form-control" id="title" placeholder="title" ></span>
                         </div>
                         <div class="form-group col-md-8">
-                            <label for="start" class="col-form-label">start</label> <input type="text" th:field="*{startLesson}" class="form-control" id="start" placeholder="start HH:mm dd/MM/yyyy"></span>
+                            <label for="start" class="col-form-label">start</label> <input type="datetime-local" th:field="*{startLesson}" class="form-control" id="start" placeholder="start HH:mm dd/MM/yyyy"></span>
                         </div>
                         <div class="form-group col-md-8">
-                            <label for="end" class="col-form-label">end</label> <input type="text" th:field="*{endLesson}" class="form-control" id="end" placeholder="end HH:mm dd/MM/yyyy"></span>
+                            <label for="end" class="col-form-label">end</label> <input type="datetime-local" th:field="*{endLesson}" class="form-control" id="end" placeholder="end HH:mm dd/MM/yyyy"></span>
                         </div>
                         <div class="form-group col-md-8">
                             <label for="class-room" class="col-form-label">Class room</label> <input type="text" th:field="*{classRoom.number}" class="form-control" id="class-room" placeholder="Class room"></span>
