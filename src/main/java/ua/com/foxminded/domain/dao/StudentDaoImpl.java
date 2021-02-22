@@ -1,6 +1,8 @@
 package ua.com.foxminded.domain.dao;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.StudentEntity;
 
@@ -14,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class StudentDaoImpl implements StudentDao{
     private final EntityManagerFactory managerFactory;
+    private final Logger logger = LoggerFactory.getLogger(StudentDaoImpl.class);
 
 
     @Override
@@ -24,6 +27,7 @@ public class StudentDaoImpl implements StudentDao{
         em.persist(entity);
         et.commit();
         em.close();
+        logger.debug("save student {}", entity);
         return entity;
     }
 
@@ -31,13 +35,17 @@ public class StudentDaoImpl implements StudentDao{
     @SuppressWarnings("unchecked")
     public List<StudentEntity> readAll() {
         EntityManager em = managerFactory.createEntityManager();
-        return em.createQuery("SELECT student from StudentEntity student").getResultList();
+        List<StudentEntity>students =  em.createQuery("SELECT student from StudentEntity student").getResultList();
+        logger.debug("read all students");
+        return students;
     }
 
     @Override
     public StudentEntity findOne(Integer id) {
         EntityManager em = managerFactory.createEntityManager();
-        return em.find(StudentEntity.class, id);
+        StudentEntity student =  em.find(StudentEntity.class, id);
+        logger.debug("find student with id = {}", id);
+        return student;
     }
 
     @Override
@@ -48,6 +56,7 @@ public class StudentDaoImpl implements StudentDao{
         em.merge(entity);
         et.commit();
         em.close();
+        logger.debug("update student {}", entity);
         return entity;
     }
 
@@ -60,6 +69,7 @@ public class StudentDaoImpl implements StudentDao{
         em.remove(student);
         et.commit();
         em.close();
+        logger.debug("delete student with id = {}", id);
     }
 
     @Override

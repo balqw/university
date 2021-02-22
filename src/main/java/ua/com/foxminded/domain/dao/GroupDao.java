@@ -1,6 +1,8 @@
 package ua.com.foxminded.domain.dao;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import ua.com.foxminded.domain.entity.Group;
@@ -16,6 +18,8 @@ import java.util.List;
 public class GroupDao implements CrudOperation<Group, Integer> {
 
     private final EntityManagerFactory managerFactory;
+    private final Logger logger = LoggerFactory.getLogger(Group.class);
+
 
     @Override
     public Group save(Group entity) {
@@ -25,18 +29,22 @@ public class GroupDao implements CrudOperation<Group, Integer> {
         em.persist(entity);
         et.commit();
         em.close();
+        logger.debug("save group {}", entity);
         return entity;
     }
 
     @Override
     public List<Group> readAll() {
         EntityManager em = managerFactory.createEntityManager();
+        logger.debug("read all group");
         return em.createQuery("select a from Group a").getResultList();
     }
 
     @Override
     public Group findOne(Integer id) {
-        return managerFactory.createEntityManager().find(Group.class, id);
+        Group group = managerFactory.createEntityManager().find(Group.class, id);
+        logger.debug("find group with id = {}", id);
+        return group;
     }
 
 
@@ -48,6 +56,7 @@ public class GroupDao implements CrudOperation<Group, Integer> {
         em.merge(entity);
         et.commit();
         em.close();
+        logger.debug("update group", entity);
         return entity;
     }
 
@@ -59,6 +68,7 @@ public class GroupDao implements CrudOperation<Group, Integer> {
         em.remove(em.find(IdCardEntity.class, id));
         et.commit();
         em.close();
+        logger.debug("delete group with id = {}", id);
     }
 
     public Group findByAbbr(String name) {

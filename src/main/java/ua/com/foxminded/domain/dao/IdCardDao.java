@@ -1,5 +1,7 @@
 package ua.com.foxminded.domain.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.IdCardEntity;
@@ -13,7 +15,7 @@ import java.util.List;
 public class IdCardDao implements CrudOperation<IdCardEntity, Integer>{
 
     private final EntityManagerFactory managerFactory;
-
+    private final Logger logger = LoggerFactory.getLogger(IdCardDao.class);
     @Autowired
     public IdCardDao(EntityManagerFactory managerFactory) {
         this.managerFactory = managerFactory;
@@ -28,18 +30,23 @@ public class IdCardDao implements CrudOperation<IdCardEntity, Integer>{
         em.persist(entity);
         et.commit();
         em.close();
+        logger.debug("save id card {}", entity);
         return entity;
     }
 
     @Override
     public List<IdCardEntity> readAll() {
         EntityManager em = managerFactory.createEntityManager();
-        return em.createQuery("select idCard from IdCardEntity idCard").getResultList();
+        List<IdCardEntity>cards =  em.createQuery("select idCard from IdCardEntity idCard").getResultList();
+        logger.debug("read all cards");
+        return cards;
     }
 
     @Override
     public IdCardEntity findOne(Integer id) {
-        return managerFactory.createEntityManager().find(IdCardEntity.class, id);
+        IdCardEntity card =  managerFactory.createEntityManager().find(IdCardEntity.class, id);
+        logger.debug("find card with id = {}", id);
+        return card;
     }
 
     @Override
@@ -50,6 +57,7 @@ public class IdCardDao implements CrudOperation<IdCardEntity, Integer>{
         em.merge(entity);
         et.commit();
         em.close();
+        logger.debug("update card {}", entity);
         return entity;
     }
 
@@ -61,6 +69,7 @@ public class IdCardDao implements CrudOperation<IdCardEntity, Integer>{
         em.remove(em.find(IdCardEntity.class,id));
         et.commit();
         em.close();
+        logger.debug("delete card with id = {}", id);
     }
 
     @Override

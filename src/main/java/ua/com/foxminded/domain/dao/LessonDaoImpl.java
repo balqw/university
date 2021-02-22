@@ -1,8 +1,11 @@
 package ua.com.foxminded.domain.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.LessonEntity;
+import ua.com.foxminded.domain.mappers.LessonInfoMapperImpl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,6 +17,7 @@ import java.util.List;
 public class LessonDaoImpl implements LessonDao {
 
     private final EntityManagerFactory managerFactory;
+    private final Logger logger = LoggerFactory.getLogger(LessonInfoMapperImpl.class);
 
     @Autowired
     public LessonDaoImpl(EntityManagerFactory managerFactory) {
@@ -28,6 +32,7 @@ public class LessonDaoImpl implements LessonDao {
         em.persist(entity);
         et.commit();
         em.close();
+        logger.debug("save lesson {}", entity);
         return entity;
     }
 
@@ -35,13 +40,16 @@ public class LessonDaoImpl implements LessonDao {
     @SuppressWarnings("unchecked")
     public List<LessonEntity> readAll() {
         EntityManager em = managerFactory.createEntityManager();
-        return em.createQuery("SELECT a from LessonEntity a").getResultList();
+        List<LessonEntity>lessons = em.createQuery("SELECT a from LessonEntity a").getResultList();
+        logger.debug("read all lessons");
+        return lessons;
     }
 
     @Override
     public LessonEntity findOne(Integer id) {
-        EntityManager em = managerFactory.createEntityManager();
-        return em.find(LessonEntity.class, id);
+       LessonEntity lesson = managerFactory.createEntityManager().find(LessonEntity.class, id);
+       logger.debug("find lesson with id = {}", id);
+       return lesson;
     }
 
     @Override
@@ -52,6 +60,7 @@ public class LessonDaoImpl implements LessonDao {
         em.merge(entity);
         et.commit();
         em.close();
+        logger.debug("update lesson {}", entity);
         return entity;
     }
 
@@ -64,6 +73,7 @@ public class LessonDaoImpl implements LessonDao {
         em.remove(lessonEntity);
         et.commit();
         em.close();
+        logger.debug("delete lesson with id = {}", id);
     }
 
     @Override

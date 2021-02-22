@@ -1,5 +1,7 @@
 package ua.com.foxminded.domain.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.EducatorEntity;
@@ -13,6 +15,7 @@ import java.util.List;
 @Repository
 public class EducatorDao implements CrudOperation<EducatorEntity,Integer>{
     private final EntityManagerFactory managerFactory;
+    private final Logger logger = LoggerFactory.getLogger(EducatorDao.class);
 
     @Autowired
     public EducatorDao(EntityManagerFactory managerFactory) {
@@ -28,17 +31,22 @@ public class EducatorDao implements CrudOperation<EducatorEntity,Integer>{
         em.persist(entity);
         et.commit();
         em.close();
+        logger.debug("save educator {}", entity);
         return entity;
     }
 
     @Override
     public List<EducatorEntity> readAll() {
-        return managerFactory.createEntityManager().createQuery("select educator from EducatorEntity educator").getResultList();
+        List<EducatorEntity>educators =  managerFactory.createEntityManager().createQuery("select educator from EducatorEntity educator").getResultList();
+        logger.debug("read all educators");
+        return educators;
     }
 
     @Override
     public EducatorEntity findOne(Integer id) {
-       return managerFactory.createEntityManager().find(EducatorEntity.class, id);
+       EducatorEntity educator = managerFactory.createEntityManager().find(EducatorEntity.class, id);
+       logger.debug("find educator with id = {}", id);
+       return educator;
     }
 
     @Override
@@ -49,6 +57,7 @@ public class EducatorDao implements CrudOperation<EducatorEntity,Integer>{
       em.merge(entity);
       et.commit();
       em.close();
+      logger.debug("update educator {}", entity);
       return entity;
     }
 
@@ -60,6 +69,7 @@ public class EducatorDao implements CrudOperation<EducatorEntity,Integer>{
         em.remove(em.find(EducatorEntity.class,id));
         et.commit();
         em.close();
+        logger.debug("delete educator with id = {}", id);
     }
 
     @Override
