@@ -11,6 +11,7 @@ import ua.com.foxminded.domain.entity.IdCardEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -83,6 +84,10 @@ public class GroupDao implements CrudOperation<Group, Integer> {
 
     @Override
     public boolean exist(Group entity) {
-        return false;//ToDo
+        EntityManager em = managerFactory.createEntityManager();
+        Query q = em.createQuery("select count (a) from Group a where a.abbreviate=:abbr")
+                .setParameter("abbr",entity.getAbbreviate());
+        Long count = (Long) q.getSingleResult();
+        return count>0;
     }
 }

@@ -78,7 +78,14 @@ public class LessonDaoImpl implements LessonDao {
 
     @Override
     public boolean exist(LessonEntity entity) {
-        return false;//ToDo -> implement me
+        EntityManager em = managerFactory.createEntityManager();
+        Query q = em.createQuery("select count(lesson) from LessonEntity lesson " +
+                "where lesson.startLesson = :start " +
+                "and lesson.title = :title")
+                .setParameter("start",entity.getStartLesson())
+                .setParameter("title",entity.getTitle());
+        Long count = (Long) q.getSingleResult();
+        return count>0;
     }
 
     @Override
@@ -96,6 +103,7 @@ public class LessonDaoImpl implements LessonDao {
         query.setParameter("idLesson", lessId).setParameter("idGroup", groupId);
 
     }
+
 
 
 }

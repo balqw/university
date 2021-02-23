@@ -22,6 +22,8 @@ public class StudentService {
 
     public StudentEntity save(StudentDTO dto) {
         StudentEntity entity = studentMapper.toStudentEntity(dto);
+        if(studentDao.exist(entity))
+            throw new IllegalArgumentException("student already exist");
         return studentDao.save(entity);
     }
 

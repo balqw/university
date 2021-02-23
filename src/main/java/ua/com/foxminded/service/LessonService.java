@@ -24,6 +24,8 @@ public class LessonService {
     public LessonInfo save(LessonInfo lessonInfo) {
         setRoom(lessonInfo);
         LessonEntity entity = lessonInfoMapper.toEntity(lessonInfo);
+        if(lessonDaoImpl.exist(entity))
+            throw new IllegalArgumentException("lesson already exist");
         lessonDaoImpl.save(entity);
         return lessonInfo;
 

@@ -7,10 +7,9 @@ import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
 import ua.com.foxminded.domain.entity.EducatorEntity;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
+import javax.persistence.*;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ClassRoomDao implements CrudOperation<ClassRoomEntity, Integer>{
@@ -72,10 +71,14 @@ public class ClassRoomDao implements CrudOperation<ClassRoomEntity, Integer>{
         logger.debug("delete room with id = {}", id);
     }
 
-    @Override
-    public boolean exist(ClassRoomEntity entity) {
-        return false;
-    }
+   @Override
+   public boolean exist(ClassRoomEntity entity) {
+       EntityManager em = managerFactory.createEntityManager();
+       Query q =  em.createQuery("select count(a) from ClassRoomEntity a where a.number = :num")
+               .setParameter("num", entity.getNumber());
+       Long c = (Long) q.getSingleResult();
+       return c>0;
+   }
 
     public ClassRoomEntity findByNumber(Integer number) throws RuntimeException{
         return (ClassRoomEntity) managerFactory.createEntityManager().createQuery("select a from ClassRoomEntity a where a.number = ?1")

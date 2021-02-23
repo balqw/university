@@ -34,6 +34,9 @@ public class GroupService {
     }
 
    public Group save(Group group){
+
+        if(groupDao.exist(group))
+            throw new IllegalArgumentException("group already exist");
         return groupDao.save(group);
    }
 }

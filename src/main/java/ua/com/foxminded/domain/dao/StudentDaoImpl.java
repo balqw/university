@@ -73,8 +73,14 @@ public class StudentDaoImpl implements StudentDao{
     }
 
     @Override
-    public boolean exist(StudentEntity entity) {
-        return false;//FixMe
+    public boolean exist(StudentEntity entity){
+        EntityManager em = managerFactory.createEntityManager();
+        Query q = em.createQuery("select count(student) from StudentEntity student where student.firstName = :name " +
+                "and student.lastName = :surname")
+                .setParameter("name",entity.getFirstName())
+                .setParameter("surname",entity.getLastName());
+        Long count = (Long) q.getSingleResult();
+        return count>0;
     }
 
     @Override

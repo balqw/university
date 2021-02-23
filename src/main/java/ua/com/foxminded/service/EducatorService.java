@@ -19,6 +19,9 @@ public class EducatorService {
     private final IdCardDao idCardDao;
 
     public EducatorEntity save(EducatorEntity educator) {
+        if(educatorDao.exist(educator))
+            throw new IllegalArgumentException("educator already exist");
+        
         return educatorDao.save(educator);
     }
 

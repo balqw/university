@@ -10,6 +10,7 @@ import ua.com.foxminded.domain.entity.IdCardEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -74,6 +75,12 @@ public class EducatorDao implements CrudOperation<EducatorEntity,Integer>{
 
     @Override
     public boolean exist(EducatorEntity entity) {
-        return false;
+        EntityManager em = managerFactory.createEntityManager();
+        Query q = em.createQuery("select count(a) from EducatorEntity a where a.firstName=:name and a.lastName = :surname")
+                .setParameter("name",entity.getFirstName())
+                .setParameter("surname",entity.getLastName());
+        Long count = (Long) q.getSingleResult();
+        return count>0;
+
     }
 }

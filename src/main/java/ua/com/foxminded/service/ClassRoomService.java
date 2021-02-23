@@ -16,6 +16,8 @@ public class ClassRoomService{
 
 
     public ClassRoomEntity save(ClassRoomEntity entity) {
+       if(classRoomDao.exist(entity))
+           throw new IllegalArgumentException("classroom already exist");
         return classRoomDao.save(entity);
     }
 
