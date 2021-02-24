@@ -14,7 +14,9 @@ public class EducatorEntity extends Person {
     @GeneratedValue
     @Column(name = "educator_id")
     private Integer educatorId;
-    @OneToOne
-    @JoinColumn(referencedColumnName = "card_id")
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_card", referencedColumnName = "card_id")
     private IdCardEntity idCard;
+
 }
