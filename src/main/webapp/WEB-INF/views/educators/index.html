@@ -36,7 +36,7 @@
                                 <td th:text="${educator.getFirstName()}"></td>
                                 <td th:text="${educator.getLastName()}"></td>
                                 <td th:text="${educator.getIdCard().getCardId()}"></td>
-                                <td th:text="${educator.getIdCard().getDataExpire()}"></td>
+                                <td th:text="${educator.getIdCard().getDateExpire()}"></td>
                                 <td><a th:href="@{educators/{id}/edit(id=${educator.getEducatorId()})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
                                 <td><a th:href="@{educators/{id}/delete(id=${educator.getEducatorId()})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
                             </tr>

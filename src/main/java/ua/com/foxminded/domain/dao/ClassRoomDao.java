@@ -1,91 +1,87 @@
 package ua.com.foxminded.domain.dao;
 
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
-import ua.com.foxminded.domain.entity.mapperEntity.ClassRoomMapper;
-import ua.com.foxminded.domain.exceptions.NotFoundException;
+import ua.com.foxminded.domain.entity.EducatorEntity;
 
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+import javax.persistence.*;
 import java.util.List;
-
-import static java.lang.String.format;
+import java.util.Optional;
 
 @Repository
-@RequiredArgsConstructor
-public class ClassRoomDao implements CrudOperation<ClassRoomEntity, Integer> {
-    private final String INSERT = "insert into classroom (number,capacity) values(?,?)";
-    private final String FIND_BY_ID = "select * from classroom where number = ?";
-    private final String FIND_ALL = "select * from classroom";
-    private final String UPDATE = "update classroom set number=?,capacity=? where classId=? ";
-    private final String DELETE = "delete from classroom where classId = ?";
-    private final String COUNT = "select count(classId) from classroom where classId=?";
-    private final JdbcTemplate jdbcTemplate;
-    private final static Logger logger = LoggerFactory.getLogger(ClassRoomDao.class);
+public class ClassRoomDao implements CrudOperation<ClassRoomEntity, Integer>{
+    private final EntityManagerFactory managerFactory;
+    private final Logger logger = LoggerFactory.getLogger(ClassRoomDao.class);
 
+    @Autowired
+    public ClassRoomDao(EntityManagerFactory managerFactory) {
+        this.managerFactory = managerFactory;
+    }
 
     @Override
     public ClassRoomEntity save(ClassRoomEntity entity) {
-        KeyHolder keyH = new GeneratedKeyHolder();
-        jdbcTemplate.update(con -> {
-            PreparedStatement ps = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, entity.getNumber());
-            ps.setInt(2, entity.getCapacity());
-            return ps;
-        }, keyH);
-        entity.setClassId((int) keyH.getKeys().get("classId"));
-        logger.debug("save classRoom {}", entity);
+        EntityManager em = managerFactory.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        em.persist(entity);
+        et.commit();
+        em.close();
+        logger.debug("save class room {}",entity);
         return entity;
     }
 
     @Override
     public List<ClassRoomEntity> readAll() {
-        logger.debug("read all classRooms");
-        return jdbcTemplate.query(FIND_ALL, new ClassRoomMapper());
+        EntityManager em = managerFactory.createEntityManager();
+        List<ClassRoomEntity>rooms = em.createQuery("select room from ClassRoomEntity room").getResultList();
+        logger.debug("read all rooms");
+        return rooms;
     }
 
     @Override
     public ClassRoomEntity findOne(Integer id) {
-        logger.debug("find classRoom with id {}", id);
-        try {
-            return jdbcTemplate.queryForObject(FIND_BY_ID, new Object[]{id}, new ClassRoomMapper());
-        } catch (RuntimeException e) {
-            logger.error("classRoom with id {} failed", id, e);
-            String msg = format("classRoom with id = '%s' not exist", id);
-            throw new NotFoundException(msg);
-        }
+        ClassRoomEntity room =  managerFactory.createEntityManager().find(ClassRoomEntity.class, id);
+        logger.debug("find room by id = {}",id);
+        return room;
     }
 
     @Override
     public ClassRoomEntity update(ClassRoomEntity entity) {
-        logger.debug("update classRoom {}", entity);
-        jdbcTemplate.update(UPDATE,
-                entity.getNumber(),
-                entity.getCapacity(),
-                entity.getClassId());
+        EntityManager em = managerFactory.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        em.merge(entity);
+        et.commit();
+        em.close();
+        logger.debug("update room {}",entity);
         return entity;
     }
 
     @Override
     public void delete(Integer id) {
-        logger.debug("delete classRoom with id {}", id);
-        jdbcTemplate.update(DELETE, id);
+        EntityManager em = managerFactory.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        em.remove(em.find(ClassRoomEntity.class,id));
+        et.commit();
+        em.close();
+        logger.debug("delete room with id = {}", id);
     }
 
-    @Override
-    public boolean exist(ClassRoomEntity entity) {
-        return jdbcTemplate.queryForObject(COUNT, new Object[]{entity.getClassId()}, Integer.class) > 0;
+   @Override
+   public boolean exist(ClassRoomEntity entity) {
+       EntityManager em = managerFactory.createEntityManager();
+       Query q =  em.createQuery("select count(a) from ClassRoomEntity a where a.number = :num")
+               .setParameter("num", entity.getNumber());
+       Long c = (Long) q.getSingleResult();
+       return c>0;
+   }
+
+    public ClassRoomEntity findByNumber(Integer number) throws RuntimeException{
+        return (ClassRoomEntity) managerFactory.createEntityManager().createQuery("select a from ClassRoomEntity a where a.number = ?1")
+                .setParameter(1,number).getSingleResult();
     }
-
-    public boolean isExist(Integer id) {
-        return jdbcTemplate.queryForObject(COUNT, new Object[]{id}, Integer.class) > 0;
-    }
-
-
 }

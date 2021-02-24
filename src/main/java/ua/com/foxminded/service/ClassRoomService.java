@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.ClassRoomDao;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
-import ua.com.foxminded.domain.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -17,9 +16,8 @@ public class ClassRoomService{
 
 
     public ClassRoomEntity save(ClassRoomEntity entity) {
-        if(classRoomDao.isExist(entity.getNumber()))
-            throw new IllegalArgumentException("classroom already exist");
-
+       if(classRoomDao.exist(entity))
+           throw new IllegalArgumentException("classroom already exist");
         return classRoomDao.save(entity);
     }
 
@@ -32,10 +30,7 @@ public class ClassRoomService{
     }
 
     public ClassRoomEntity update(ClassRoomEntity entity) {
-        if(classRoomDao.isExist(entity.getClassId()))
-            return classRoomDao.update(entity);
-
-        throw new NotFoundException(format("classRoom with id = '%s' not exist",entity.getClassId()));
+          return classRoomDao.update(entity);
     }
 
     public void delete(Integer id) {

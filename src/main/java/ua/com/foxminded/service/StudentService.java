@@ -2,40 +2,57 @@ package ua.com.foxminded.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ua.com.foxminded.domain.dao.LessonDao;
 import ua.com.foxminded.domain.dao.StudentDao;
+import ua.com.foxminded.domain.entity.LessonEntity;
 import ua.com.foxminded.domain.entity.StudentEntity;
+import ua.com.foxminded.domain.dto.StudentDTO;
+import ua.com.foxminded.domain.dto.StudentSummaryInfo;
+import ua.com.foxminded.domain.mappers.StudentMapper;
 
 import java.util.List;
-
-import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
 public class StudentService {
-    private final StudentDao studentDao;
 
-    public StudentEntity save(StudentEntity entity) {
-        if (studentDao.isExist(entity.getFirstName(), entity.getLastName()))
+    private final StudentDao studentDao;
+    private final LessonDao lessonDao;
+    private final StudentMapper studentMapper;
+
+    public StudentEntity save(StudentDTO dto) {
+        StudentEntity entity = studentMapper.toStudentEntity(dto);
+        if(studentDao.exist(entity))
             throw new IllegalArgumentException("student already exist");
         return studentDao.save(entity);
     }
 
-    public List<StudentEntity> readAll() {
-        return studentDao.readAll();
+    public List<StudentDTO> readAll() {
+
+        return studentMapper.toDtos(studentDao.readAll());
     }
 
-    public StudentEntity findOne(Integer id) {
-        return studentDao.findOne(id);
+    public StudentDTO findOne(Integer id) {
+        return studentMapper.toStudentDTO(studentDao.findOne(id));
     }
 
-    public StudentEntity update(StudentEntity entity) {
-        if (studentDao.exist(entity))
-            return studentDao.update(entity);
-        throw new IllegalArgumentException(format("student with id = '%s' not exist", entity.getStudentId()));
+    public StudentDTO update(StudentDTO studentDTO) {
+        StudentEntity entity = studentMapper.toStudentEntity(studentDTO);
+         studentDao.update(entity);
+        return studentDTO;
     }
 
     public void delete(Integer id) {
         studentDao.delete(id);
     }
 
+    public StudentSummaryInfo combineSummaryInfo(Integer id) {
+        StudentEntity student = studentDao.findOne(id);
+        List<LessonEntity> lessons = lessonDao.findByGroup(student.getGroup().getGroupId());
+        return StudentSummaryInfo.builder()
+                .id(student.getStudentId())
+                .name(String.format("%s %s", student.getFirstName(), student.getLastName()))
+                .lessons(lessons)
+                .build();
+    }
 }

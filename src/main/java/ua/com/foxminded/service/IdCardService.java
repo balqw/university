@@ -4,13 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.foxminded.domain.dao.IdCardDao;
 import ua.com.foxminded.domain.entity.IdCardEntity;
-import ua.com.foxminded.domain.exceptions.NotFoundException;
+
 import java.util.List;
-import static java.lang.String.format;
 
 @RequiredArgsConstructor
 @Service
-public class IdCardService{
+public class IdCardService {
     private final IdCardDao idCardDao;
 
 
@@ -27,10 +26,7 @@ public class IdCardService{
     }
 
     public IdCardEntity update(IdCardEntity entity) {
-        if(idCardDao.exist(entity))
-            return idCardDao.update(entity);
-
-        throw new NotFoundException(format("idCard with id = '%s' not exist",entity.getCardId()));
+        return idCardDao.update(entity);
     }
 
     public void delete(Integer id) {

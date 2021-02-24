@@ -2,39 +2,73 @@ package ua.com.foxminded.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ua.com.foxminded.domain.dao.LessonDao;
+import ua.com.foxminded.domain.dao.ClassRoomDao;
+import ua.com.foxminded.domain.dao.LessonDaoImpl;
+import ua.com.foxminded.domain.dao.StudentDaoImpl;
+import ua.com.foxminded.domain.entity.ClassRoomEntity;
 import ua.com.foxminded.domain.entity.LessonEntity;
-import ua.com.foxminded.domain.exceptions.NotFoundException;
-import java.util.List;
+import ua.com.foxminded.domain.entity.StudentEntity;
+import ua.com.foxminded.domain.dto.LessonInfo;
+import ua.com.foxminded.domain.mappers.LessonInfoMapper;
 
-import static java.lang.String.format;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class LessonService {
-    private final LessonDao lessonDao;
+    private final LessonDaoImpl lessonDaoImpl;
+    private final ClassRoomDao classRoomDao;
+    private final StudentDaoImpl studentDao;
+    private final LessonInfoMapper lessonInfoMapper;
 
+    public LessonInfo save(LessonInfo lessonInfo) {
+        setRoom(lessonInfo);
+        LessonEntity entity = lessonInfoMapper.toEntity(lessonInfo);
+        if(lessonDaoImpl.exist(entity))
+            throw new IllegalArgumentException("lesson already exist");
+        lessonDaoImpl.save(entity);
+        return lessonInfo;
 
-    public LessonEntity save(LessonEntity entity) {
-        return lessonDao.save(entity);
     }
 
-    public List<LessonEntity> readAll() {
-        return lessonDao.readAll();
+    public List<LessonInfo> readAll() {
+        return lessonInfoMapper.toDtos(lessonDaoImpl.readAll());
     }
 
-    public LessonEntity findOne(Integer id) {
-        return lessonDao.findOne(id);
+    public LessonInfo findOne(Integer id) {
+        LessonEntity lessonEntity =  lessonDaoImpl.findOne(id);
+        return lessonInfoMapper.toDto(lessonEntity);
     }
 
-    public LessonEntity update(LessonEntity entity) {
-        if(lessonDao.exist(entity))
-            return lessonDao.update(entity);
+    public LessonInfo update(LessonInfo lessonInfo) {
+        setRoom(lessonInfo);
+        LessonEntity entity = lessonInfoMapper.toEntity(lessonInfo);
+        lessonDaoImpl.update(entity);
+        return lessonInfo;
+    }
 
-        throw new NotFoundException(format("lesson with id = '%s' not exist",entity.getLessonId()));
+    private void setRoom(LessonInfo lessonInfo) {
+        ClassRoomEntity classRoom = null;
+
+        try {
+            classRoom = classRoomDao.findByNumber(lessonInfo.getClassRoom().getNumber());
+        } catch (RuntimeException e) {
+            throw new IllegalArgumentException("class not exist");
+        }
+        lessonInfo.setClassRoom(classRoom);
+
     }
 
     public void delete(Integer id) {
-        lessonDao.delete(id);
+        lessonDaoImpl.delete(id);
+    }
+
+    public LessonInfo getLessonInfo(Integer groupId) {
+        List<StudentEntity> students = studentDao.findByGroup(groupId);
+        return null;
+    }
+
+    public void setGroup(Integer idGroup, Integer idLesson){
+        lessonDaoImpl.setGroup(idLesson,idGroup);
     }
 }

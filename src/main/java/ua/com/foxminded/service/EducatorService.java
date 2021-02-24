@@ -19,8 +19,9 @@ public class EducatorService {
     private final IdCardDao idCardDao;
 
     public EducatorEntity save(EducatorEntity educator) {
-        if (educatorDao.exist(educator)) throw new IllegalArgumentException("educator already exist");
-        idCardExistsAndValid(educator.getIdCard());
+        if(educatorDao.exist(educator))
+            throw new IllegalArgumentException("educator already exist");
+        
         return educatorDao.save(educator);
     }
 
@@ -32,7 +33,6 @@ public class EducatorService {
     }
 
     public List<EducatorEntity> readAll() {
-
         return educatorDao.readAll();
     }
 
@@ -41,12 +41,11 @@ public class EducatorService {
     }
 
     public EducatorEntity update(EducatorEntity educator) {
-        if (educatorDao.exist(educator))
             return educatorDao.update(educator);
-        throw new NotFoundException(format("educator with id = '%s' not exist", educator.getIdCard()));
     }
 
     public void delete(Integer id) {
         educatorDao.delete(id);
     }
+
 }

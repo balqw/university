@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>new student</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</head>
+<body>
+<div class="container my-5">
+    <h3> Add Group</h3>
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-10">
+                <form th:action="@{/groups}" th:object="${group_}" th:method="post" >
+                    <div class="row">
+                        <div class="form-group col-md-8">
+                            <label for="abbreviate" class="col-form-label">Abbreviate</label> <input type="text" th:field="*{abbreviate}" class="form-control" id="abbreviate" placeholder="Abbreviate">
+                        </div>
+                        <div  class="form-group col-md-8">
+                            <label for="description" class="col-form-label">Description</label> <input type="text" th:field="*{description}" class="form-control" id="description" placeholder="Description">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-primary" value="Add Educator">
+                        </div>
+
+                        <div class="form-group col-md-8"></div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

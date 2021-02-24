@@ -27,18 +27,22 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Surname</th>
+                                <th>Group</th>
                                 <th>Course</th>
+                                <th>Details</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody >
                             <tr th:each="student : ${students}">
-                                <td th:text="${student.getFirstName()}"></td>
-                                <td th:text="${student.getLastName()}"></td>
+                                <td th:text="${student.getName()}"></td>
+                                <td th:text="${student.getSurName()}"></td>
+                                <td th:text="${student.getGroup().getAbbreviate()}"></td>
                                 <td th:text="${student.getCourse()}"></td>
-                                <td><a th:href="@{students/{id}/edit(id=${student.getStudentId()})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-                                <td><a th:href="@{students/{id}/delete(id=${student.getStudentId()})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
+                                <td><a th:href="@{students/{id}/details(id=${student.getId()})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
+                                <td><a th:href="@{students/{id}/edit(id=${student.getId()})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
+                                <td><a th:href="@{students/{id}/delete(id=${student.getId()})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
                             </tr>
                             </tbody>
                         </table>
