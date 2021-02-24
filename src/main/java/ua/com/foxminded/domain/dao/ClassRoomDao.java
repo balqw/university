@@ -1,41 +1,28 @@
 package ua.com.foxminded.domain.dao;
-
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
-import ua.com.foxminded.domain.entity.EducatorEntity;
-
 import javax.persistence.*;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class ClassRoomDao implements CrudOperation<ClassRoomEntity, Integer>{
-    private final EntityManagerFactory managerFactory;
     private final Logger logger = LoggerFactory.getLogger(ClassRoomDao.class);
-
-    @Autowired
-    public ClassRoomDao(EntityManagerFactory managerFactory) {
-        this.managerFactory = managerFactory;
-    }
+    private final EntityManager em;
 
     @Override
     public ClassRoomEntity save(ClassRoomEntity entity) {
-        EntityManager em = managerFactory.createEntityManager();
-        EntityTransaction et = em.getTransaction();
-        et.begin();
+
         em.persist(entity);
-        et.commit();
-        em.close();
         logger.debug("save class room {}",entity);
         return entity;
     }
 
     @Override
     public List<ClassRoomEntity> readAll() {
-        EntityManager em = managerFactory.createEntityManager();
         List<ClassRoomEntity>rooms = em.createQuery("select room from ClassRoomEntity room").getResultList();
         logger.debug("read all rooms");
         return rooms;
@@ -43,37 +30,26 @@ public class ClassRoomDao implements CrudOperation<ClassRoomEntity, Integer>{
 
     @Override
     public ClassRoomEntity findOne(Integer id) {
-        ClassRoomEntity room =  managerFactory.createEntityManager().find(ClassRoomEntity.class, id);
+        ClassRoomEntity room =  em.find(ClassRoomEntity.class, id);
         logger.debug("find room by id = {}",id);
         return room;
     }
 
     @Override
     public ClassRoomEntity update(ClassRoomEntity entity) {
-        EntityManager em = managerFactory.createEntityManager();
-        EntityTransaction et = em.getTransaction();
-        et.begin();
         em.merge(entity);
-        et.commit();
-        em.close();
         logger.debug("update room {}",entity);
         return entity;
     }
 
     @Override
     public void delete(Integer id) {
-        EntityManager em = managerFactory.createEntityManager();
-        EntityTransaction et = em.getTransaction();
-        et.begin();
         em.remove(em.find(ClassRoomEntity.class,id));
-        et.commit();
-        em.close();
         logger.debug("delete room with id = {}", id);
     }
 
    @Override
    public boolean exist(ClassRoomEntity entity) {
-       EntityManager em = managerFactory.createEntityManager();
        Query q =  em.createQuery("select count(a) from ClassRoomEntity a where a.number = :num")
                .setParameter("num", entity.getNumber());
        Long c = (Long) q.getSingleResult();
@@ -81,7 +57,7 @@ public class ClassRoomDao implements CrudOperation<ClassRoomEntity, Integer>{
    }
 
     public ClassRoomEntity findByNumber(Integer number) throws RuntimeException{
-        return (ClassRoomEntity) managerFactory.createEntityManager().createQuery("select a from ClassRoomEntity a where a.number = ?1")
+        return (ClassRoomEntity) em.createQuery("select a from ClassRoomEntity a where a.number = ?1")
                 .setParameter(1,number).getSingleResult();
     }
 }

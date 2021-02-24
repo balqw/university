@@ -2,6 +2,7 @@ package ua.com.foxminded.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.domain.dao.ClassRoomDao;
 import ua.com.foxminded.domain.dao.LessonDaoImpl;
 import ua.com.foxminded.domain.dao.StudentDaoImpl;
@@ -21,6 +22,7 @@ public class LessonService {
     private final StudentDaoImpl studentDao;
     private final LessonInfoMapper lessonInfoMapper;
 
+    @Transactional
     public LessonInfo save(LessonInfo lessonInfo) {
         setRoom(lessonInfo);
         LessonEntity entity = lessonInfoMapper.toEntity(lessonInfo);
@@ -31,15 +33,18 @@ public class LessonService {
 
     }
 
+    @Transactional
     public List<LessonInfo> readAll() {
         return lessonInfoMapper.toDtos(lessonDaoImpl.readAll());
     }
 
+    @Transactional
     public LessonInfo findOne(Integer id) {
         LessonEntity lessonEntity =  lessonDaoImpl.findOne(id);
         return lessonInfoMapper.toDto(lessonEntity);
     }
 
+    @Transactional
     public LessonInfo update(LessonInfo lessonInfo) {
         setRoom(lessonInfo);
         LessonEntity entity = lessonInfoMapper.toEntity(lessonInfo);
@@ -47,7 +52,8 @@ public class LessonService {
         return lessonInfo;
     }
 
-    private void setRoom(LessonInfo lessonInfo) {
+    @Transactional
+    public void setRoom(LessonInfo lessonInfo) {
         ClassRoomEntity classRoom = null;
 
         try {
@@ -59,15 +65,18 @@ public class LessonService {
 
     }
 
+    @Transactional
     public void delete(Integer id) {
         lessonDaoImpl.delete(id);
     }
 
+    @Transactional
     public LessonInfo getLessonInfo(Integer groupId) {
         List<StudentEntity> students = studentDao.findByGroup(groupId);
         return null;
     }
 
+    @Transactional
     public void setGroup(Integer idGroup, Integer idLesson){
         lessonDaoImpl.setGroup(idLesson,idGroup);
     }
