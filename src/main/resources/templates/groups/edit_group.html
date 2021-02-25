@@ -13,7 +13,7 @@
     <div class="card">
         <div class="card-body">
             <div class="col-md-8">
-                <form th:action="@{/groups/{id}(id=${group.getGroupId()})}" th:object="${group}" th:method="PATCH">
+                <form th:action="@{/groups/{id}/edit(id=${group.getGroupId()})}" th:object="${group}" th:method="POST">
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="abbreviate" class="col-form-label">Abbreviate</label> <input type="text" th:field="*{abbreviate}" class="form-control" id="abbreviate" placeholder="abbreviate"></span>

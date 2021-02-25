@@ -13,7 +13,7 @@
     <div class="card">
         <div class="card-body">
             <div class="col-md-8">
-                <form th:action="@{/cards/{id}(id=${card.getCardId()})}" th:object="${card}" th:method="PATCH">
+                <form th:action="@{/cards/{id}/edit(id=${card.getCardId()})}" th:object="${card}" th:method="POST">
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="id" class="col-form-label">Id</label> <input type="text" th:field="*{cardId}" class="form-control" id="id" placeholder="Id" disabled></span>

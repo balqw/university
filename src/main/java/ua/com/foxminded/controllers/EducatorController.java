@@ -46,7 +46,7 @@ public class EducatorController {
         return "/educators/edit_educator";
     }
 
-    @PatchMapping("{id}")
+    @PostMapping("{id}/edit")
     public String editEducator(@ModelAttribute("educator") EducatorEntity educatorEntity,@PathVariable("id") int id){
         educatorEntity.setEducatorId(id);
         educatorService.update(educatorEntity);

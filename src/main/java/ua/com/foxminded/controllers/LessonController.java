@@ -45,7 +45,7 @@ public class LessonController {
         return "lessons/edit_lesson";
     }
 
-    @PatchMapping("{id}")
+    @PostMapping("{id}/edit")
     public String editLesson(@PathVariable("id") int id, @ModelAttribute("lesson") LessonInfo lessonInfo) {
         lessonInfo.setLessonId(id);
         lessonService.update(lessonInfo);

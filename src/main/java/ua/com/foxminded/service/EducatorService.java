@@ -8,51 +8,57 @@ import ua.com.foxminded.domain.dao.IdCardDao;
 import ua.com.foxminded.domain.entity.EducatorEntity;
 import ua.com.foxminded.domain.entity.IdCardEntity;
 import ua.com.foxminded.domain.exceptions.NotFoundException;
+import ua.com.foxminded.reposytory.EducatorRepository;
+import ua.com.foxminded.reposytory.IdCardRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
 public class EducatorService {
-    private final EducatorDao educatorDao;
-    private final IdCardDao idCardDao;
+    private final EducatorRepository educatorRepository;
+    private final IdCardRepository cardRepository;
 
     @Transactional
     public EducatorEntity save(EducatorEntity educator) {
-        if(educatorDao.exist(educator))
-            throw new IllegalArgumentException("educator already exist");
-        
-        return educatorDao.save(educator);
+       if(educatorRepository.existsEducatorEntityByFirstNameAndAndFirstName(educator.getFirstName(),educator.getLastName()))
+            throw new IllegalArgumentException("Educator already exist");
+        return educatorRepository.save(educator);
     }
 
     @Transactional
     public void idCardExistsAndValid(IdCardEntity idCard) {
         if (idCard != null && idCard.getCardId() != null) {
-            if (!idCardDao.exist(idCard))
+            if (!cardRepository.existsById(idCard.getCardId()))
                 throw new NotFoundException("Such idCard not found");
         }
     }
 
     @Transactional
     public List<EducatorEntity> readAll() {
-        return educatorDao.readAll();
+        return educatorRepository.findAll();
     }
 
     @Transactional
     public EducatorEntity findOne(Integer id) {
-        return educatorDao.findOne(id);
+        Optional<EducatorEntity>optional = educatorRepository.findById(id);
+        if(optional.isPresent())
+            return optional.get();
+        else
+            throw new NotFoundException(format("Not found educator with id %d", id));
     }
 
     @Transactional
     public EducatorEntity update(EducatorEntity educator) {
-            return educatorDao.update(educator);
+            return educatorRepository.save(educator);
     }
 
     @Transactional
     public void delete(Integer id) {
-        educatorDao.delete(id);
+        educatorRepository.deleteById(id);
     }
 
 }

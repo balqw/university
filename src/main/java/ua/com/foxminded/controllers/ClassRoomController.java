@@ -41,7 +41,7 @@ public class ClassRoomController {
         return "class/edit_classroom";
     }
 
-    @PatchMapping("{id}")
+    @PostMapping("{id}/edit")
     public String editClassRoom(@ModelAttribute("classroom") ClassRoomEntity classRoomEntity,@PathVariable("id") int id){
         classRoomEntity.setClassId(id);
         classRoomService.update(classRoomEntity);

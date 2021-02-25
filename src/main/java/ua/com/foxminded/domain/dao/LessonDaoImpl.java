@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ua.com.foxminded.domain.entity.LessonEntity;
-import ua.com.foxminded.domain.mappers.LessonInfoMapperImpl;
+import ua.com.foxminded.domain.mappers.LessonMapperImpl;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LessonDaoImpl implements LessonDao {
     private final EntityManager em;
-    private final Logger logger = LoggerFactory.getLogger(LessonInfoMapperImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(LessonMapperImpl.class);
 
     @Override
     public LessonEntity save(LessonEntity entity) {
