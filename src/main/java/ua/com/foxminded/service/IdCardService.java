@@ -3,10 +3,9 @@ package ua.com.foxminded.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.foxminded.domain.dao.IdCardDao;
 import ua.com.foxminded.domain.entity.IdCardEntity;
 import ua.com.foxminded.domain.exceptions.NotFoundException;
-import ua.com.foxminded.reposytory.IdCardRepository;
+import ua.com.foxminded.repository.IdCardRepository;
 
 import java.util.List;
 import java.util.Optional;

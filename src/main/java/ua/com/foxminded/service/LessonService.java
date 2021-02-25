@@ -8,9 +8,8 @@ import ua.com.foxminded.domain.entity.LessonEntity;
 import ua.com.foxminded.domain.dto.LessonInfo;
 import ua.com.foxminded.domain.exceptions.NotFoundException;
 import ua.com.foxminded.domain.mappers.LessonMapper;
-import ua.com.foxminded.reposytory.ClassRoomRepository;
-import ua.com.foxminded.reposytory.LessonRepository;
-
+import ua.com.foxminded.repository.ClassRoomRepository;
+import ua.com.foxminded.repository.LessonRepository;
 import java.util.List;
 import java.util.Optional;
 

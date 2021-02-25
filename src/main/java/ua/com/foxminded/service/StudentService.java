@@ -9,7 +9,7 @@ import ua.com.foxminded.domain.dto.StudentDTO;
 import ua.com.foxminded.domain.dto.StudentSummaryInfo;
 import ua.com.foxminded.domain.exceptions.NotFoundException;
 import ua.com.foxminded.domain.mappers.StudentMapper;
-import ua.com.foxminded.reposytory.StudentRepository;
+import ua.com.foxminded.repository.StudentRepository;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +20,7 @@ public class StudentService {
     private final StudentMapper studentMapper;
     private final StudentRepository repository;
 
+
     @Transactional
     public StudentEntity save(StudentDTO dto) {
         StudentEntity entity = studentMapper.toStudentEntity(dto);
@@ -27,6 +28,7 @@ public class StudentService {
             throw new IllegalArgumentException("student already exist");
         return repository.save(entity);
     }
+
 
     @Transactional
     public List<StudentDTO> readAll() {

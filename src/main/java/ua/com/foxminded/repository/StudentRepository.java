@@ -1,9 +1,6 @@
-package ua.com.foxminded.reposytory;
+package ua.com.foxminded.repository;
 
-import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import ua.com.foxminded.domain.entity.StudentEntity;
 
 

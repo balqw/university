@@ -3,13 +3,12 @@ package ua.com.foxminded.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.foxminded.domain.dao.GroupDao;
 
 import ua.com.foxminded.domain.entity.Group;
 import ua.com.foxminded.domain.dto.GroupDTO;
 import ua.com.foxminded.domain.exceptions.NotFoundException;
 import ua.com.foxminded.domain.mappers.GroupMapper;
-import ua.com.foxminded.reposytory.GroupRepository;
+import ua.com.foxminded.repository.GroupRepository;
 
 import java.util.List;
 import java.util.Optional;

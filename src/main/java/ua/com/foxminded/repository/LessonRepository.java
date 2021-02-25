@@ -1,4 +1,4 @@
-package ua.com.foxminded.reposytory;
+package ua.com.foxminded.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ua.com.foxminded.domain.entity.LessonEntity;

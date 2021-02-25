@@ -3,13 +3,10 @@ package ua.com.foxminded.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.com.foxminded.domain.dao.ClassRoomDao;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
-import ua.com.foxminded.domain.exceptions.NotFoundException;
-import ua.com.foxminded.reposytory.ClassRoomRepository;
+import ua.com.foxminded.repository.ClassRoomRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.lang.String.format;
 
@@ -31,15 +28,6 @@ public class ClassRoomService{
     }
 
     @Transactional
-    public ClassRoomEntity findOne(Integer id) {
-        Optional<ClassRoomEntity>optional = repository.findById(id);
-        if(optional.isPresent())
-            return optional.get();
-        else
-           throw  new NotFoundException(format("did't find class with id %d", id));
-    }
-
-    @Transactional
     public ClassRoomEntity update(ClassRoomEntity entity) {
           return repository.save(entity);
     }
@@ -48,4 +36,9 @@ public class ClassRoomService{
     public void delete(Integer id) {
         repository.deleteById(id);
     }
+
+    @Transactional
+    public ClassRoomEntity findOne(Integer id) {
+       return repository.findById(id)
+               .orElseThrow(()->new IllegalArgumentException(""));}
 }
