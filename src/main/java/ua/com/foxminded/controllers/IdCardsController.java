@@ -48,7 +48,7 @@ public class IdCardsController {
         return "cards/edit_card";
     }
 
-    @PatchMapping("{id}")
+    @PostMapping("{id}/edit")
     public String editCard(@ModelAttribute("card") IdCardEntity idCardEntity, @PathVariable("id") int id){
         idCardEntity.setCardId(id);
         idCardService.update(idCardEntity);

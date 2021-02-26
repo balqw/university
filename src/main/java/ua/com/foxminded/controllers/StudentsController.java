@@ -52,7 +52,7 @@ public class StudentsController {
     }
 
 
-    @PatchMapping("{id}")
+    @PostMapping("{id}/edit")
     public String editStudent(@ModelAttribute("student") StudentDTO studentDTO, @PathVariable("id") int id) {
         studentDTO.setId(id);
         studentService.update(studentDTO);

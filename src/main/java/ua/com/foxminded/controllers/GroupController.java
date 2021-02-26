@@ -38,7 +38,7 @@ public class GroupController {
         return "groups/edit_group";
     }
 
-    @PatchMapping("{id}")
+    @PostMapping("{id}/edit")
     public String updateGroup(@ModelAttribute("group") Group group, @PathVariable("id") Integer id ){
         group.setGroupId(id);
         groupService.update(group);

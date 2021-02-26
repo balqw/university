@@ -25,11 +25,7 @@ public class GroupDao implements CrudOperation<Group, Integer> {
     @Override
     public Group save(Group entity) {
         EntityManager em = managerFactory.createEntityManager();
-        EntityTransaction et = em.getTransaction();
-        et.begin();
         em.persist(entity);
-        et.commit();
-        em.close();
         logger.debug("save group {}", entity);
         return entity;
     }
@@ -52,11 +48,7 @@ public class GroupDao implements CrudOperation<Group, Integer> {
     @Override
     public Group update(Group entity) {
         EntityManager em = managerFactory.createEntityManager();
-        EntityTransaction et = em.getTransaction();
-        et.begin();
         em.merge(entity);
-        et.commit();
-        em.close();
         logger.debug("update group", entity);
         return entity;
     }
@@ -64,11 +56,7 @@ public class GroupDao implements CrudOperation<Group, Integer> {
     @Override
     public void delete(Integer id) {
         EntityManager em = managerFactory.createEntityManager();
-        EntityTransaction et = em.getTransaction();
-        et.begin();
         em.remove(em.find(IdCardEntity.class, id));
-        et.commit();
-        em.close();
         logger.debug("delete group with id = {}", id);
     }
 

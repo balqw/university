@@ -7,7 +7,7 @@ import ua.com.foxminded.domain.dto.LessonInfo;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface LessonInfoMapper {
+public interface LessonMapper {
 
     LessonInfo toDto(LessonEntity entity);
 
