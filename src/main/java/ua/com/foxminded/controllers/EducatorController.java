@@ -50,7 +50,6 @@ public class EducatorController {
     public String editEducator(@ModelAttribute("educator") EducatorDTO educatorDTO, @PathVariable("id") int id){
         educatorDTO.setEducatorId(id);
         educatorService.update(educatorDTO);
-        idCardService.update(educatorDTO.getIdCardDTO());
         return "redirect:/educators";
     }
 
