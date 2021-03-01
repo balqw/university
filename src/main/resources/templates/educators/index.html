@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Educator</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css} "/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 </head>
 
@@ -33,10 +33,10 @@
                             </thead>
                             <tbody>
                             <tr th:each="educator : ${educators}">
-                                <td th:text="${educator.getFirstName()}"></td>
-                                <td th:text="${educator.getLastName()}"></td>
-                                <td th:text="${educator.getIdCard().getCardId()}"></td>
-                                <td th:text="${educator.getIdCard().getDateExpire()}"></td>
+                                <td th:text="${educator.getName()}"></td>
+                                <td th:text="${educator.getSurname()}"></td>
+                                <td th:text="${educator.getIdCardDTO().getCardId()}"></td>
+                                <td th:text="${educator.getIdCardDTO().getDateExpire()}"></td>
                                 <td><a th:href="@{educators/{id}/edit(id=${educator.getEducatorId()})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
                                 <td><a th:href="@{educators/{id}/delete(id=${educator.getEducatorId()})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
                             </tr>

@@ -3,8 +3,10 @@ package ua.com.foxminded.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.com.foxminded.domain.dto.IdCardDTO;
 import ua.com.foxminded.domain.entity.IdCardEntity;
 import ua.com.foxminded.domain.exceptions.NotFoundException;
+import ua.com.foxminded.domain.mappers.IdCardMapper;
 import ua.com.foxminded.repository.IdCardRepository;
 
 import java.util.List;
@@ -15,34 +17,40 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 @Service
 public class IdCardService {
-    private final IdCardRepository repository;
+    private final IdCardRepository cardRepo;
+    private final IdCardMapper idCardMapper;
 
     @Transactional
-    public IdCardEntity save(IdCardEntity entity) {
-        return repository.save(entity);
+    public IdCardDTO save(IdCardDTO cardDto) {
+        IdCardEntity cardEntity = idCardMapper.toEntity(cardDto);
+        cardRepo.save(cardEntity);
+        return cardDto;
     }
 
     @Transactional
-    public List<IdCardEntity> readAll() {
-        return repository.findAll();
+    public List<IdCardDTO> findAll() {
+        List<IdCardEntity> cardEntities = cardRepo.findAll();
+        return idCardMapper.toDtos(cardEntities);
     }
 
     @Transactional
-    public IdCardEntity findOne(Integer id) {
-        Optional<IdCardEntity>optional = repository.findById(id);
+    public IdCardDTO findById(Integer id) {
+        Optional<IdCardEntity>optional = cardRepo.findById(id);
         if(optional.isPresent())
-            return optional.get();
+            return idCardMapper.toDto(optional.get());
         else
             throw new NotFoundException(format("Not found idCard with id %d", id));
     }
 
     @Transactional
-    public IdCardEntity update(IdCardEntity entity) {
-        return repository.save(entity);
+    public IdCardDTO update(IdCardDTO cardDto) {
+        IdCardEntity cardEntity = idCardMapper.toEntity(cardDto);
+        cardRepo.save(cardEntity);
+        return cardDto;
     }
 
     @Transactional
-    public void delete(Integer id) {
-        repository.deleteById(id);
+    public void deleteById(Integer id) {
+        cardRepo.deleteById(id);
     }
 }

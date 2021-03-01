@@ -11,6 +11,7 @@ public class StudentEntity {
     @Id
     @GeneratedValue
     @Column(name = "student_id")
+
     private Integer studentId;
     @Column(name = "course")
     private Integer course;

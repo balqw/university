@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ua.com.foxminded.domain.dto.EducatorDTO;
 import ua.com.foxminded.domain.entity.EducatorEntity;
-import ua.com.foxminded.domain.entity.IdCardEntity;
 import ua.com.foxminded.service.EducatorService;
 import ua.com.foxminded.service.IdCardService;
 
@@ -24,33 +24,33 @@ public class EducatorController {
 
     @GetMapping
     public String showAll(Model model){
-        model.addAttribute("educators",educatorService.readAll());
+        model.addAttribute("educators",educatorService.findAll());
         return "/educators/index";
     }
 
     @GetMapping("/new")
     public String showAdd(Model model){
-        model.addAttribute("educator",new EducatorEntity());
+        model.addAttribute("educator",new EducatorDTO());
         return "/educators/new_educator";
     }
 
     @PostMapping
-    public String addEducator(@ModelAttribute("educator") EducatorEntity educatorEntity){
-        educatorService.save(educatorEntity);
+    public String addEducator(@ModelAttribute("educator") EducatorDTO educatorDTO){
+        educatorService.save(educatorDTO);
         return "redirect:/educators";
     }
 
     @GetMapping("{id}/edit")
     public String showEdit(@PathVariable("id") int id, Model model){
-        model.addAttribute("educator", educatorService.findOne(id));
+        model.addAttribute("educator", educatorService.findById(id));
         return "/educators/edit_educator";
     }
 
     @PostMapping("{id}/edit")
-    public String editEducator(@ModelAttribute("educator") EducatorEntity educatorEntity,@PathVariable("id") int id){
-        educatorEntity.setEducatorId(id);
-        educatorService.update(educatorEntity);
-        idCardService.update(educatorEntity.getIdCard());
+    public String editEducator(@ModelAttribute("educator") EducatorDTO educatorDTO, @PathVariable("id") int id){
+        educatorDTO.setEducatorId(id);
+        educatorService.update(educatorDTO);
+        idCardService.update(educatorDTO.getIdCardDTO());
         return "redirect:/educators";
     }
 
