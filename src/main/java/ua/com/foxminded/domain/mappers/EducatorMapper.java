@@ -9,10 +9,11 @@ import ua.com.foxminded.domain.entity.IdCardEntity;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {IdCardEntity.class})
+@Mapper(componentModel = "spring")
 public interface EducatorMapper {
     @Mapping(target = "name", source = "firstName")
     @Mapping(target = "surname", source = "lastName")
+    @Mapping(target = "idCardDTO", source = "idCard")
     EducatorDTO toDto(EducatorEntity entity);
 
     @InheritInverseConfiguration
