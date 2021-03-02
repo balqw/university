@@ -41,9 +41,13 @@ public class StudentsController {
     }
 
     @PostMapping
-    public String createStudent(@ModelAttribute("student") @Valid StudentDTO dto, BindingResult bindingResult) {
-        if(bindingResult.hasErrors())
+    public String createStudent(Model model,@ModelAttribute("student") @Valid StudentDTO dto, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            model.addAttribute("student", dto);
+            model.addAttribute("groups",groupService.readAll());
             return "students/new_student";
+        }
+
         studentService.save(dto);
         return "redirect:/students";
     }
@@ -57,8 +61,13 @@ public class StudentsController {
 
 
     @PostMapping("{id}/edit")
-    public String editStudent(@ModelAttribute("student") StudentDTO studentDTO, @PathVariable("id") int id) {
+    public String editStudent( Model model, @ModelAttribute("student") @Valid StudentDTO studentDTO, BindingResult bindingResult, @PathVariable("id") int id) {
         studentDTO.setId(id);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("student", studentDTO);
+            model.addAttribute("groups",groupService.readAll());
+            return "students/edit_student";
+        }
         studentService.update(studentDTO);
         return "redirect:/students";
     }

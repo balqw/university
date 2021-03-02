@@ -20,6 +20,7 @@
                         </div>
                         <div class="form-group col-md-8">
                             <label for="date-expire" class="col-form-label">Date expire</label> <input type="date" th:field="*{dateExpire}" class="form-control" id="date-expire" placeholder="Date expire"></span>
+                            <div style="color: crimson" th:if="${#fields.hasErrors('dateExpire')}" th:errors="*{dateExpire}"></div>
                         </div>
 
                         <div class="form-group col-md-8">

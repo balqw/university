@@ -17,7 +17,6 @@ import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class GroupService {
     private final GroupMapper groupMapper;
     private final GroupRepository groupRepository;
@@ -38,19 +37,23 @@ public class GroupService {
     }
 
     @Transactional
-    public void delete (Integer id){
+    public void delete(Integer id){
         groupRepository.deleteById(id);
     }
 
     @Transactional
-    public Group update (Group group){
-        return groupRepository.save(group);
+    public GroupDTO update(GroupDTO dto){
+        Group group = groupMapper.toEntity(dto);
+        groupRepository.save(group);
+        return dto;
     }
 
     @Transactional
-    public Group save(Group group){
+    public GroupDTO save(GroupDTO dto){
+        Group group = groupMapper.toEntity(dto);
         if(groupRepository.existsGroupByAbbreviate(group.getAbbreviate()))
             throw new IllegalArgumentException("group already exist");
-        return groupRepository.save(group);
+        groupRepository.save(group);
+        return dto;
    }
 }

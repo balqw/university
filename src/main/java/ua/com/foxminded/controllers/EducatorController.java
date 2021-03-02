@@ -3,11 +3,14 @@ package ua.com.foxminded.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.EducatorDTO;
 import ua.com.foxminded.domain.entity.EducatorEntity;
 import ua.com.foxminded.service.EducatorService;
 import ua.com.foxminded.service.IdCardService;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/educators")
@@ -35,7 +38,11 @@ public class EducatorController {
     }
 
     @PostMapping
-    public String addEducator(@ModelAttribute("educator") EducatorDTO educatorDTO){
+    public String addEducator(Model model, @ModelAttribute("educator") @Valid EducatorDTO educatorDTO, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("educator",educatorDTO);
+            return "/educators/new_educator";
+        }
         educatorService.save(educatorDTO);
         return "redirect:/educators";
     }
@@ -47,8 +54,12 @@ public class EducatorController {
     }
 
     @PostMapping("{id}/edit")
-    public String editEducator(@ModelAttribute("educator") EducatorDTO educatorDTO, @PathVariable("id") int id){
+    public String editEducator(Model model, @ModelAttribute("educator") @Valid EducatorDTO educatorDTO, BindingResult bindingResult,@PathVariable("id") int id){
         educatorDTO.setEducatorId(id);
+        if(bindingResult.hasErrors()){
+            model.addAttribute("educator",educatorDTO);
+            return "/educators/edit_educator";
+        }
         educatorService.update(educatorDTO);
         return "redirect:/educators";
     }

@@ -18,16 +18,19 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="title" class="col-form-label ">Title</label> <input type="text" th:field="*{title}" class="form-control" id="title" placeholder="title" ></span>
+                            <div style="color: crimson" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
                         </div>
                         <div class="form-group col-md-8">
                             <label for="start" class="col-form-label">start</label> <input type="datetime-local" th:field="*{startLesson}" class="form-control " id="start"></span>
+                            <div style="color: crimson" th:if="${#fields.hasErrors('startLesson')}" th:errors="*{startLesson}"></div>
                         </div>
                         <div class="form-group col-md-8">
                             <label for="end" class="col-form-label">end</label> <input type="datetime-local" th:field="*{endLesson}" class="form-control" id="end" ></span>
+                            <div style="color: crimson" th:if="${#fields.hasErrors('endLesson')}" th:errors="*{endLesson}"></div>
                         </div>
                         <div class="form-group col-md-8">
+                            ClassRoom
                             <select th:field="*{classRoom.number}">
-                                <option value="">Class</option>
                                 <option th:each="classEach :${class}"
                                         th:value="${classEach.getNumber()}"
                                         th:text="${classEach.getNumber()}">

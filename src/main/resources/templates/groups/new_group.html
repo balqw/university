@@ -17,6 +17,7 @@
                     <div class="row">
                         <div class="form-group col-md-8">
                             <label for="abbreviate" class="col-form-label">Abbreviate</label> <input type="text" th:field="*{abbreviate}" class="form-control" id="abbreviate" placeholder="Abbreviate">
+                            <div style="color: crimson" th:if="${#fields.hasErrors('abbreviate')}" th:errors="*{abbreviate}"></div>
                         </div>
                         <div  class="form-group col-md-8">
                             <label for="description" class="col-form-label">Description</label> <input type="text" th:field="*{description}" class="form-control" id="description" placeholder="Description">
