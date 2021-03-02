@@ -3,9 +3,13 @@ package ua.com.foxminded.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ua.com.foxminded.domain.dto.GroupDTO;
 import ua.com.foxminded.domain.entity.Group;
 import ua.com.foxminded.service.GroupService;
+
+import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,12 +26,15 @@ public class GroupController {
 
     @GetMapping("/new")
     public String getNewGroup(Model model){
-        model.addAttribute("group_",new Group());
+        model.addAttribute("group_",new GroupDTO());
         return "groups/new_group";
     }
 
     @PostMapping
-    public String creatGroup(@ModelAttribute("_group") Group group){
+    public String creatGroup(@ModelAttribute("_group") @Valid GroupDTO group, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "groups/new_group";
+        }
         groupService.save(group);
         return "redirect:/groups";
     }
@@ -39,9 +46,13 @@ public class GroupController {
     }
 
     @PostMapping("{id}/edit")
-    public String updateGroup(@ModelAttribute("group") Group group, @PathVariable("id") Integer id ){
-        group.setGroupId(id);
-        groupService.update(group);
+    public String updateGroup(Model model, @ModelAttribute("group") @Valid GroupDTO groupDTO,BindingResult bindingResult, @PathVariable("id") Integer id ){
+        groupDTO.setGroupId(id);
+        if(bindingResult.hasErrors()){
+            model.addAttribute("group",groupDTO);
+            return "groups/edit_group";
+        }
+        groupService.update(groupDTO);
         return "redirect:/groups";
     }
 

@@ -33,12 +33,12 @@ public class LessonService {
     }
 
     @Transactional
-    public List<LessonInfo> readAll() {
+    public List<LessonInfo> findAll() {
         return lessonMapper.toDtos(lessonRepository.findAll());
     }
 
     @Transactional
-    public LessonInfo findOne(Integer id) {
+    public LessonInfo findById(Integer id) {
         Optional<LessonEntity>optional = lessonRepository.findById(id);
         LessonInfo lessonInfo;
         if(optional.isPresent()){

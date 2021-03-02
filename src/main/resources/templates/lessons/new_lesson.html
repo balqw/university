@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <title>new card</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/css/datepicker.min.css}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css} "/>
 </head>
 <body>
 
@@ -21,16 +18,19 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="title" class="col-form-label ">Title</label> <input type="text" th:field="*{title}" class="form-control" id="title" placeholder="title" ></span>
+                            <div style="color: crimson" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
                         </div>
                         <div class="form-group col-md-8">
                             <label for="start" class="col-form-label">start</label> <input type="datetime-local" th:field="*{startLesson}" class="form-control " id="start"></span>
+                            <div style="color: crimson" th:if="${#fields.hasErrors('startLesson')}" th:errors="*{startLesson}"></div>
                         </div>
                         <div class="form-group col-md-8">
                             <label for="end" class="col-form-label">end</label> <input type="datetime-local" th:field="*{endLesson}" class="form-control" id="end" ></span>
+                            <div style="color: crimson" th:if="${#fields.hasErrors('endLesson')}" th:errors="*{endLesson}"></div>
                         </div>
                         <div class="form-group col-md-8">
+                            ClassRoom
                             <select th:field="*{classRoom.number}">
-                                <option value="">Class</option>
                                 <option th:each="classEach :${class}"
                                         th:value="${classEach.getNumber()}"
                                         th:text="${classEach.getNumber()}">

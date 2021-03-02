@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>edit</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css} "/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 </head>
 <body>
@@ -13,13 +13,15 @@
     <div class="card">
         <div class="card-body">
             <div class="col-md-8">
-                <form th:action="@{/classrooms/{id}/edit(id=${classroom.getClassId()})}" th:object="${classroom}" th:method="POST">
+                <form th:action="@{/classrooms/{id}/edit(id=${classroom.getId()})}" th:object="${classroom}" th:method="POST">
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label for="number" class="col-form-label">Number</label> <input type="text" th:field="*{number}" class="form-control" id="number" placeholder="Number"></span>
+                            <label for="number" class="col-form-label">Number</label> <input type="number" th:field="*{number}" class="form-control" id="number" placeholder="Number"></span>
+                            <div style="color: crimson" th:if="${#fields.hasErrors('number')}" th:errors="*{number}"></div>
                         </div>
                         <div class="form-group col-md-8">
-                            <label for="capacity" class="col-form-label">Capacity</label> <input type="text" th:field="*{capacity}" class="form-control" id="capacity" placeholder="Capacity"></span>
+                            <label for="capacity" class="col-form-label">Capacity</label> <input type="number" th:field="*{capacity}" class="form-control" id="capacity" placeholder="Capacity"></span>
+                            <div style="color: crimson" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></div>
                         </div>
                         <div class="form-group col-md-8">
                             <input type="submit" class="btn btn-primary" value="Update Class room">

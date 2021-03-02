@@ -3,11 +3,13 @@ package ua.com.foxminded.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.com.foxminded.domain.entity.StudentEntity;
 import ua.com.foxminded.domain.dto.StudentDTO;
 import ua.com.foxminded.service.GroupService;
 import ua.com.foxminded.service.StudentService;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/students")
@@ -39,7 +41,13 @@ public class StudentsController {
     }
 
     @PostMapping
-    public String createStudent(@ModelAttribute("student")StudentDTO dto) {
+    public String createStudent(Model model,@ModelAttribute("student") @Valid StudentDTO dto, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            model.addAttribute("student", dto);
+            model.addAttribute("groups",groupService.readAll());
+            return "students/new_student";
+        }
+
         studentService.save(dto);
         return "redirect:/students";
     }
@@ -53,8 +61,13 @@ public class StudentsController {
 
 
     @PostMapping("{id}/edit")
-    public String editStudent(@ModelAttribute("student") StudentDTO studentDTO, @PathVariable("id") int id) {
+    public String editStudent( Model model, @ModelAttribute("student") @Valid StudentDTO studentDTO, BindingResult bindingResult, @PathVariable("id") int id) {
         studentDTO.setId(id);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("student", studentDTO);
+            model.addAttribute("groups",groupService.readAll());
+            return "students/edit_student";
+        }
         studentService.update(studentDTO);
         return "redirect:/students";
     }
