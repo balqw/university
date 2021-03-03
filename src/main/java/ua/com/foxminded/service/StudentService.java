@@ -22,11 +22,12 @@ public class StudentService {
 
 
     @Transactional
-    public StudentEntity save(StudentDTO dto) {
+    public StudentDTO save(StudentDTO dto) {
         StudentEntity entity = studentMapper.toStudentEntity(dto);
         if(repository.existsByFirstNameAndLastName(entity.getFirstName(),entity.getLastName()))
             throw new IllegalArgumentException("student already exist");
-        return repository.save(entity);
+        repository.save(entity);
+        return dto;
     }
 
 
