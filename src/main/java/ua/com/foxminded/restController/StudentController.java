@@ -41,6 +41,7 @@ public class StudentController {
 
     @PutMapping("students/{id}")
     StudentDTO update(@PathVariable("id") Integer id,@RequestBody @Valid StudentDTO studentDTO){
+        studentDTO.setId(id);
         return studentService.update(studentDTO);
     }
 

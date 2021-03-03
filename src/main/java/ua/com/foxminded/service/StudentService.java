@@ -50,6 +50,7 @@ public class StudentService {
 
     @Transactional
     public StudentDTO update(StudentDTO studentDTO) {
+        repository.existsById(studentDTO.getId());
         StudentEntity entity = studentMapper.toStudentEntity(studentDTO);
          repository.save(entity);
         return studentDTO;
