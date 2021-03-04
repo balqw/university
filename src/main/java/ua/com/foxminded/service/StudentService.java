@@ -2,14 +2,18 @@ package ua.com.foxminded.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import static java.lang.String.format;
+
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.domain.entity.StudentEntity;
 import ua.com.foxminded.domain.dto.StudentDTO;
 import ua.com.foxminded.domain.dto.StudentSummaryInfo;
+import ua.com.foxminded.domain.exceptions.NoDataFoundException;
 import ua.com.foxminded.domain.exceptions.NotFoundException;
 import ua.com.foxminded.domain.mappers.StudentMapper;
 import ua.com.foxminded.repository.StudentRepository;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +28,7 @@ public class StudentService {
     @Transactional
     public StudentDTO save(StudentDTO dto) {
         StudentEntity entity = studentMapper.toStudentEntity(dto);
-        if(repository.existsByFirstNameAndLastName(entity.getFirstName(),entity.getLastName()))
+        if (repository.existsByFirstNameAndLastName(entity.getFirstName(), entity.getLastName()))
             throw new IllegalArgumentException("student already exist");
         repository.save(entity);
         return dto;
@@ -33,26 +37,27 @@ public class StudentService {
 
     @Transactional
     public List<StudentDTO> readAll() {
-
-        return studentMapper.toDtos(repository.findAll());
+        List<StudentDTO> studentDTOList = studentMapper.toDtos(repository.findAll());
+        if (studentDTOList.isEmpty()) {
+            throw new NoDataFoundException("No data found");
+        }
+        return studentDTOList;
     }
 
     @Transactional
     public StudentDTO findOne(Integer id) {
-
-        Optional<StudentEntity>student = repository.findById(id);
-
+        Optional<StudentEntity> student = repository.findById(id);
         if (student.isPresent())
             return studentMapper.toStudentDTO(student.get());
         else
-            throw new NotFoundException(format("No student found with id %d",id));
+            throw new NotFoundException(format("No student found with id %d", id));
     }
 
     @Transactional
     public StudentDTO update(StudentDTO studentDTO) {
         repository.existsById(studentDTO.getId());
         StudentEntity entity = studentMapper.toStudentEntity(studentDTO);
-         repository.save(entity);
+        repository.save(entity);
         return studentDTO;
     }
 
@@ -65,14 +70,13 @@ public class StudentService {
     @Transactional
     public StudentSummaryInfo combineSummaryInfo(Integer id) {
         Optional<StudentEntity> option = repository.findById(id);
-        if(option.isPresent()) {
+        if (option.isPresent()) {
             StudentEntity student = option.get();
             return StudentSummaryInfo.builder()
                     .id(student.getStudentId())
                     .name(String.format("%s %s", student.getFirstName(), student.getLastName()))
                     .build();
-        }
-        else
-            throw new NotFoundException(format("No student found with id %d",id));
+        } else
+            throw new NotFoundException(format("No student found with id %d", id));
     }
 }
