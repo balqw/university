@@ -36,7 +36,7 @@ public class StudentsController {
     @GetMapping("/new")
     public String create(Model model) {
         model.addAttribute("student", new StudentDTO());
-        model.addAttribute("groups",groupService.readAll());
+        model.addAttribute("groups",groupService.findAll());
         return "students/new_student";
     }
 
@@ -44,7 +44,7 @@ public class StudentsController {
     public String createStudent(Model model,@ModelAttribute("student") @Valid StudentDTO dto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             model.addAttribute("student", dto);
-            model.addAttribute("groups",groupService.readAll());
+            model.addAttribute("groups",groupService.findAll());
             return "students/new_student";
         }
 
@@ -55,7 +55,7 @@ public class StudentsController {
     @GetMapping("/{id}/edit")
     public String showEdit(@PathVariable("id") int id, Model model) {
         model.addAttribute("student", studentService.findOne(id));
-        model.addAttribute("groups",groupService.readAll());
+        model.addAttribute("groups",groupService.findAll());
         return "students/edit_student";
     }
 
@@ -65,7 +65,7 @@ public class StudentsController {
         studentDTO.setId(id);
         if (bindingResult.hasErrors()) {
             model.addAttribute("student", studentDTO);
-            model.addAttribute("groups",groupService.readAll());
+            model.addAttribute("groups",groupService.findAll());
             return "students/edit_student";
         }
         studentService.update(studentDTO);

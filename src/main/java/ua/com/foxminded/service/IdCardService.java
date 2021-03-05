@@ -35,11 +35,8 @@ public class IdCardService {
 
     @Transactional
     public IdCardDTO findById(Integer id) {
-        Optional<IdCardEntity>optional = cardRepo.findById(id);
-        if(optional.isPresent())
-            return idCardMapper.toDto(optional.get());
-        else
-            throw new NotFoundException(format("Not found idCard with id %d", id));
+        return idCardMapper.toDto(cardRepo.findById(id)
+                .orElseThrow(()->new NotFoundException(format("Not found IdCard with id %d", id))));
     }
 
     @Transactional

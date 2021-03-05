@@ -20,7 +20,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class StudentService {
-
     private final StudentMapper studentMapper;
     private final StudentRepository repository;
 
@@ -34,23 +33,15 @@ public class StudentService {
         return dto;
     }
 
-
     @Transactional
     public List<StudentDTO> readAll() {
-        List<StudentDTO> studentDTOList = studentMapper.toDtos(repository.findAll());
-        if (studentDTOList.isEmpty()) {
-            throw new NoDataFoundException("No data found");
-        }
-        return studentDTOList;
+        return studentMapper.toDtos(repository.findAll());
     }
 
     @Transactional
     public StudentDTO findOne(Integer id) {
-        Optional<StudentEntity> student = repository.findById(id);
-        if (student.isPresent())
-            return studentMapper.toStudentDTO(student.get());
-        else
-            throw new NotFoundException(format("No student found with id %d", id));
+        return studentMapper.toStudentDTO(repository.findById(id)
+            .orElseThrow(()->new NotFoundException(format("No student found with id %d", id))));
     }
 
     @Transactional
@@ -63,7 +54,6 @@ public class StudentService {
 
     @Transactional
     public void delete(Integer id) {
-
         repository.deleteById(id);
     }
 

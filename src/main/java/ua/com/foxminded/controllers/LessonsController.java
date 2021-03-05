@@ -15,7 +15,7 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/lessons")
 @AllArgsConstructor
-public class LessonController {
+public class LessonsController {
     private final LessonService lessonService;
     private final ClassRoomService classRoomService;
 

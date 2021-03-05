@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.GroupDTO;
-import ua.com.foxminded.domain.entity.Group;
 import ua.com.foxminded.service.GroupService;
 
 import javax.validation.Valid;
@@ -14,13 +13,13 @@ import javax.validation.Valid;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/groups")
-public class GroupController {
+public class GroupsController {
 
     private final GroupService groupService;
 
     @GetMapping
     public String readAll(Model model){
-        model.addAttribute("groups",groupService.readAll());
+        model.addAttribute("groups",groupService.findAll());
         return "groups/index";
     }
 

@@ -21,7 +21,6 @@ import static java.lang.String.format;
 @RequiredArgsConstructor
 public class StudentController {
     private final StudentService studentService;
-    private final StudentMapper studentMapper;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/students")

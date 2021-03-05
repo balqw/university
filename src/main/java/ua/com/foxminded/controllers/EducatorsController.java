@@ -14,13 +14,13 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/educators")
-public class EducatorController {
+public class EducatorsController {
 
     private final EducatorService educatorService;
     private final IdCardService idCardService;
 
     @Autowired
-    public EducatorController(EducatorService educatorService, IdCardService idCardService) {
+    public EducatorsController(EducatorService educatorService, IdCardService idCardService) {
         this.educatorService = educatorService;
         this.idCardService = idCardService;
     }

@@ -13,11 +13,11 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/classrooms")
-public class ClassRoomController {
+public class ClassRoomsController {
     private final ClassRoomService classRoomService;
 
     @Autowired
-    public ClassRoomController(ClassRoomService classRoomService) {
+    public ClassRoomsController(ClassRoomService classRoomService) {
         this.classRoomService = classRoomService;
     }
 
