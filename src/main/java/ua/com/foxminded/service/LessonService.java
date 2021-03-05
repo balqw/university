@@ -39,14 +39,8 @@ public class LessonService {
 
     @Transactional
     public LessonInfo findById(Integer id) {
-        Optional<LessonEntity>optional = lessonRepository.findById(id);
-        LessonInfo lessonInfo;
-        if(optional.isPresent()){
-            lessonInfo = lessonMapper.toDto(optional.get());
-            return lessonInfo;
-        }
-            else
-                throw new NotFoundException(format("Not found lesson with id %d", id));
+        return lessonMapper.toDto(lessonRepository.findById(id)
+                .orElseThrow(()-> new NotFoundException(format("Not found lesson with id %d", id))));
     }
 
     @Transactional
@@ -70,15 +64,5 @@ public class LessonService {
     @Transactional
     public void delete(Integer id) {
         lessonRepository.deleteById(id);
-    }
-
-    @Transactional
-    public LessonInfo getLessonInfo(Integer groupId) {
-        return null;
-    }
-
-    @Transactional
-    public void setGroup(Integer idGroup, Integer idLesson){
-
     }
 }

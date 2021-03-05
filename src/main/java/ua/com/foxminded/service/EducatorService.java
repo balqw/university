@@ -24,12 +24,13 @@ public class EducatorService {
     private final EducatorMapper educatorMapper;
 
     @Transactional
-    public EducatorEntity save(EducatorDTO educatorDTO) {
+    public EducatorDTO save(EducatorDTO educatorDTO) {
         EducatorEntity educator = educatorMapper.toEntity(educatorDTO);
        if(educatorRepository.existsEducatorEntityByFirstNameAndAndFirstName(educator.getFirstName(),educator.getLastName()))
             throw new IllegalArgumentException("Educator already exist");
        idCardExistsAndValid(educator.getIdCard());
-       return educatorRepository.save(educator);
+       educatorRepository.save(educator);
+       return educatorDTO;
     }
 
     @Transactional
@@ -48,11 +49,8 @@ public class EducatorService {
 
     @Transactional
     public EducatorDTO findById(Integer id) {
-        Optional<EducatorEntity>optional = educatorRepository.findById(id);
-        if(optional.isPresent())
-            return educatorMapper.toDto(optional.get());
-        else
-            throw new NotFoundException(format("Not found educator with id %d", id));
+        return educatorMapper.toDto(educatorRepository.findById(id)
+            .orElseThrow(()->new NotFoundException(format("Not found educator with id %d", id))));
     }
 
     @Transactional
@@ -66,5 +64,4 @@ public class EducatorService {
     public void delete(Integer id) {
         educatorRepository.deleteById(id);
     }
-
 }

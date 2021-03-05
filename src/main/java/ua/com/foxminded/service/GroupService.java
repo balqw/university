@@ -22,18 +22,14 @@ public class GroupService {
     private final GroupRepository groupRepository;
 
     @Transactional
-    public List<Group> readAll(){
-        return groupRepository.findAll();
+    public List<GroupDTO> findAll(){
+        return groupMapper.toDtos(groupRepository.findAll());
     }
 
     @Transactional
     public GroupDTO findById(Integer id){
-        Optional<Group>optional = groupRepository.findById(id);
-        if(optional.isPresent()){
-            return groupMapper.toDto(optional.get());
-        }
-        else
-            throw new NotFoundException(format("Not found group with id %d", id));
+        return groupMapper.toDto(groupRepository.findById(id)
+            .orElseThrow(()->new NotFoundException(format("Not found group with id %d", id))));
     }
 
     @Transactional
