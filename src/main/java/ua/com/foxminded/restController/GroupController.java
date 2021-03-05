@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class GroupController {
-    GroupService groupService;
+    private final GroupService groupService;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/groups")

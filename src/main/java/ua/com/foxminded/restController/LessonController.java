@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class LessonController {
-    LessonService lessonService;
+    private final LessonService lessonService;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/lessons")

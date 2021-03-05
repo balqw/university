@@ -4,10 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.StudentDTO;
-import ua.com.foxminded.domain.entity.StudentEntity;
-import ua.com.foxminded.domain.exceptions.NotFoundException;
-import ua.com.foxminded.domain.mappers.StudentMapper;
-import ua.com.foxminded.repository.StudentRepository;
 import ua.com.foxminded.service.StudentService;
 
 import javax.validation.Valid;

@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class IdCardController {
-    IdCardService idCardService;
+    private final IdCardService idCardService;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/idcards")

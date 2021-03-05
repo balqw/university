@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class ClassRoomController {
-    ClassRoomService classRoomService;
+    private final ClassRoomService classRoomService;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/classrooms")

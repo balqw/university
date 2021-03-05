@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class EducatorController {
-    EducatorService educatorService;
+    private final EducatorService educatorService;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/educators")
