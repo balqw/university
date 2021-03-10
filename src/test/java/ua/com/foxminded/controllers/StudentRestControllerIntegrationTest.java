@@ -38,6 +38,14 @@ class StudentRestControllerIntegrationTest{
     }
 
     @Test
+    public void shouldReturnExceptionOnBadRequest() throws Exception{
+        mvc.perform(MockMvcRequestBuilders.get("/api/studentshhh"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+
+    @Test
     public void shouldReturnFromDbById() throws Exception{
         mvc.perform(MockMvcRequestBuilders.get("/api/students/2"))
                 .andDo(print())
