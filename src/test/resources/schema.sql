@@ -53,9 +53,17 @@ create table lesson
     class_room   int references class_room (number)
 );
 
-create table lesson_group
-(
-    id        serial primary key,
-    lesson_id int references lesson (lesson_id),
-    group_id  int references _group (group_id)
-);
+
+INSERT INTO _group (group_id, abbreviate, description)
+VALUES (1,'abbr1','desc1');
+INSERT INTO _group (group_id, abbreviate,description)
+VALUES (2,'abbr2','desc2');
+INSERT INTO _group (group_id, abbreviate,description)
+VALUES (3,'abbr3','desc3');
+
+INSERT INTO student (student_id, first_name, last_name, course, group_id)
+VALUES (1,'John1','John1',1,1);
+INSERT INTO student (student_id, first_name, last_name, course, group_id)
+VALUES (2,'John2','John2',2,2);
+INSERT INTO student (student_id, first_name, last_name, course, group_id)
+VALUES (3,'John3','John3',3,2);

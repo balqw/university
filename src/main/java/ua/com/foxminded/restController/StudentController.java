@@ -2,6 +2,7 @@ package ua.com.foxminded.restController;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.StudentDTO;
 import ua.com.foxminded.service.StudentService;
@@ -38,7 +39,7 @@ public class StudentController {
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("students/{id}")
-    StudentDTO update(@PathVariable("id") Integer id,@RequestBody @Valid StudentDTO studentDTO){
+    StudentDTO update(@PathVariable("id") Integer id, @RequestBody @Valid StudentDTO studentDTO){
         studentDTO.setId(id);
         return studentService.update(studentDTO);
     }
