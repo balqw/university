@@ -1,26 +1,61 @@
-drop table if exists student cascade ;
-drop table if exists _group cascade ;
-
+drop table if exists student;
+drop table if exists educator cascade;
+drop table if exists id_card cascade;
+drop table if exists educator_card;
+drop table if exists class_room cascade;
+drop table if exists lesson cascade;
+drop table if exists lesson_group cascade;
+drop table if exists _group cascade;
 
 create table _group
 (
-    id serial primary key,
-    abbr  varchar(10) unique,
-    descr varchar(200)
+    group_id    serial primary key,
+    abbreviate  varchar(10) unique,
+    description varchar(200)
 );
 
 create table student
 (
-    id serial primary key,
-    f_name  varchar(100),
-    l_name   varchar(100),
+    student_id serial primary key,
+    first_name  varchar(100),
+    last_name   varchar(100),
     course     integer,
-    group_id   integer
+    group_id   int references _group (group_id)
 );
 
-INSERT INTO _group (id, abbr, descr)
-VALUES (1,'test2','test2');
+create table id_card
+(
+    card_id     serial primary key,
+    date_expire timestamp
+);
 
-INSERT INTO student (id, f_name, l_name, course, group_id)
-VALUES (1,'test2','test2',1,1);
+create table educator
+(
+    educator_id serial primary key,
+    first_name  varchar(100),
+    last_name   varchar(100),
+    id_card     int references id_card (card_id)
+);
 
+create table class_room
+(
+    class_id serial primary key,
+    number   int unique,
+    capacity int
+);
+
+create table lesson
+(
+    lesson_id    serial primary key,
+    title        varchar(100),
+    start_lesson timestamp,
+    end_lesson   timestamp,
+    class_room   int references class_room (number)
+);
+
+create table lesson_group
+(
+    id        serial primary key,
+    lesson_id int references lesson (lesson_id),
+    group_id  int references _group (group_id)
+);
