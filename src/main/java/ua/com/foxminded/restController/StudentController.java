@@ -1,5 +1,6 @@
 package ua.com.foxminded.restController;
 
+import com.oracle.webservices.internal.api.message.ContentType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -8,6 +9,7 @@ import ua.com.foxminded.domain.dto.StudentDTO;
 import ua.com.foxminded.service.StudentService;
 
 import javax.validation.Valid;
+import java.rmi.MarshalException;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +34,7 @@ public class StudentController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("students")
+    @PostMapping(value = "students",consumes = "application/json", produces = "application/json")
     StudentDTO save(@RequestBody @Valid StudentDTO studentDTO){
         return studentService.save(studentDTO);
     }

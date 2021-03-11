@@ -18,16 +18,20 @@ import ua.com.foxminded.domain.dto.StudentDTO;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static sun.plugin2.util.PojoUtil.toJson;
 
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @Sql(value = "classpath:schema.sql")
+
 class StudentRestControllerIntegrationTest{
 
     @Autowired
     private MockMvc mvc;
+
+
 
 
     @Test
@@ -71,8 +75,8 @@ class StudentRestControllerIntegrationTest{
         newStudent.setName("updateName");
 
         mvc.perform(MockMvcRequestBuilders.put("/api/students/3")
-                .content(new ObjectMapper().writeValueAsString(newStudent))
-                .contentType(MediaType.ALL))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(newStudent)))
                 .andDo(print())
                 .andExpect(status().isAccepted());
     }
@@ -80,7 +84,7 @@ class StudentRestControllerIntegrationTest{
     @Test
     public void shouldDeleteById() throws Exception{
         mvc.perform(MockMvcRequestBuilders.delete("/api/students/3")
-                .contentType(MediaType.ALL))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isAccepted());
     }
@@ -94,6 +98,8 @@ class StudentRestControllerIntegrationTest{
         newStudent.setCourse(2);
         GroupDTO group = new GroupDTO();
         group.setGroupId(1);
+        group.setDescription("fdfdfd");
+        group.setAbbreviate("fdfdfd");
         newStudent.setGroup(group);
         return newStudent;
     }
