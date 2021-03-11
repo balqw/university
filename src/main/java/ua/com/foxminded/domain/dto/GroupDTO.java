@@ -6,8 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-@RequiredArgsConstructor
-@AllArgsConstructor
+
 @Data
 public class GroupDTO {
     private Integer groupId;

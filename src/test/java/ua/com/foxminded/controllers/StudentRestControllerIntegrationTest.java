@@ -72,7 +72,7 @@ class StudentRestControllerIntegrationTest{
     public void shouldUpdateStudentWithId() throws Exception{
         StudentDTO newStudent = getNewStudent();
         newStudent.setId(3);
-        newStudent.setName("updateName");
+        newStudent.setName("update");
 
         mvc.perform(MockMvcRequestBuilders.put("/api/students/3")
                 .contentType(MediaType.APPLICATION_JSON)
