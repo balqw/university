@@ -23,5 +23,6 @@ public class StudentDTO {
     private String surName;
     @Positive(message = "ddd")
     private Integer course;
+    @Valid
     private GroupDTO group;
 }

@@ -76,10 +76,12 @@ class StudentRestControllerIntegrationTest{
 
         mvc.perform(MockMvcRequestBuilders.put("/api/students/3")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(newStudent)))
+                .content(new ObjectMapper().writeValueAsString(newStudent)))
                 .andDo(print())
                 .andExpect(status().isAccepted());
     }
+
+
 
     @Test
     public void shouldDeleteById() throws Exception{
@@ -92,7 +94,6 @@ class StudentRestControllerIntegrationTest{
 
     private StudentDTO getNewStudent() {
         StudentDTO newStudent = new StudentDTO();
-        newStudent.setId(4);
         newStudent.setName("John4");
         newStudent.setSurName("John4");
         newStudent.setCourse(2);

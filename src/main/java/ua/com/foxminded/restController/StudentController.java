@@ -34,7 +34,7 @@ public class StudentController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value = "students",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "students")
     StudentDTO save(@RequestBody @Valid StudentDTO studentDTO){
         return studentService.save(studentDTO);
     }
