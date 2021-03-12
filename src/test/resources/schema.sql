@@ -66,4 +66,4 @@ VALUES (1,'John1','John1',1,1);
 INSERT INTO student (student_id, first_name, last_name, course, group_id)
 VALUES (2,'John2','John2',2,2);
 INSERT INTO student (student_id, first_name, last_name, course, group_id)
-VALUES (3,'John3','John3',3,2);
+VALUES (3,'John3','John3',3,3);
