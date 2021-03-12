@@ -6,9 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.EducatorDTO;
-import ua.com.foxminded.domain.entity.EducatorEntity;
 import ua.com.foxminded.service.EducatorService;
-import ua.com.foxminded.service.IdCardService;
+import ua.com.foxminded.service.IdCardServiceImpl;
 
 import javax.validation.Valid;
 
@@ -17,12 +16,12 @@ import javax.validation.Valid;
 public class EducatorsController {
 
     private final EducatorService educatorService;
-    private final IdCardService idCardService;
+    private final IdCardServiceImpl idCardServiceImpl;
 
     @Autowired
-    public EducatorsController(EducatorService educatorService, IdCardService idCardService) {
+    public EducatorsController(EducatorService educatorService, IdCardServiceImpl idCardServiceImpl) {
         this.educatorService = educatorService;
-        this.idCardService = idCardService;
+        this.idCardServiceImpl = idCardServiceImpl;
     }
 
     @GetMapping

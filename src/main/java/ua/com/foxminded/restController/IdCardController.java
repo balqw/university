@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.IdCardDTO;
-import ua.com.foxminded.service.IdCardService;
+import ua.com.foxminded.service.IdCardServiceImpl;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -13,36 +13,36 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class IdCardController {
-    private final IdCardService idCardService;
+    private final IdCardServiceImpl idCardServiceImpl;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/idcards")
     public List<IdCardDTO> findAll(){
-        return idCardService.findAll();
+        return idCardServiceImpl.findAll();
     }
 
     @ResponseStatus(HttpStatus.FOUND)
     @GetMapping("idcards/{id}")
     public IdCardDTO findById(@PathVariable("id") Integer id){
-        return idCardService.findById(id);
+        return idCardServiceImpl.findById(id);
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("idcards/{id}")
     public IdCardDTO update(@PathVariable("id") Integer id, @RequestBody @Valid IdCardDTO idCardDTO){
         idCardDTO.setCardId(id);
-        return idCardService.update(idCardDTO);
+        return idCardServiceImpl.update(idCardDTO);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("idcards")
     public IdCardDTO save (@RequestBody @Valid IdCardDTO idCardDTO){
-        return idCardService.save(idCardDTO);
+        return idCardServiceImpl.save(idCardDTO);
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @DeleteMapping("idcards/{id}")
     public void delete(@PathVariable("id") Integer id){
-        idCardService.deleteById(id);
+        idCardServiceImpl.deleteById(id);
     }
 }
