@@ -1,12 +1,15 @@
 package ua.com.foxminded.restController;
 
+import com.oracle.webservices.internal.api.message.ContentType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.StudentDTO;
 import ua.com.foxminded.service.StudentService;
 
 import javax.validation.Valid;
+import java.rmi.MarshalException;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,14 +34,14 @@ public class StudentController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("students")
+    @PostMapping(value = "students")
     StudentDTO save(@RequestBody @Valid StudentDTO studentDTO){
         return studentService.save(studentDTO);
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("students/{id}")
-    StudentDTO update(@PathVariable("id") Integer id,@RequestBody @Valid StudentDTO studentDTO){
+    StudentDTO update(@PathVariable("id") Integer id, @RequestBody @Valid StudentDTO studentDTO){
         studentDTO.setId(id);
         return studentService.update(studentDTO);
     }

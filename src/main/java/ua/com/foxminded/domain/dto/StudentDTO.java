@@ -1,6 +1,8 @@
 package ua.com.foxminded.domain.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.NumberFormat;
 import ua.com.foxminded.domain.entity.Group;
 import ua.com.foxminded.validation.CustomSizeConstraint;
@@ -21,5 +23,6 @@ public class StudentDTO {
     private String surName;
     @Positive(message = "ddd")
     private Integer course;
+    @Valid
     private GroupDTO group;
 }
