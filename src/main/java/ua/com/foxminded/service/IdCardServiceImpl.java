@@ -57,6 +57,6 @@ public class IdCardServiceImpl implements IdCardService {
     @Override
     public Page<IdCardDTO> findPaginated(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo-1, pageSize);
-       return  cardRepo.findAll(pageable).map(idCardMapper::toDto);
+        return  cardRepo.findAll(pageable).map(idCardMapper::toDto);
     }
 }

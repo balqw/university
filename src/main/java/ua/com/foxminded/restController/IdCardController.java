@@ -1,6 +1,7 @@
 package ua.com.foxminded.restController;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.IdCardDTO;
@@ -16,9 +17,10 @@ public class IdCardController {
     private final IdCardServiceImpl idCardServiceImpl;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/idcards")
-    public List<IdCardDTO> findAll(){
-        return idCardServiceImpl.findAll();
+    @GetMapping(value = "/idcards/{page}/{size}")
+    public List<IdCardDTO> findAll(@PathVariable("page") int page,
+                                   @PathVariable("size") int size){
+        return idCardServiceImpl.findPaginated(page, size).getContent();
     }
 
     @ResponseStatus(HttpStatus.FOUND)
