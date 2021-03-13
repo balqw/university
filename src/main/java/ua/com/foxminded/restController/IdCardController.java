@@ -1,7 +1,9 @@
 package ua.com.foxminded.restController;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.IdCardDTO;
@@ -15,12 +17,13 @@ import java.util.List;
 @RequestMapping("/api")
 public class IdCardController {
     private final IdCardServiceImpl idCardServiceImpl;
+    private final ApplicationEventPublisher eventPublisher;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/idcards/{page}/{size}")
-    public List<IdCardDTO> findAll(@PathVariable("page") int page,
-                                   @PathVariable("size") int size){
-        return idCardServiceImpl.findPaginated(page, size).getContent();
+    @GetMapping(value = "/idcards",params = {"page","size"})
+    public List<IdCardDTO> findAll(@RequestParam("page") int page,
+                                   @RequestParam("size") int size){
+        return idCardServiceImpl.findPaginated(page, size, Sort.by("cardId").descending()).getContent();
     }
 
     @ResponseStatus(HttpStatus.FOUND)

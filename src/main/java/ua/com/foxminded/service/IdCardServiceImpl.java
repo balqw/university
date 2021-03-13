@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.domain.dto.IdCardDTO;
@@ -55,8 +56,8 @@ public class IdCardServiceImpl implements IdCardService {
     }
 
     @Override
-    public Page<IdCardDTO> findPaginated(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo-1, pageSize);
+    public Page<IdCardDTO> findPaginated(int pageNo, int pageSize, Sort sortBy) {
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sortBy);
         return  cardRepo.findAll(pageable).map(idCardMapper::toDto);
     }
 }
