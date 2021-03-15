@@ -20,6 +20,7 @@ import ua.com.foxminded.repository.StudentRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +39,12 @@ public class StudentService {
     }
 
     @Transactional
-    public Page<StudentDTO> findAll(Pageable pageable){
+    public List<StudentDTO> findAll(){
+        return repository.findAll().stream().map(studentMapper::toStudentDTO).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Page<StudentDTO> findAllPage(Pageable pageable){
         return repository.findAll(pageable).map(studentMapper::toStudentDTO);
     }
 

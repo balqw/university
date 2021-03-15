@@ -1,10 +1,6 @@
 package ua.com.foxminded.controllers;
 
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +10,7 @@ import ua.com.foxminded.service.GroupService;
 import ua.com.foxminded.service.StudentService;
 
 import javax.validation.Valid;
-import java.util.List;
+
 
 @Controller
 @RequestMapping("/students")
@@ -25,14 +21,10 @@ public class StudentsController {
     private final GroupService groupService;
 
 
-    @GetMapping("/{page}")
-    public String findAll(Model model,@PathVariable("page") int pageNo) {
-        int pageSize = 5;
-        Pageable pageable = PageRequest.of(pageNo-1, pageSize, Sort.by("lastName"));
-        Page<StudentDTO>page = studentService.findAll(pageable);
-        List<StudentDTO>students = page.getContent();
-        model.addAttribute("students",students);
-        model.addAttribute("currentPage",pageNo);
+    @GetMapping
+    public String findAll(Model model) {
+
+        model.addAttribute("students",studentService.findAll());
         return "students/index";
     }
 
@@ -58,7 +50,7 @@ public class StudentsController {
             return "students/new_student";
         }
         studentService.save(dto);
-        return "redirect:/students/1";
+        return "redirect:/students";
     }
 
     @GetMapping("/{id}/edit")
@@ -77,7 +69,7 @@ public class StudentsController {
             return "students/edit_student";
         }
         studentService.update(studentDTO);
-        return "redirect:/students/1";
+        return "redirect:/students";
     }
 
     @GetMapping("{id}/delete")

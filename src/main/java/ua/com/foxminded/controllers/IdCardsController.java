@@ -10,11 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.IdCardDTO;
-import ua.com.foxminded.domain.entity.IdCardEntity;
 import ua.com.foxminded.service.IdCardServiceImpl;
 
 import javax.validation.Valid;
-import java.util.List;
+
 
 @Controller
 @RequestMapping("/cards")
@@ -27,16 +26,9 @@ public class IdCardsController {
         this.idCardServiceImpl = idCardServiceImpl;
     }
 
-    @GetMapping("page/{pageNo}")
-    public String showAllPageable(Model model, @PathVariable("pageNo") int pageNo){
-        int pageSize = 5;
-        Pageable pageable = PageRequest.of(pageNo-1,pageSize,Sort.by("cardId").descending());
-        Page<IdCardDTO> page = idCardServiceImpl.findPaginated(pageable);
-        List<IdCardDTO> listIdCards = page.getContent();
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("cards", listIdCards);
+    @GetMapping()
+    public String showAllPageable(Model model){
+        model.addAttribute("cards", idCardServiceImpl.findAll());
         return "cards/index";
     }
 

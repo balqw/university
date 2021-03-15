@@ -23,8 +23,8 @@ public class StudentController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/students")
-    Page<StudentDTO> findAll(@PageableDefault(size=5,sort = "surName") Pageable pageable){
-        return studentService.findAll(pageable);
+    Page<StudentDTO> findAll(@PageableDefault(size=5, sort = "lastName") Pageable pageable){
+        return studentService.findAllPage(pageable);
     }
 
     @ResponseStatus(HttpStatus.FOUND)
