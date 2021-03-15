@@ -1,12 +1,12 @@
 package ua.com.foxminded.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.ClassRoomDTO;
-import ua.com.foxminded.domain.entity.ClassRoomEntity;
 import ua.com.foxminded.service.ClassRoomService;
 
 import javax.validation.Valid;

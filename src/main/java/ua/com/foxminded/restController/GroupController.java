@@ -1,6 +1,9 @@
 package ua.com.foxminded.restController;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.GroupDTO;
@@ -17,8 +20,8 @@ public class GroupController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/groups")
-    public List<GroupDTO> findAll(){
-        return groupService.findAll();
+    public Page<GroupDTO> findAll(@PageableDefault Pageable pageable){
+        return groupService.findAllPage(pageable);
     }
 
     @ResponseStatus(HttpStatus.FOUND)

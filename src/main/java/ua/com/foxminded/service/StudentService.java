@@ -1,6 +1,10 @@
 package ua.com.foxminded.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import static java.lang.String.format;
@@ -34,8 +38,8 @@ public class StudentService {
     }
 
     @Transactional
-    public List<StudentDTO> readAll() {
-        return studentMapper.toDtos(repository.findAll());
+    public Page<StudentDTO> findAll(Pageable pageable){
+        return repository.findAll(pageable).map(studentMapper::toStudentDTO);
     }
 
     @Transactional

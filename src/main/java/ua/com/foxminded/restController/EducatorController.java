@@ -1,15 +1,15 @@
 package ua.com.foxminded.restController;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.EducatorDTO;
-import ua.com.foxminded.domain.dto.GroupDTO;
 import ua.com.foxminded.service.EducatorService;
-import ua.com.foxminded.service.GroupService;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -19,8 +19,8 @@ public class EducatorController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/educators")
-    public List<EducatorDTO> findAll(){
-        return educatorService.findAll();
+    public Page<EducatorDTO> findAll(@PageableDefault Pageable pageable){
+        return educatorService.findAllPage(pageable);
     }
 
     @ResponseStatus(HttpStatus.FOUND)

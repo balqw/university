@@ -3,7 +3,9 @@ package ua.com.foxminded.restController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.IdCardDTO;
@@ -20,10 +22,9 @@ public class IdCardController {
     private final ApplicationEventPublisher eventPublisher;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/idcards",params = {"page","size"})
-    public List<IdCardDTO> findAll(@RequestParam("page") int page,
-                                   @RequestParam("size") int size){
-        return idCardServiceImpl.findPaginated(page, size, Sort.by("cardId").descending()).getContent();
+    @GetMapping(value = "/idcards")
+    public Page<IdCardDTO> findAll(@PageableDefault(sort = "cardId",size = 3)Pageable pageable){
+        return idCardServiceImpl.findPaginated(pageable);
     }
 
     @ResponseStatus(HttpStatus.FOUND)

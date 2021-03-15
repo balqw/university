@@ -1,6 +1,8 @@
 package ua.com.foxminded.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.domain.dto.ClassRoomDTO;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -31,10 +34,13 @@ public class ClassRoomService{
     }
 
     @Transactional
+    public Page<ClassRoomDTO> findAllPage(Pageable pageable) {
+        return repository.findAll(pageable).map(classroomMapper::toDto);
+    }
+
+    @Transactional
     public List<ClassRoomDTO> findAll() {
-        List<ClassRoomDTO>rooms = classroomMapper.toDtos(repository.findAll());
-        rooms.sort(Comparator.comparing(ClassRoomDTO::getNumber));
-        return rooms;
+        return repository.findAll().stream().map(classroomMapper::toDto).collect(Collectors.toList());
     }
 
     @Transactional

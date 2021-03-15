@@ -19,7 +19,7 @@ import static java.lang.String.format;
 
 @RequiredArgsConstructor
 @Service
-public class IdCardServiceImpl implements IdCardService {
+public class IdCardServiceImpl {
     private final IdCardRepository cardRepo;
     private final IdCardMapper idCardMapper;
 
@@ -55,9 +55,8 @@ public class IdCardServiceImpl implements IdCardService {
         cardRepo.deleteById(id);
     }
 
-    @Override
-    public Page<IdCardDTO> findPaginated(int pageNo, int pageSize, Sort sortBy) {
-        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sortBy);
+    @Transactional
+    public Page<IdCardDTO> findPaginated(Pageable pageable) {
         return  cardRepo.findAll(pageable).map(idCardMapper::toDto);
     }
 }

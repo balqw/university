@@ -1,6 +1,10 @@
 package ua.com.foxminded.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +14,7 @@ import ua.com.foxminded.service.GroupService;
 import ua.com.foxminded.service.StudentService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/students")
@@ -20,9 +25,14 @@ public class StudentsController {
     private final GroupService groupService;
 
 
-    @GetMapping
-    public String findAll(Model model) {
-        model.addAttribute("students", studentService.readAll());
+    @GetMapping("/{page}")
+    public String findAll(Model model,@PathVariable("page") int pageNo) {
+        int pageSize = 5;
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize, Sort.by("lastName"));
+        Page<StudentDTO>page = studentService.findAll(pageable);
+        List<StudentDTO>students = page.getContent();
+        model.addAttribute("students",students);
+        model.addAttribute("currentPage",pageNo);
         return "students/index";
     }
 
@@ -47,9 +57,8 @@ public class StudentsController {
             model.addAttribute("groups",groupService.findAll());
             return "students/new_student";
         }
-
         studentService.save(dto);
-        return "redirect:/students";
+        return "redirect:/students/1";
     }
 
     @GetMapping("/{id}/edit")
@@ -58,7 +67,6 @@ public class StudentsController {
         model.addAttribute("groups",groupService.findAll());
         return "students/edit_student";
     }
-
 
     @PostMapping("{id}/edit")
     public String editStudent( Model model, @ModelAttribute("student") @Valid StudentDTO studentDTO, BindingResult bindingResult, @PathVariable("id") int id) {
@@ -69,7 +77,7 @@ public class StudentsController {
             return "students/edit_student";
         }
         studentService.update(studentDTO);
-        return "redirect:/students";
+        return "redirect:/students/1";
     }
 
     @GetMapping("{id}/delete")

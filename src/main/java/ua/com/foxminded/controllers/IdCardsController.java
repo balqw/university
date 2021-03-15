@@ -2,6 +2,8 @@ package ua.com.foxminded.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,9 +28,10 @@ public class IdCardsController {
     }
 
     @GetMapping("page/{pageNo}")
-    public String showAllPageable(Model model, @PathVariable("pageNo") int pageNo, Sort sortBy){
+    public String showAllPageable(Model model, @PathVariable("pageNo") int pageNo){
         int pageSize = 5;
-        Page<IdCardDTO> page = idCardServiceImpl.findPaginated(pageNo,pageSize, sortBy);
+        Pageable pageable = PageRequest.of(pageNo-1,pageSize,Sort.by("cardId").descending());
+        Page<IdCardDTO> page = idCardServiceImpl.findPaginated(pageable);
         List<IdCardDTO> listIdCards = page.getContent();
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
@@ -37,11 +40,7 @@ public class IdCardsController {
         return "cards/index";
     }
 
-    @GetMapping
-    public String showAll(Model model){
-        model.addAttribute("cards", idCardServiceImpl.findAll());
-        return "cards/index";
-    }
+
 
     @GetMapping("/new")
     public String showAdd(Model model){

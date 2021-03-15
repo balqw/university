@@ -1,19 +1,19 @@
 package ua.com.foxminded.restController;
 
-import com.oracle.webservices.internal.api.message.ContentType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.StudentDTO;
 import ua.com.foxminded.service.StudentService;
 
 import javax.validation.Valid;
-import java.rmi.MarshalException;
-import java.util.List;
-import java.util.Optional;
 
-import static java.lang.String.format;
+
+
 
 @RestController
 @RequestMapping("/api")
@@ -22,9 +22,9 @@ public class StudentController {
     private final StudentService studentService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/students")
-    List<StudentDTO> findAll(){
-        return studentService.readAll();
+    @GetMapping(value = "/students")
+    Page<StudentDTO> findAll(@PageableDefault(size=5,sort = "surName") Pageable pageable){
+        return studentService.findAll(pageable);
     }
 
     @ResponseStatus(HttpStatus.FOUND)
