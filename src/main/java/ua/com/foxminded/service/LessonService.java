@@ -1,6 +1,8 @@
 package ua.com.foxminded.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.domain.entity.ClassRoomEntity;
@@ -12,6 +14,8 @@ import ua.com.foxminded.repository.ClassRoomRepository;
 import ua.com.foxminded.repository.LessonRepository;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -33,8 +37,13 @@ public class LessonService {
     }
 
     @Transactional
+    public Page<LessonInfo> findAllPage(Pageable pageable) {
+        return lessonRepository.findAll(pageable).map(lessonMapper::toDto);
+    }
+
+    @Transactional
     public List<LessonInfo> findAll() {
-        return lessonMapper.toDtos(lessonRepository.findAll());
+        return lessonRepository.findAll().stream().map(lessonMapper::toDto).collect(Collectors.toList());
     }
 
     @Transactional

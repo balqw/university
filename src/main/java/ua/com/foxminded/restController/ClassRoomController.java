@@ -1,12 +1,14 @@
 package ua.com.foxminded.restController;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.ClassRoomDTO;
 import ua.com.foxminded.service.ClassRoomService;
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -14,10 +16,11 @@ import java.util.List;
 public class ClassRoomController {
     private final ClassRoomService classRoomService;
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.OK
+    )
     @GetMapping("/classrooms")
-    public List<ClassRoomDTO> findAll(){
-        return classRoomService.findAll();
+    public Page<ClassRoomDTO> findAll(@PageableDefault Pageable pageable){
+        return classRoomService.findAllPage(pageable);
     }
 
     @ResponseStatus(HttpStatus.FOUND)

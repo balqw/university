@@ -21,8 +21,8 @@ public class StudentDTO {
     @NotEmpty
     @Size(min = 2, max = 10, message = "Surname must be between 2 and 10 letters")
     private String surName;
-    @Positive(message = "ddd")
+    @Positive()
     private Integer course;
-    @Valid
+
     private GroupDTO group;
 }

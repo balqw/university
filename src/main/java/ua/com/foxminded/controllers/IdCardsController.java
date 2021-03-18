@@ -1,32 +1,38 @@
 package ua.com.foxminded.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.IdCardDTO;
-import ua.com.foxminded.domain.entity.IdCardEntity;
-import ua.com.foxminded.service.IdCardService;
+import ua.com.foxminded.service.IdCardServiceImpl;
 
 import javax.validation.Valid;
+
 
 @Controller
 @RequestMapping("/cards")
 public class IdCardsController {
 
-    private final IdCardService idCardService;
+    private final IdCardServiceImpl idCardServiceImpl;
 
     @Autowired
-    public IdCardsController(IdCardService idCardService) {
-        this.idCardService = idCardService;
+    public IdCardsController(IdCardServiceImpl idCardServiceImpl) {
+        this.idCardServiceImpl = idCardServiceImpl;
     }
 
-    @GetMapping
-    public String showAll(Model model){
-        model.addAttribute("cards",idCardService.findAll());
+    @GetMapping()
+    public String showAllPageable(Model model){
+        model.addAttribute("cards", idCardServiceImpl.findAll());
         return "cards/index";
     }
+
+
 
     @GetMapping("/new")
     public String showAdd(Model model){
@@ -40,13 +46,13 @@ public class IdCardsController {
             model.addAttribute("cards",idcard);
             return "cards/new_card";
         }
-        idCardService.save(idcard);
+        idCardServiceImpl.save(idcard);
         return "redirect:/cards";
     }
 
     @GetMapping("{id}/edit")
     public String showEdit(@PathVariable("id")int id, Model model){
-        model.addAttribute("card",idCardService.findById(id));
+        model.addAttribute("card", idCardServiceImpl.findById(id));
         return "cards/edit_card";
     }
 
@@ -57,13 +63,13 @@ public class IdCardsController {
             model.addAttribute("card",idcard);
             return "cards/edit_card";
         }
-        idCardService.update(idcard);
+        idCardServiceImpl.update(idcard);
         return "redirect:/cards";
     }
 
     @GetMapping("{id}/delete")
     public String deleteCard(@PathVariable("id") int id){
-        idCardService.deleteById(id);
+        idCardServiceImpl.deleteById(id);
         return "redirect:/cards";
     }
 

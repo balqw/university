@@ -20,7 +20,7 @@ public class LessonsController {
     private final ClassRoomService classRoomService;
 
 
-    @GetMapping
+    @GetMapping()
     public String showAll(Model model) {
         model.addAttribute("lessons", lessonService.findAll());
         return "/lessons/index";

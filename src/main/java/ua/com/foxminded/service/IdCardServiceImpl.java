@@ -1,6 +1,10 @@
 package ua.com.foxminded.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.domain.dto.IdCardDTO;
@@ -10,15 +14,15 @@ import ua.com.foxminded.domain.mappers.IdCardMapper;
 import ua.com.foxminded.repository.IdCardRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.lang.String.format;
 
 @RequiredArgsConstructor
 @Service
-public class IdCardService {
+public class IdCardServiceImpl {
     private final IdCardRepository cardRepo;
     private final IdCardMapper idCardMapper;
+
 
     @Transactional
     public IdCardDTO save(IdCardDTO cardDto) {
@@ -49,5 +53,10 @@ public class IdCardService {
     @Transactional
     public void deleteById(Integer id) {
         cardRepo.deleteById(id);
+    }
+
+    @Transactional
+    public Page<IdCardDTO> findPaginated(Pageable pageable) {
+        return  cardRepo.findAll(pageable).map(idCardMapper::toDto);
     }
 }

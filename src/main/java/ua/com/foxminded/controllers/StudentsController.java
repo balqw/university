@@ -11,6 +11,7 @@ import ua.com.foxminded.service.StudentService;
 
 import javax.validation.Valid;
 
+
 @Controller
 @RequestMapping("/students")
 @AllArgsConstructor
@@ -22,7 +23,8 @@ public class StudentsController {
 
     @GetMapping
     public String findAll(Model model) {
-        model.addAttribute("students", studentService.readAll());
+
+        model.addAttribute("students",studentService.findAll());
         return "students/index";
     }
 
@@ -47,7 +49,6 @@ public class StudentsController {
             model.addAttribute("groups",groupService.findAll());
             return "students/new_student";
         }
-
         studentService.save(dto);
         return "redirect:/students";
     }
@@ -58,7 +59,6 @@ public class StudentsController {
         model.addAttribute("groups",groupService.findAll());
         return "students/edit_student";
     }
-
 
     @PostMapping("{id}/edit")
     public String editStudent( Model model, @ModelAttribute("student") @Valid StudentDTO studentDTO, BindingResult bindingResult, @PathVariable("id") int id) {

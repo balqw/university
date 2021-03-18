@@ -1,6 +1,8 @@
 package ua.com.foxminded.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.foxminded.domain.dto.EducatorDTO;
@@ -13,6 +15,7 @@ import ua.com.foxminded.repository.IdCardRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -42,9 +45,13 @@ public class EducatorService {
     }
 
     @Transactional
+    public Page<EducatorDTO> findAllPage(Pageable pageable) {
+        return educatorRepository.findAll(pageable).map(educatorMapper::toDto);
+    }
+
+    @Transactional
     public List<EducatorDTO> findAll() {
-        List<EducatorEntity>entities =  educatorRepository.findAll();
-        return educatorMapper.toDtos(entities);
+        return educatorRepository.findAll().stream().map(educatorMapper::toDto).collect(Collectors.toList());
     }
 
     @Transactional

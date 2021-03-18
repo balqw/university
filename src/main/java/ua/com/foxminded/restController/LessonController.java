@@ -1,6 +1,9 @@
 package ua.com.foxminded.restController;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ua.com.foxminded.domain.dto.LessonInfo;
@@ -16,8 +19,8 @@ public class LessonController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/lessons")
-    public List<LessonInfo> findAll(){
-        return lessonService.findAll();
+    public Page<LessonInfo> findAll(@PageableDefault Pageable pageable){
+        return lessonService.findAllPage(pageable);
     }
 
     @ResponseStatus(HttpStatus.FOUND)
